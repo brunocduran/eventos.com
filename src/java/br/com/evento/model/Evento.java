@@ -22,6 +22,7 @@ public class Evento {
     private Curso curso;
     private CategoriaEvento categoriaEvento;
     private List<Organizador> organizadores;
+    private List<AtividadeEvento> atividadesEvento;
 
     public Evento() {
         this.idEvento = 0;
@@ -39,10 +40,11 @@ public class Evento {
         this.curso = new Curso();
         this.categoriaEvento = new CategoriaEvento();
         this.organizadores = null; // depois verificar se é isso mesmo
+        this.atividadesEvento = null;
         
     }
 
-    public Evento(int idEvento, String nomeEvento, Double valorEvento, Double valorEventoPrazo, Date dataInicioEvento, Date dataTerminoEvento, String informacaoEvento, String situacaoEvento, String situacaoCaixa, Double saldoCaixa, String imagem, Cidade cidade, Curso curso, CategoriaEvento categoriaEvento, List<Organizador> organizadores) {
+    public Evento(int idEvento, String nomeEvento, Double valorEvento, Double valorEventoPrazo, Date dataInicioEvento, Date dataTerminoEvento, String informacaoEvento, String situacaoEvento, String situacaoCaixa, Double saldoCaixa, String imagem, Cidade cidade, Curso curso, CategoriaEvento categoriaEvento, List<Organizador> organizadores, List<AtividadeEvento> atividadesEvento) {
         this.idEvento = idEvento;
         this.nomeEvento = nomeEvento;
         this.valorEvento = valorEvento;
@@ -58,6 +60,7 @@ public class Evento {
         this.curso = curso;
         this.categoriaEvento = categoriaEvento;
         this.organizadores = organizadores;
+        this.atividadesEvento = atividadesEvento;
     }
 
     public int getIdEvento() {
@@ -179,5 +182,14 @@ public class Evento {
     public void setOrganizadores(List<Organizador> organizadores) {
         this.organizadores = organizadores;
     }
-     
+
+    public List<AtividadeEvento> getAtividadesEvento() {
+        return atividadesEvento;
+    }
+
+    public void setAtividadesEvento(List<AtividadeEvento> atividadesEvento) {
+        this.atividadesEvento = atividadesEvento;
+    }
+
 }
+    

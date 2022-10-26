@@ -5,8 +5,10 @@
  */
 package br.com.evento.controller.evento;
 
-import br.com.evento.dao.EventoDAO;
-import br.com.evento.model.Evento;
+import br.com.evento.dao.CidadeDAO;
+import br.com.evento.dao.CursoDAO;
+import br.com.evento.dao.GenericDAO;
+import br.com.evento.model.Cidade;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -19,8 +21,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author igorb
  */
-@WebServlet(name = "EventoCadastrar", urlPatterns = {"/EventoCadastrar"})
-public class EventoCadastrar extends HttpServlet {
+@WebServlet(name = "EventoNovo", urlPatterns = {"/EventoNovo"})
+public class EventoNovo extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,30 +34,19 @@ public class EventoCadastrar extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException {        
         response.setContentType("text/html;charset=iso-8859-1");
-        String mensagem = null;
         try{
-            Evento oEvento = new Evento();
-            oEvento.setIdEvento(Integer.parseInt(request.getParameter("idevento")));
-            //oEvento.set
+            GenericDAO oCidadedao = new CidadeDAO();
+            request.setAttribute("cidades", oCidadedao.listar());
+            GenericDAO oCursoDAO = new CursoDAO();
+            request.setAttribute("cursos", oCursoDAO.listar());
             
-            //oInstituicao.setIdInstituicao(Integer.parseInt(request.getParameter("idInstituicao")));
-           // oInstituicao.setNomeInstituicao(request.getParameter("nomeInstituicao"));
-           // oInstituicao.setCnpj(request.getParameter("cnpj"));
-           // oInstituicao.setSituacao(request.getParameter("situacao"));
-           // oInstituicao.setImagem(request.getParameter("imagem"));
+            //falta fazer o de CATEGORIAEVENTO
             
-            EventoDAO dao = new EventoDAO();
-            
-            if (dao.cadastrar(oEvento)){
-                response.getWriter().write("1");
-            }else{
-                response.getWriter().write("0");
-            }
-        }catch(Exception ex){
-            System.out.println("Problemas no servlet cadastrar evento! Erro: "+ex.getMessage());
-            ex.printStackTrace();
+            request.getRequestDispatcher("painel/cadastros/evento/eventoCadastrar.jsp").forward(request, response);
+        } catch(Exception ex){
+            System.out.println("Problemas no Servlet ao listar Cidade! Erro: "+ ex.getMessage());
         }
     }
 

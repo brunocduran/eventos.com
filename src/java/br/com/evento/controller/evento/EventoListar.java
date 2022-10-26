@@ -6,7 +6,7 @@
 package br.com.evento.controller.evento;
 
 import br.com.evento.dao.EventoDAO;
-import br.com.evento.model.Evento;
+import br.com.evento.dao.GenericDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -19,8 +19,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author igorb
  */
-@WebServlet(name = "EventoCadastrar", urlPatterns = {"/EventoCadastrar"})
-public class EventoCadastrar extends HttpServlet {
+@WebServlet(name = "EventoListar", urlPatterns = {"/EventoListar"})
+public class EventoListar extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,28 +33,13 @@ public class EventoCadastrar extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=iso-8859-1");
-        String mensagem = null;
+         response.setContentType("text/html;charset=iso-8859-1");
         try{
-            Evento oEvento = new Evento();
-            oEvento.setIdEvento(Integer.parseInt(request.getParameter("idevento")));
-            //oEvento.set
-            
-            //oInstituicao.setIdInstituicao(Integer.parseInt(request.getParameter("idInstituicao")));
-           // oInstituicao.setNomeInstituicao(request.getParameter("nomeInstituicao"));
-           // oInstituicao.setCnpj(request.getParameter("cnpj"));
-           // oInstituicao.setSituacao(request.getParameter("situacao"));
-           // oInstituicao.setImagem(request.getParameter("imagem"));
-            
-            EventoDAO dao = new EventoDAO();
-            
-            if (dao.cadastrar(oEvento)){
-                response.getWriter().write("1");
-            }else{
-                response.getWriter().write("0");
-            }
-        }catch(Exception ex){
-            System.out.println("Problemas no servlet cadastrar evento! Erro: "+ex.getMessage());
+            GenericDAO dao = new EventoDAO();
+            request.setAttribute("eventos", dao.listar());
+            request.getRequestDispatcher("painel/cadastros/evento/evento.jsp").forward(request, response);
+        } catch(Exception ex){
+            System.out.println("Problema no servlet ao listar eventos"+ex.getMessage());
             ex.printStackTrace();
         }
     }
