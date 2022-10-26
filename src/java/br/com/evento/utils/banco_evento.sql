@@ -154,12 +154,6 @@ where p.idpessoa = pr.idpessoa
 and pr.permitelogin = 'S'
 and pr.situacao = 'A';
 
-
-create table categoriaevento(
-	idcategoriaevento serial primary key,
-	nome varchar(100)
-);
-
 create table evento (
 	idevento serial primary key, 
 	nomeevento varchar(100),
