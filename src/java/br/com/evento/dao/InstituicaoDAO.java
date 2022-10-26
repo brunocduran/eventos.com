@@ -199,7 +199,7 @@ public class InstituicaoDAO implements GenericDAO {
     }
     
     public List<Object> listarAtivos() {
-     PreparedStatement stmt = null;
+        PreparedStatement stmt = null;
         ResultSet rs = null;
         List<Object> resultado = new ArrayList<>();
         Instituicao oInstituicao = null;
