@@ -276,6 +276,17 @@
                                     </a>
                                 </li>
                             </c:if>
+                                
+                              <c:if test="${sessionScope.tipousuario == 'Administrador' or sessionScope.tipousuario == 'Organizador'}">
+                                <li class="nav-item">
+                                    <a href="${pageContext.request.contextPath}/CategoriaEventoListar" class="nav-link" id="menucategoriaevento">
+                                        <i class="nav-icon fas fa-cube"></i>
+                                        <p>
+                                            Categoria Evento
+                                        </p>
+                                    </a>
+                                </li>
+                            </c:if>
 
                         </ul>
                     </nav>
