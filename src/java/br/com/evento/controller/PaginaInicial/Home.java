@@ -5,6 +5,7 @@
  */
 package br.com.evento.controller.PaginaInicial;
 
+import br.com.evento.dao.CategoriaEventoDAO;
 import br.com.evento.dao.GenericDAO;
 import br.com.evento.dao.InstituicaoDAO;
 import java.io.IOException;
@@ -36,8 +37,11 @@ public class Home extends HttpServlet {
         response.setContentType("text/html;charset=iso-8859-1");
         try{
             InstituicaoDAO dao = new InstituicaoDAO();
+            CategoriaEventoDAO oCategoriaEventoDAO = new CategoriaEventoDAO();
             request.setAttribute("instituicoes", dao.listarCarrossel());
+            request.setAttribute("categorias", oCategoriaEventoDAO.listarAtivos());
             request.getRequestDispatcher("/home/home.jsp").forward(request, response);
+            
         } catch(Exception ex){
             System.out.println("Problema no servlet ao listar instituicoes"+ex.getMessage());
             ex.printStackTrace();

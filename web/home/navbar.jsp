@@ -65,9 +65,9 @@
                 </a>
                 <nav class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 bg-light" id="navbar-vertical" style="width: calc(100% - 30px); z-index: 999;">
                     <div class="navbar-nav w-100">
-                        <a href="" class="nav-item nav-link">Eventos Acadêmicos</a>
-                        <a href="" class="nav-item nav-link">Eventos Culturais</a>
-                        <a href="" class="nav-item nav-link">Festivais</a>
+                         <c:forEach var="categoriaevento" items="${categorias}">
+                            <a href="" class="nav-item nav-link">${categoriaevento.nome}</a>                                             
+                        </c:forEach> 
                     </div>
                 </nav>
             </div>
