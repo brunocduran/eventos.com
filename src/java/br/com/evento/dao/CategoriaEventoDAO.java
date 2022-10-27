@@ -67,7 +67,7 @@ public class CategoriaEventoDAO implements GenericDAO{
     public Boolean alterar(Object objeto) {
         CategoriaEvento oCategoriaEvento = (CategoriaEvento) objeto;
         PreparedStatement stmt = null;
-        String sql = "update categoriaevento set nome=? ,situacao=? where ididcategoriaevento=?";
+        String sql = "update categoriaevento set nome=? ,situacao=? where idcategoriaevento=?";
         try{
             stmt = conexao.prepareStatement(sql);
             stmt.setString(1, oCategoriaEvento.getNome());
@@ -94,7 +94,7 @@ public class CategoriaEventoDAO implements GenericDAO{
     public Boolean excluir(int numero) {
         int idCategoriaEvento = numero;
         PreparedStatement stmt = null;
-        String sql = "update instituicao set situacao=? where idinstituicao=?";
+        String sql = "update categoriaevento set situacao=? where idcategoriaevento=?";
         try{
             CategoriaEvento oCategoriaEvento = (CategoriaEvento) this.carregar(idCategoriaEvento);
             stmt = conexao.prepareStatement(sql);
@@ -125,14 +125,14 @@ public class CategoriaEventoDAO implements GenericDAO{
         PreparedStatement stmt = null;
         ResultSet rs = null;
         CategoriaEvento oCategoriaEvento = null;
-        String sql = "select * from categoriaevento where ididcategoriaevento = ?";      
+        String sql = "select * from categoriaevento where idcategoriaevento = ?";      
         try{
             stmt = conexao.prepareStatement(sql);
             stmt.setInt(1, idCategoriaEvento);
             rs = stmt.executeQuery();
             while(rs.next()){
                 oCategoriaEvento = new CategoriaEvento();
-                oCategoriaEvento.setIdCategoriaEvento(rs.getInt("ididcategoriaevento"));
+                oCategoriaEvento.setIdCategoriaEvento(rs.getInt("idcategoriaevento"));
                 oCategoriaEvento.setNome(rs.getString("nome"));
                 oCategoriaEvento.setSituacao(rs.getString("situacao"));
                 

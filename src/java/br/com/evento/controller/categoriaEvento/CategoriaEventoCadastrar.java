@@ -37,7 +37,7 @@ public class CategoriaEventoCadastrar extends HttpServlet {
         String mensagem = null;
         try{
             
-            int idCategoriaEvento = Integer.parseInt(request.getParameter("ididcategoriaevento"));
+            int idCategoriaEvento = Integer.parseInt(request.getParameter("idcategoriaEvento"));
             String nome = request.getParameter("nome");
             String situacao = request.getParameter("situacao");
             
