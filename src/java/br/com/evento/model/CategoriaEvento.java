@@ -15,6 +15,9 @@ public class CategoriaEvento {
     private String situacao;
 
     public CategoriaEvento() {
+        this.idCategoriaEvento = 0;
+        this.nome = "";
+        this.situacao = "A";
     }
 
     public CategoriaEvento(int idCategoriaEvento, String nome, String situacao) {

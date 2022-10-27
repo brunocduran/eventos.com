@@ -180,6 +180,8 @@ create table categoriaevento(
         situacao char(1)
 );
 
+insert into categoriaevento (nome,situacao) values ('Semana Acadêmica','A');
+
 create table evento (
 	idevento serial primary key, 
 	nomeevento varchar(100),
