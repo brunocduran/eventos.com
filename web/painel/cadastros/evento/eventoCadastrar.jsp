@@ -61,7 +61,7 @@
                                                                 <div class="col-6">
                                                                     <label for="nomeevento" id="labelnomeevento">Nome Evento</label>
                                                                     <input type="text" class="form-control" maxlength="100" value="${evento.nomeevento}"
-                                                                           id="nomeevento" name="nomeevento" placeholder="Digite a descrição resumida do produto">
+                                                                           id="nomeevento" name="nomeevento" placeholder="Digite o nome do evento">
                                                                 </div>
                                                                 <div class="col-3">
                                                                     <label for="datainicioevento" id="labeldatainicioevento">Data Início</label>
@@ -81,7 +81,7 @@
                                                                 <div class="col-sm">
                                                                     <label id="labelmarca" for="idcidade">Cidade</label>
                                                                     <select class="form-control" id="idcidade" name="idcidade">
-                                                                        <option id="0" value="0">Selecione a marca</option>
+                                                                        <option id="0" value="0">Selecione a cidade</option>
                                                                         {loop="$marcas"}
                                                                         <option id="${value.idcidade}" value="${value.idcidade}" 
                                                                                 {if="$value.idcidade == $evento.idcidade"} selected {/if}>
@@ -94,7 +94,7 @@
                                                                 <div class="col-sm">
                                                                     <label id="labelgrupo" for="idcurso">Curso</label>
                                                                     <select class="form-control" id="idcurso" name="idcurso">
-                                                                        <option id="0" value="0">Selecione o grupo</option>
+                                                                        <option id="0" value="0">Selecione o curso</option>
                                                                         {loop="$grupos"}
                                                                         <option id="${value.idcurso}" value="${value.idcurso}" 
                                                                                 {if="$value.idcurso == $evento.idcurso"} selected {/if}>
@@ -106,7 +106,7 @@
                                                                 <div class="col-sm">
                                                                     <label id="labelsubgrupo" for="idcategoria">Categoria</label>
                                                                     <select class="form-control" id="idcategoria" name="idcategoria">
-                                                                        <option id="0" value="0">Selecione o subgrupo</option>
+                                                                        <option id="0" value="0">Selecione a categoria</option>
                                                                         {loop="$subgrupos"}
                                                                         <option id="${value.idcategoria}" value="${value.idcategoria}"
                                                                                 {if="$value.idcategoria == $evento.idcategoria"} selected {/if}>${value.nomesubgrupo}</option>
@@ -120,7 +120,7 @@
                                                                 <div class="col-sm">
                                                                     <label for="nomeeventodetalhada" id="labelnomeeventodetalhada">Informações</label>
                                                                     <textarea class="form-control" id="nomeeventodetalhada" name="nomeeventodetalhada" rows="3"
-                                                                              placeholder="Digite a descrição detalhada"
+                                                                              placeholder="Digite detalhes do evento"
                                                                               maxlength="500"></textarea>
                                                                 </div>
 
@@ -143,8 +143,11 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <button class="btn btn-success" id="salvarecontinuar" onclick="stepper.next()">Salvar e continuar <i
-                                                                class="fa fa-arrow-right"></i></button>
+                                                        <hr>
+                                                        <div align="right">
+                                                            <button class="btn btn-success" id="salvarecontinuar" onclick="stepper.next()">Salvar e continuar <i
+                                                                    class="fa fa-arrow-right"></i></button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <!--</form>-->
@@ -173,7 +176,9 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div id="espacoadd">
+                                                        <hr>
+                                                        <div id="espacoaddorganizador">
+
                                                             <!-- Loop dos códigos de barras já cadastrados-->
 
                                                             <div id="div_${value.idorganizadorevento}">
@@ -193,9 +198,11 @@
                                                             </div> 
                                                         </div>
                                                         <div class="form-group"></div>
-
-                                                        <button class="btn btn-primary" onclick="stepper.previous()"><i class="fa fa-arrow-left"></i> Voltar </button>
-                                                        <button class="btn btn-success" onclick="stepper.next()"> Salvar e continuar <i class="fa fa-arrow-right"></i></button>
+                                                        <hr>
+                                                        <div align="right">
+                                                            <button class="btn btn-primary" onclick="stepper.previous()"><i class="fa fa-arrow-left"></i> Voltar </button>
+                                                            <button class="btn btn-success" onclick="stepper.next()"> Salvar e continuar <i class="fa fa-arrow-right"></i></button>
+                                                        </div>
                                                     </div>
 
                                                 </div>
@@ -246,25 +253,45 @@
                                                             <div class="col-sm">
                                                                 <label for="cargahoraria" id="labelcargahoraria">Carga Horária</label>
                                                                 <input type="text" class="form-control" maxlength="100" value="${evento.cargahoraria}"
-                                                                       id="cargahoraria" name="cargahoraria" placeholder="Digite o nome da atividade">
+                                                                       id="cargahoraria" name="cargahoraria" placeholder="00">
                                                             </div>
 
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
-
                                                         <div class="form-line row">                    
-
                                                             <div class="col-sm">
                                                                 <label for="resumo" id="labelreumo">Resumo</label>
                                                                 <textarea class="form-control" id="resumo" name="resumo" rows="3"
-                                                                          placeholder="Digite o evento"
+                                                                          placeholder="Digite detalhes da atividade"
                                                                           maxlength="500"></textarea>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <button class="btn btn-primary" onclick="stepper.previous()"><i class="fa fa-arrow-left"></i> Voltar </button>
-                                                    <a class="btn btn-success" href="/painel/produto">Finalizar</i></a>
+
+                                                    <div align="right">
+                                                        <button class="btn btn-primary" onclick="adcDivAtividadeEvento()">Adicionar</button>
+                                                    </div>
+
+                                                    <hr>    
+
+                                                    <div id="espacoaddatividadeevento">
+                                                        <!--Configurar loop-->
+                                                        <div class="input-group input-group-mb-3">
+                                                            <input type="text" class="form-control" id="${value.idatividadeevento}"
+                                                                   value="${value.nomeatividadeevento}" disabled />
+                                                            <span class="input-group-append">
+                                                                <button type="button" onclick="deletar(${value.idatividadeevento})"
+                                                                        class="btn btn-danger btn-flat">Remover</button>
+                                                            </span>
+                                                        </div>
+
+                                                    </div>
+                                                    <hr>                  
+                                                    <div align="right">
+                                                        <button class="btn btn-primary" onclick="stepper.previous()"><i class="fa fa-arrow-left"></i> Voltar </button>
+                                                        <a class="btn btn-success" href="/painel/produto">Finalizar</a>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <!-- Fim fotos produto -->
@@ -350,20 +377,22 @@
         menuAtivo();
     });
 
+
+    //ADCIONAR ORGANIZADOR#############################################################################################################
     function adcDivOrganizador(idorganizador, nomeOrganizador) {
-        var html = '<div id="div_123">'//alterar para o id do organizador
+        var html = '<div id="divOrg_123">'//alterar para o id do organizador
                 + '<div class="form-group"></div><div class="form-line row">'
                 + '<div class="col-sm">'
                 + '<div class="input-group input-group-mb-3">'
-                + '<input type="text" class="form-control" id="div_123" value="Organizador" disabled/>'//alterar o id e value
+                + '<input type="text" class="form-control" id="divOrg_123" value="Organizador" disabled/>'//alterar o id e value
                 + '<span class="input-group-append">'
-                + '<button type="button" onclick="deletar(' + 123 + ')" class="btn btn-danger btn-flat">Remover</button>'//alterar o valor do deletar
+                + '<button type="button" onclick="deletarOrganizador(' + 123 + ')" class="btn btn-danger btn-flat">Remover</button>'//alterar o valor do deletar
                 + '</span></div></div></div> '
                 + '</div>';
-        $("#espacoadd").append(html);
+        $("#espacoaddorganizador").append(html);
     }
 
-    function deletar(idorganizador) {
+    function deletarOrganizador(idorganizador) {
         /*var url = window.location.pathname.substring(0, window.location.pathname.indexOf("/", 2)) + "/codigobarraproduto";
          var dados = "idcodigobarraproduto=" + idcodigobarraproduto;
          
@@ -411,12 +440,85 @@
     }
 
     function removeLinhaOrganizadorHTML(idcodigobarraproduto) {
-        var id = "div_" + idcodigobarraproduto;
+        var id = "divOrg_" + idcodigobarraproduto;
         // Removendo um nó a partir do pai
         var node = document.getElementById(id);
         if (node.parentNode) {
             node.parentNode.removeChild(node);
         }
+
+    }
+
+    //ADCIONAR ATIVIDADE EVENTO########################################################################################################
+    function adcDivAtividadeEvento(idatividadeevento, nomeAtividadeEvento) {
+        var html = '<div id="divAtv_123">'//alterar para o id da atividade evento
+                + '<div class="form-group"></div><div class="form-line row">'
+                + '<div class="col-sm">'
+                + '<div class="input-group input-group-mb-3">'
+                + '<input type="text" class="form-control" id="divAtv_123" value="Atividade Evento" disabled/>'//alterar o id e value
+                + '<span class="input-group-append">'
+                + '<button type="button" onclick="deletarAtividadeEvento(' + 123 + ')" class="btn btn-danger btn-flat">Remover</button>'//alterar o valor do deletar
+                + '</span></div></div></div> '
+                + '</div>';
+        $("#espacoaddatividadeevento").append(html);
+    }
+
+    function deletarAtividadeEvento(idatividadeevento) {
+        /*var url = window.location.pathname.substring(0, window.location.pathname.indexOf("/", 2)) + "/codigobarraproduto";
+         var dados = "idcodigobarraproduto=" + idcodigobarraproduto;
+         
+         Swal.fire({
+         title: 'Você tem certeza?',
+         text: 'Deseja retirar o organizador do evento?',
+         icon: 'warning',
+         showCancelButton: true,
+         confirmButtonColor: '#3085d6',
+         cancelButtonColor: '#d33',
+         confirmButtonText: 'Sim',
+         cancelButtonText: 'Cancelar'
+         }).then((result) => {
+         if (result.isConfirmed) {
+         $.ajax({
+         asyc: false,
+         type: "POST",
+         url: url + "/deletar",
+         data: dados,
+         dataType: "json",
+         error: function (xhr) {
+         Swal.fire({
+         position: 'center',
+         icon: 'error',
+         title: 'Erro',
+         text: 'Não foi possível excluir o codigo de barras do produto!',
+         showConfirmButton: true,
+         timer: 10000
+         }).then(function () {
+         window.location.href = url;
+         })
+         },
+         success: function (data) {
+         if (data.resultado == 'ok') {
+         removeLinhaCodBarraHTML(idcodigobarraproduto);
+         }
+         }
+         });
+         
+         }
+         ;
+         });*/
+
+        removeLinhaAtividadeEventoHTML(idatividadeevento);
+    }
+
+    function removeLinhaAtividadeEventoHTML(idatividadeevento) {
+        var id = "divAtv_" + idatividadeevento;
+        // Removendo um nó a partir do pai
+        var node = document.getElementById(id);
+        if (node.parentNode) {
+            node.parentNode.removeChild(node);
+        }
+
+//#################################################################################################################################     
 
     }
 </script>
