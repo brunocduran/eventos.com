@@ -6,9 +6,13 @@
 package br.com.evento.controller.evento;
 
 import br.com.evento.dao.EventoDAO;
+import br.com.evento.model.CategoriaEvento;
+import br.com.evento.model.Cidade;
+import br.com.evento.model.Curso;
 import br.com.evento.model.Evento;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -38,13 +42,39 @@ public class EventoCadastrar extends HttpServlet {
         try{
             Evento oEvento = new Evento();
             oEvento.setIdEvento(Integer.parseInt(request.getParameter("idevento")));
-            //oEvento.set
+            oEvento.setNomeEvento(request.getParameter("nomeevento"));
+            oEvento.setValorEvento(Double.parseDouble(request.getParameter("valorevento")));
+            oEvento.setValorEventoPrazo(Double.parseDouble(request.getParameter("valoreventoprazo")));
+            oEvento.setDataInicioEvento(Date.valueOf(request.getParameter("datainicioevento")));
+            oEvento.setDataTerminoEvento(Date.valueOf(request.getParameter("dataterminoevento")));
+            oEvento.setSituacaoEvento(request.getParameter("situacaoevento"));
+            oEvento.setSaldoCaixa(Double.parseDouble(request.getParameter("saldocaixa")));
+            oEvento.setSituacaoCaixa(request.getParameter(request.getParameter("situacaocaixa")));
+            oEvento.setImagem(request.getParameter("imagem"));
             
-            //oInstituicao.setIdInstituicao(Integer.parseInt(request.getParameter("idInstituicao")));
-           // oInstituicao.setNomeInstituicao(request.getParameter("nomeInstituicao"));
-           // oInstituicao.setCnpj(request.getParameter("cnpj"));
-           // oInstituicao.setSituacao(request.getParameter("situacao"));
-           // oInstituicao.setImagem(request.getParameter("imagem"));
+            int idCidade = Integer.parseInt(request.getParameter("idcidade"));
+            int idCurso = Integer.parseInt(request.getParameter("idcurso"));
+            int idCategoriaEvento = Integer.parseInt(request.getParameter("idcategoriaevento"));
+            
+                    
+            
+            //cria objeto de cidade.
+            Cidade oCidade = new Cidade();
+            oCidade.setIdCidade(idCidade);
+                    
+            oEvento.setCidade(oCidade);
+            
+            //cria o objeto de curso
+            Curso oCurso = new Curso();
+            oCurso.setIdCurso(idCurso);
+            
+            oEvento.setCurso(oCurso);
+            
+            //cria o objeto de categoriaevento
+            CategoriaEvento oCategoriaEvento = new CategoriaEvento();
+            oCategoriaEvento.setIdCategoriaEvento(idCategoriaEvento);
+            
+            oEvento.setCategoriaEvento(oCategoriaEvento);          
             
             EventoDAO dao = new EventoDAO();
             

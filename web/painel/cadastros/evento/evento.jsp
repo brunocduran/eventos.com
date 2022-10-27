@@ -26,20 +26,20 @@
                         <tbody>
                             <c:forEach var="evento" items="${eventos}">
                                 <tr>
-                                    <td align="right">${evento.idevento}</td>
-                                    <td align="left">${evento.nomeevento}</td>
+                                    <td align="right">${evento.idEvento}</td>
+                                    <td align="left">${evento.nomeEvento}</td>
                                     <td align="center">
-                                        <a href="${pageContext.request.contextPath}/EventoCarregar?idevento=${evento.idevento}" class="btn btn-group-lg btn-primary">
+                                        <a href="${pageContext.request.contextPath}/EventoCarregar?idEvento=${evento.idEvento}" class="btn btn-group-lg btn-primary">
                                             <i class="fas fa-edit"></i><Strong> Alterar </Strong> </a>
                                     </td>
                                     <td align="center">
-                                        <a href="#" onclick="deletar(${evento.idevento}, '${evento.situacao}')">
+                                        <a href="#" onclick="deletar(${evento.idEvento}, '${evento.situacaoEvento}')">
                                             <button class="btn
-                                                    <c:out value="${evento.situacao == 'A' ? 'btn-danger':'btn-success'}"/>">
+                                                    <c:out value="${evento.situacaoEvento == 'A' ? 'btn-danger':'btn-success'}"/>">
                                                 <i class="fas fa-fw
-                                                   <c:out value="${evento.situacao == 'A' ? 'fa-times' : 'fas fa-check'}"/>"></i>
+                                                   <c:out value="${evento.situacaoEvento == 'A' ? 'fa-times' : 'fas fa-check'}"/>"></i>
                                                 <Strong>
-                                                    <c:out value="${evento.situacao == 'A' ? 'Inativar' : 'Ativar'}"/>
+                                                    <c:out value="${evento.situacaoEvento == 'A' ? 'Inativar' : 'Ativar'}"/>
                                                 </Strong>
                                             </button></a>
                                     </td>
@@ -107,7 +107,7 @@
         });
     });
 
-    function deletar(codigo, situacao) {
+   /* function deletar(codigo, situacaoEvento) {
         var id = codigo;
         console.log(codigo);
 
@@ -115,7 +115,7 @@
         var tituloConfirmacao = "";
         var confirmButtonText = "";
 
-        if (situacao == 'I') {
+        if (situacaoEvento == 'I') {
             titulo = "Você deseja realmente ativar o evento?";
             confirmButtonText = "Sim, ative o Evento!";
             tituloConfirmacao = "Evento ativado com sucesso!";
@@ -141,7 +141,7 @@
                     type: 'post',
                     url: '${pageContext.request.contextPath}/EventoExcluir',
                     data: {
-                        idevento: id
+                        idEvento: id
                     },
                     success:
                             function (data) {
@@ -177,7 +177,7 @@
             }
             ;
         });
-    }
+    }*/
 
     function menuAtivo() {
         document.getElementById('titulopainel').innerHTML = "<strong>Evento</strong>";

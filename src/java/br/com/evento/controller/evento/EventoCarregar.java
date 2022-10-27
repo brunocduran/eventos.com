@@ -5,10 +5,10 @@
  */
 package br.com.evento.controller.evento;
 
-import br.com.evento.dao.CidadeDAO;
-import br.com.evento.dao.CursoDAO;
-import br.com.evento.dao.GenericDAO;
-import br.com.evento.model.Cidade;
+import br.com.evento.dao.EventoDAO;
+import br.com.evento.model.Evento;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -21,8 +21,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author igorb
  */
-@WebServlet(name = "EventoNovo", urlPatterns = {"/EventoNovo"})
-public class EventoNovo extends HttpServlet {
+@WebServlet(name = "EventoCarregar", urlPatterns = {"/EventoCarregar"})
+public class EventoCarregar extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,19 +34,20 @@ public class EventoNovo extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {        
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=iso-8859-1");
         try{
-            GenericDAO oCidadedao = new CidadeDAO();
-            request.setAttribute("cidades", oCidadedao.listar());
-            GenericDAO oCursoDAO = new CursoDAO();
-            request.setAttribute("cursos", oCursoDAO.listar());
+            int idEvento = Integer.parseInt(request.getParameter("idevento"));
+            EventoDAO dao = new EventoDAO();
             
-            //falta fazer o de CATEGORIAEVENTO
-            
-            request.getRequestDispatcher("painel/cadastros/evento/eventoCadastrar.jsp").forward(request, response);
-        } catch(Exception ex){
-            System.out.println("Problemas no Servlet EventoNovo! Erro: "+ ex.getMessage());
+            Evento oEvento = (Evento) dao.carregar(idEvento);
+                    
+            Gson ogson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+            String jSon = ogson.toJson(oEvento);
+            response.getWriter().write(jSon);
+        }catch(Exception ex){
+            System.out.println("Erro servlet evento carregar"+ex.getMessage());
+            ex.printStackTrace();
         }
     }
 

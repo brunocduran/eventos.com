@@ -5,10 +5,8 @@
  */
 package br.com.evento.controller.evento;
 
-import br.com.evento.dao.CidadeDAO;
-import br.com.evento.dao.CursoDAO;
+import br.com.evento.dao.EventoDAO;
 import br.com.evento.dao.GenericDAO;
-import br.com.evento.model.Cidade;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -21,8 +19,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author igorb
  */
-@WebServlet(name = "EventoNovo", urlPatterns = {"/EventoNovo"})
-public class EventoNovo extends HttpServlet {
+@WebServlet(name = "EventoExcluir", urlPatterns = {"/EventoExcluir"})
+public class EventoExcluir extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,19 +32,22 @@ public class EventoNovo extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {        
-        response.setContentType("text/html;charset=iso-8859-1");
+            throws ServletException, IOException {
+         response.setContentType("text/html;charset=iso-8859-1");
+        int idEvento = Integer.parseInt(request.getParameter("idevento"));
+        String mensagem = null;
         try{
-            GenericDAO oCidadedao = new CidadeDAO();
-            request.setAttribute("cidades", oCidadedao.listar());
-            GenericDAO oCursoDAO = new CursoDAO();
-            request.setAttribute("cursos", oCursoDAO.listar());
-            
-            //falta fazer o de CATEGORIAEVENTO
-            
-            request.getRequestDispatcher("painel/cadastros/evento/eventoCadastrar.jsp").forward(request, response);
-        } catch(Exception ex){
-            System.out.println("Problemas no Servlet EventoNovo! Erro: "+ ex.getMessage());
+            GenericDAO dao = new EventoDAO();
+            if(dao.excluir(idEvento)){
+                response.getWriter().write("1");
+            }else{
+                response.getWriter().write("0");
+            }
+            //request.setAttribute("mensagem", mensagem);
+            //response.sendRedirect("DespesaListar");
+        }catch (Exception e){
+            System.out.println("Problemas na Servelet ao Excluir Evento! Erro: "+e.getLocalizedMessage());
+            e.printStackTrace();
         }
     }
 

@@ -5,6 +5,7 @@
  */
 package br.com.evento.dao;
 
+import br.com.evento.model.CategoriaEvento;
 import br.com.evento.model.Cidade;
 import br.com.evento.model.Curso;
 import br.com.evento.model.Evento;
@@ -176,7 +177,10 @@ public class EventoDAO implements GenericDAO {
                 CursoDAO oCursoDAO = new CursoDAO();
                 oEvento.setCurso((Curso) oCursoDAO.carregar(rs.getInt("idcurso")));
                 
-                //FALTA FAZER DA CATEGORIA EVENTO - ESPERAR A DAO FICAR PRONTA   
+                CategoriaEventoDAO oCategoriaEventoDAO = new CategoriaEventoDAO();
+                oEvento.setCategoriaEvento((CategoriaEvento) oCategoriaEventoDAO.carregar(rs.getInt("idcategoriaevento")));
+                
+                //Depois fazer o carregar de participantes e atividades daquele evento
       
             }
             return oEvento;
@@ -198,16 +202,16 @@ public class EventoDAO implements GenericDAO {
             while (rs.next()) {
                 Evento oEvento = new Evento();
                 
-               oEvento.setIdEvento(rs.getInt("idevento"));                        
-                oEvento.setNomeEvento(rs.getString("nomeevento"));
-                oEvento.setValorEvento(rs.getDouble("valorevento"));
-                oEvento.setValorEventoPrazo(rs.getDouble("valorevento"));
-                oEvento.setDataInicioEvento(rs.getDate("datainicioevento"));
-                oEvento.setDataTerminoEvento(rs.getDate("dataterminoevento"));
-                oEvento.setInformacaoEvento(rs.getString("informacaoevento"));
-                oEvento.setSituacaoEvento(rs.getString("situacaoevento"));
-                oEvento.setSaldoCaixa(rs.getDouble("saldocaixa"));
-                oEvento.setSituacaoCaixa(rs.getString("situacaocaixa"));
+               oEvento.setIdEvento(rs.getInt("idEvento"));                        
+                oEvento.setNomeEvento(rs.getString("nomeEvento"));
+                oEvento.setValorEvento(rs.getDouble("valorEvento"));
+                oEvento.setValorEventoPrazo(rs.getDouble("valorEvento"));
+                oEvento.setDataInicioEvento(rs.getDate("dataInicioEvento"));
+                oEvento.setDataTerminoEvento(rs.getDate("dataTerminoEvento"));
+                oEvento.setInformacaoEvento(rs.getString("informacaoEvento"));
+                oEvento.setSituacaoEvento(rs.getString("situacaoEvento"));
+                oEvento.setSaldoCaixa(rs.getDouble("saldoCaixa"));
+                oEvento.setSituacaoCaixa(rs.getString("situacaoCaixa"));
                 oEvento.setImagem(rs.getString("imagem"));  
         
                 CidadeDAO oCidadeDAO = null;
@@ -229,9 +233,17 @@ public class EventoDAO implements GenericDAO {
                 }              
                 
                 oEvento.setCurso((Curso) oCursoDAO.carregar(rs.getInt("idcurso")));     
+               
                 
-                //FALTA FAZER DA CATEGORIA EVENTO - ESPERAR A DAO FICAR PRONTA  
-                
+                CategoriaEventoDAO oCategoriaEventoDAO = null;
+                 try {
+                    oCategoriaEventoDAO = new CategoriaEventoDAO();
+                } catch (Exception ex) {
+                    System.out.println("Erro buscar curso " + ex.getMessage());
+                    ex.printStackTrace();
+                }   
+                 
+                oEvento.setCategoriaEvento((CategoriaEvento) oCategoriaEventoDAO.carregar(rs.getInt("idcategoriaevento")));   
                 
                 resultado.add(oEvento);
             }
