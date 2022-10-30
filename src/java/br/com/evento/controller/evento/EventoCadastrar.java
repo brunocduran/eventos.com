@@ -10,6 +10,8 @@ import br.com.evento.model.CategoriaEvento;
 import br.com.evento.model.Cidade;
 import br.com.evento.model.Curso;
 import br.com.evento.model.Evento;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
@@ -41,20 +43,20 @@ public class EventoCadastrar extends HttpServlet {
         String mensagem = null;
         try{
             Evento oEvento = new Evento();
-            oEvento.setIdEvento(Integer.parseInt(request.getParameter("idevento")));
-            oEvento.setNomeEvento(request.getParameter("nomeevento"));
-            oEvento.setValorEvento(Double.parseDouble(request.getParameter("valorevento")));
-            oEvento.setValorEventoPrazo(Double.parseDouble(request.getParameter("valoreventoprazo")));
-            oEvento.setDataInicioEvento(Date.valueOf(request.getParameter("datainicioevento")));
-            oEvento.setDataTerminoEvento(Date.valueOf(request.getParameter("dataterminoevento")));
-            oEvento.setSituacaoEvento(request.getParameter("situacaoevento"));
-            oEvento.setSaldoCaixa(Double.parseDouble(request.getParameter("saldocaixa")));
-            oEvento.setSituacaoCaixa(request.getParameter(request.getParameter("situacaocaixa")));
+            oEvento.setIdEvento(Integer.parseInt(request.getParameter("idEvento")));
+            oEvento.setNomeEvento(request.getParameter("nomeEvento"));
+            oEvento.setValorEvento(Double.parseDouble(request.getParameter("valorEvento")));
+            oEvento.setValorEventoPrazo(Double.parseDouble(request.getParameter("valorEventoPrazo")));
+            oEvento.setDataInicioEvento(Date.valueOf(request.getParameter("dataInicioEvento")));
+            oEvento.setDataTerminoEvento(Date.valueOf(request.getParameter("dataTerminoEvento")));
+            oEvento.setSituacaoEvento(request.getParameter("situacaoEvento"));
+            oEvento.setSaldoCaixa(Double.parseDouble(request.getParameter("saldoCaixa")));
+            oEvento.setSituacaoCaixa(request.getParameter("situacaoCaixa"));
             oEvento.setImagem(request.getParameter("imagem"));
-            
-            int idCidade = Integer.parseInt(request.getParameter("idcidade"));
-            int idCurso = Integer.parseInt(request.getParameter("idcurso"));
-            int idCategoriaEvento = Integer.parseInt(request.getParameter("idcategoriaevento"));
+            oEvento.setInformacaoEvento(request.getParameter("informacaoEvento"));            
+            int idCidade = Integer.parseInt(request.getParameter("idCidade"));
+            int idCurso = Integer.parseInt(request.getParameter("idCurso"));
+            int idCategoriaEvento = Integer.parseInt(request.getParameter("idCategoriaEvento"));
             
                     
             
@@ -79,7 +81,12 @@ public class EventoCadastrar extends HttpServlet {
             EventoDAO dao = new EventoDAO();
             
             if (dao.cadastrar(oEvento)){
-                response.getWriter().write("1");
+                //response.getWriter().write("1");
+                Evento oUltimoEvento = (Evento) dao.carregarUltimoInserido();            
+                Gson ogson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+                String jSon = ogson.toJson(oUltimoEvento);
+               // System.out.println("JSON DO ULTIMO INSERIDO: "+jSon);
+                response.getWriter().write(jSon);   
             }else{
                 response.getWriter().write("0");
             }

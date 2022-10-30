@@ -50,78 +50,99 @@
                                                     <div class="card-body">
                                                         <div class="form-group">
                                                             <div class="form-line row">
-                                                                <input class="form-control" type="hidden" name="idevento" id="idevento"
-                                                                       value="{evento.idevento}" readonly="readonly">
+                                                                <input class="form-control" 
+                                                                       type="hidden"
+                                                                       name="idevento" id="idevento"
+                                                                       value="${evento.idEvento}" readonly="readonly">
                                                                 <input class="form-control" type="hidden" name="situacaoevento" id="situacaoevento"
-                                                                       value="{evento.situacaoevento}" readonly="readonly">
+                                                                       value="${evento.situacaoEvento}" readonly="readonly">
                                                                 <input class="form-control" type="hidden" name="saldocaixa" id="saldocaixa"
-                                                                       value="{evento.saldocaixa}" readonly="readonly">
+                                                                       value="${evento.saldoCaixa}" readonly="readonly">
                                                                 <input class="form-control" type="hidden" name="situacaocaixa" id="situacaocaixa"
-                                                                       value="{evento.situacaocaixa}" readonly="readonly">
+                                                                       value="${evento.situacaoCaixa}" readonly="readonly">
                                                                 <div class="col-6">
                                                                     <label for="nomeevento" id="labelnomeevento">Nome Evento</label>
-                                                                    <input type="text" class="form-control" maxlength="100" value="${evento.nomeevento}"
+                                                                    <input type="text" class="form-control" maxlength="100" value="${evento.nomeEvento}"
                                                                            id="nomeevento" name="nomeevento" placeholder="Digite o nome do evento">
                                                                 </div>
                                                                 <div class="col-3">
                                                                     <label for="datainicioevento" id="labeldatainicioevento">Data Início</label>
-                                                                    <input class="form-control" type="date" name="datainicioevento" id="datainicioevento" value="${evento.datainicioevento}"
+                                                                    <input class="form-control" type="date" name="datainicioevento" id="datainicioevento" value="${evento.dataInicioEvento}"
                                                                            maxLength="8" />
                                                                 </div>
                                                                 <div class="col-3">
                                                                     <label for="dataterminoevento" id="labeldataterminoevento">Data Término</label>
-                                                                    <input class="form-control" type="date" name="dataterminoevento" value="${evento.dataterminoevento}"
+                                                                    <input class="form-control" type="date" name="dataterminoevento" value="${evento.dataTerminoEvento}"
                                                                            id="dataterminoevento" maxLength="5" />
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
                                                             <div class="form-line row">
-                                                                <!-- Loop das marcas -->
-                                                                <div class="col-sm">
-                                                                    <label id="labelmarca" for="idcidade">Cidade</label>
-                                                                    <select class="form-control" id="idcidade" name="idcidade">
-                                                                        <option id="0" value="0">Selecione a cidade</option>
-                                                                        {loop="$marcas"}
-                                                                        <option id="${value.idcidade}" value="${value.idcidade}" 
-                                                                                {if="$value.idcidade == $evento.idcidade"} selected {/if}>
-                                                                            ${value.nomemarca}
-                                                                        </option>
-                                                                        {/loop}
-                                                                    </select>
+                                                                 <div class="col-sm">
+                                                                    <label for="valorevento" id="labelvalorevento">Valor</label>
+                                                                    <input class="form-control" style="text-align:right;"
+                                                                           type="number" min="0" max="100" step=".01"
+                                                                            value="<fmt:formatNumber value='${evento.valorEvento}'/>"
+                                                                           id="valorevento" name="valorevento">
                                                                 </div>
-                                                                <!-- Loop dos grupos -->
-                                                                <div class="col-sm">
-                                                                    <label id="labelgrupo" for="idcurso">Curso</label>
-                                                                    <select class="form-control" id="idcurso" name="idcurso">
-                                                                        <option id="0" value="0">Selecione o curso</option>
-                                                                        {loop="$grupos"}
-                                                                        <option id="${value.idcurso}" value="${value.idcurso}" 
-                                                                                {if="$value.idcurso == $evento.idcurso"} selected {/if}>
-                                                                            ${value.nomegrupo}</option>
-                                                                        {/loop}
-                                                                    </select>
+                                                               <div class="col-sm">
+                                                                    <label for="valoreventoprazo" id="labelvaloreventoprazo">Valor Prazo</label>
+                                                                  <input class="form-control" style="text-align:right;"
+                                                                         type="number" min="0" max="100" step=".01"
+                                                                            value="<fmt:formatNumber value='${evento.valorEventoPrazo}'/>"
+                                                                           id="valoreventoprazo" name="valoreventoprazo">
                                                                 </div>
-                                                                <!-- Loop dos subgrupos -->
+                                                                
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="form-line row">
+                                                                <!-- Loop das cidades -->                                                                
                                                                 <div class="col-sm">
-                                                                    <label id="labelsubgrupo" for="idcategoria">Categoria</label>
-                                                                    <select class="form-control" id="idcategoria" name="idcategoria">
-                                                                        <option id="0" value="0">Selecione a categoria</option>
-                                                                        {loop="$subgrupos"}
-                                                                        <option id="${value.idcategoria}" value="${value.idcategoria}"
-                                                                                {if="$value.idcategoria == $evento.idcategoria"} selected {/if}>${value.nomesubgrupo}</option>
-                                                                        {/loop}
+                                                                    <label id="labelcidade" for="idcidade">Cidade</label>
+                                                                    <select class="form-control" name="idcidade" id="idcidade" required>
+                                                                        <option value="nulo">Selecione</option>
+                                                                        <c:forEach var="cidade" items="${cidades}">
+                                                                            <option value="${cidade.idCidade}" ${evento.cidade.idCidade == cidade.idCidade ? "selected" : ""}>
+                                                                                ${cidade.nomeCidade}
+                                                                            </option>
+                                                                        </c:forEach>
                                                                     </select>
-                                                                </div>
+                                                                </div>    
+                                                                <!-- Loop dos cursos -->
+                                                                <div class="col-sm">
+                                                                    <label id="labelcurso" for="idcurso">Curso</label>
+                                                                    <select class="form-control" name="idcurso" id="idcurso" required>
+                                                                        <option value="nulo">Selecione</option>
+                                                                        <c:forEach var="curso" items="${cursos}">
+                                                                            <option value="${curso.idCurso}" ${evento.curso.idCurso == curso.idCurso ? "selected" : ""}>
+                                                                                ${curso.nomeCurso}
+                                                                            </option>
+                                                                        </c:forEach>
+                                                                    </select>
+                                                                </div>  
+                                                                <!-- Loop das categorias -->
+                                                                <div class="col-sm">
+                                                                    <label id="labelcategoriaevento" for="idcategoriaevento">Categoria</label>
+                                                                    <select class="form-control" name="idcategoriaevento" id="idcategoriaevento" required>
+                                                                        <option value="nulo">Selecione</option>
+                                                                        <c:forEach var="categoriaevento" items="${categoriaeventos}">
+                                                                            <option value="${categoriaevento.idCategoriaEvento}" ${evento.categoriaEvento.idCategoriaEvento == categoriaevento.idCategoriaEvento ? "selected" : ""}>
+                                                                                ${categoriaevento.nome}
+                                                                            </option>
+                                                                        </c:forEach>
+                                                                    </select>
+                                                                </div>  
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
                                                             <div class="form-line row">
                                                                 <div class="col-sm">
-                                                                    <label for="nomeeventodetalhada" id="labelnomeeventodetalhada">Informações</label>
-                                                                    <textarea class="form-control" id="nomeeventodetalhada" name="nomeeventodetalhada" rows="3"
+                                                                    <label for="informacaoevento" id="labelinformacaoevento">Informações</label>
+                                                                    <textarea class="form-control" id="informacaoevento" name="informacaoevento" rows="3"
                                                                               placeholder="Digite detalhes do evento"
-                                                                              maxlength="500"></textarea>
+                                                                              maxlength="500">${evento.informacaoEvento}</textarea>
                                                                 </div>
 
                                                             </div>
@@ -130,7 +151,7 @@
                                                             <div class="card-body">
                                                                 <div class="form-group">
                                                                     <center>
-                                                                        <img alt="imagem" clas="img-thumbnail" src=""
+                                                                        <img alt="imagem" clas="img-thumbnail" src="${evento.imagem}"
                                                                              name="target" id="target" width="170" height="200">
                                                                         <br></br>
                                                                         <input type="file" id="gallery-photo-add"
@@ -145,31 +166,44 @@
                                                         </div>
                                                         <hr>
                                                         <div align="right">
-                                                            <button class="btn btn-success" id="salvarecontinuar" onclick="stepper.next()">Salvar e continuar <i
+                                                            <button class="btn btn-success" id="salvarecontinuar" onclick="validarCamposEvento()">Salvar e continuar <i
                                                                     class="fa fa-arrow-right"></i></button>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <!--</form>-->
-                                                <!-- Fim dos dados iniciais do produto -->
-                                                <!-- Inicio código de barras -->
+                                                <!-- Fim dos dados iniciais do evento -->
+                                                <!-- Inicio organizadores -->
                                                 <div id="organizadores-part" class="content" role="tabpanel" aria-labelledby="organizadores-part-trigger">
                                                     <div class="card-body">
                                                         <div class="form-group">
                                                             <div class="form-line row">
                                                                 <div class="col-sm">
-
-                                                                    <label for="nomeeventodetalhada" id="labelcodigobarraproduto">Organizadores</label>
-                                                                    <div class="input-group input-group-mb-3">
-                                                                        <select class="form-control" id="idorganizador" name="idorganizador">
-                                                                            <option id="0" value="0">Selecione o Organizador</option>
-
-                                                                            <option id="${value.idcategoria}" value="${value.idorganizador}"
-                                                                                    selected {/if}>${value.nomeorganizador}</option>
-
-                                                                        </select>
+                                                                    <label for="idorganizaor" id="labelorganizador">Organizador</label>
+                                                                    <div class="input-group input-group-mb-3">                                                                        
+                                                                        <select class="form-control" name="idorganizador" id="idorganizador" required>
+                                                                        <option value="nulo">Selecione</option>
+                                                                        <c:forEach var="organizador" items="${organizadores}">
+                                                                            <option value="${organizador.idOrganizador}"}>
+                                                                                ${organizador.nomeRazaoPessoa}
+                                                                            </option>
+                                                                        </c:forEach>
+                                                                    </select>                                                                       
+                                                                    </div>
+                                                                </div>                                                                
+                                                                <div class="col-sm">
+                                                                    <label for="funcoes" id="funcoes">Função</label>
+                                                                    <div class="input-group input-group-mb-3">                                                                        
+                                                                        <select class="form-control" name="idfuncao" id="idfuncao" required>
+                                                                        <option value="nulo">Selecione</option>
+                                                                        <c:forEach var="funcao" items="${funcoes}">
+                                                                            <option value="${funcao.idFuncao}"}>
+                                                                                ${funcao.descricao}
+                                                                            </option>
+                                                                        </c:forEach>
+                                                                    </select>
                                                                         <span class="input-group-append">
-                                                                            <button type="button" onclick="adcDivOrganizador()"
+                                                                            <button type="button" onclick="validarCamposOrganizador()"
                                                                                     class="btn btn-primary btn-flat" id="adicionarcodigobarraproduto">Adicionar</button>
                                                                         </span>
                                                                     </div>
@@ -179,7 +213,7 @@
                                                         <hr>
                                                         <div id="espacoaddorganizador">
 
-                                                            <!-- Loop dos códigos de barras já cadastrados-->
+                                                            <!-- Loop dos códigos de barras já cadastrados
 
                                                             <div id="div_${value.idorganizadorevento}">
                                                                 <div class="form-group"></div>
@@ -196,7 +230,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div> 
-                                                        </div>
+                                                        </div>-->
                                                         <div class="form-group"></div>
                                                         <hr>
                                                         <div align="right">
@@ -219,17 +253,17 @@
 
                                                             <div class="col-sm">
                                                                 <label for="nomeatividade" id="labelnomeatividade">Nome Atividade</label>
-                                                                <input type="text" class="form-control" maxlength="100" value="${evento.nomeevento}"
+                                                                <input type="text" class="form-control" maxlength="100" value=""
                                                                        id="nomeatividade" name="nomeatividade" placeholder="Digite o nome da atividade">
                                                             </div>
                                                             <div class="col-sm">
                                                                 <label for="datainicioevento" id="labeldatainicioevento">Data Início</label>
-                                                                <input class="form-control" type="date" name="datainicioevento" id="datainicioevento" value="${evento.datainicioevento}"
+                                                                <input class="form-control" type="date" name="datainicioevento" id="datainicioevento" value=""
                                                                        maxLength="8" />
                                                             </div>
                                                             <div class="col-sm">
                                                                 <label for="dataterminoevento" id="labeldataterminoevento">Data Término</label>
-                                                                <input class="form-control" type="date" name="dataterminoevento" value="${evento.dataterminoevento}"
+                                                                <input class="form-control" type="date" name="dataterminoevento" value=""
                                                                        id="dataterminoevento" maxLength="5" />
                                                             </div>
                                                         </div>
@@ -252,7 +286,7 @@
 
                                                             <div class="col-sm">
                                                                 <label for="cargahoraria" id="labelcargahoraria">Carga Horária</label>
-                                                                <input type="text" class="form-control" maxlength="100" value="${evento.cargahoraria}"
+                                                                <input type="text" class="form-control" maxlength="100" value=""
                                                                        id="cargahoraria" name="cargahoraria" placeholder="00">
                                                             </div>
 
@@ -345,6 +379,186 @@
         window.stepper = new Stepper(document.querySelector('.bs-stepper'))
     });
 
+
+    function validarCamposEvento() {
+        if (document.getElementById("nomeevento").value == '') {
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Verifique o nome',
+                showConfirmButton: true,
+                timer: 2000
+            });
+            $("#nomeevento").focus();
+        } else if (document.getElementById("datainicioevento").value == '') {
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Verifique a data de início!',
+                showConfirmButton: true,
+                timer: 2000
+            });
+            $("#datainicioevento").focus();
+        } else if (document.getElementById("dataterminoevento").value == '') {
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Verifique a data término!',
+                showConfirmButton: true,
+                timer: 2000
+            });
+            $("#dataterminoevento").focus();
+        } else if (document.getElementById("idcidade").value == 'nulo') {
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Verifique a cidade!',
+                showConfirmButton: true,
+                timer: 2000
+            });
+            $("#idcidade").focus();
+        } else if (document.getElementById("idcurso").value == 'nulo') {
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Verifique o curso!',
+                showConfirmButton: true,
+                timer: 2000
+            });
+            $("#idcidade").focus();
+        }else if (document.getElementById("idcategoriaevento").value == 'nulo') {
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Verifique a categoria!',
+                showConfirmButton: true,
+                timer: 2000
+            });
+            $("#idcidade").focus();
+        } else {
+            gravarDados();
+            
+        }  
+    }
+    
+    
+    function validarCamposOrganizador() {
+        if (document.getElementById("idorganizador").value == 'nulo') {
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Verifique o organizador!',
+                showConfirmButton: true,
+                timer: 2000
+            });
+            $("#idcidade").focus();
+        } else if (document.getElementById("idfuncao").value == 'nulo') {
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Verifique a funcao!',
+                showConfirmButton: true,
+                timer: 2000
+            });
+            $("#idcidade").focus();
+        } else {
+            gravarDadosOrganizador();
+            
+        }  
+    }
+    
+    
+    function gravarDadosOrganizador() {
+        console.log("Gravando dados organizador....");
+        $.ajax({
+            type: 'post',
+            url: 'OrganizadorEventoCadastrar',
+            data: {
+                idEvento: $('#idevento').val(),
+                idOrganizador: $('#idorganizador').val(),
+                idFuncao: $('#ifduncao').val()
+            },
+            success:
+                    function (data) {
+                        console.log("resposta servlet->");
+                        console.log(data);
+                        if (data == 1) {
+                           //ver o que vai fazer aqui
+                           adcDivOrganizador();
+                            
+                            stepper.next();
+                        } else {
+                            Swal.fire({
+                                position: 'center',
+                                icon: 'error',
+                                title: 'Erro',
+                                text: 'Não foi possível gravar o Evento!',
+                                showConfirmButton: false,
+                                timer: 1000
+                            })
+                        }
+                    },
+            error:
+                    function (data) {
+                        //window.location.href = "${pageContext.request.contextPath}/InstituicaoListar";
+                    }
+        });
+    }
+    
+    
+        function gravarDados() {
+        console.log("Gravando dados....");
+        var target = document.getElementById("target").src;
+        console.log("Situacao caixa: " + $('#situacaocaixa').val());
+        $.ajax({
+            type: 'post',
+            url: 'EventoCadastrar',
+            data: {
+                idEvento: $('#idevento').val(),
+                nomeEvento: $('#nomeevento').val(),
+                valorEvento: $('#valorevento').val(),
+                valorEventoPrazo: $('#valoreventoprazo').val(),
+                dataInicioEvento: $('#datainicioevento').val(),
+                dataTerminoEvento: $('#dataterminoevento').val(),
+                situacaoEvento: $('#situacaoevento').val(),
+                saldoCaixa: $('#saldocaixa').val(),
+                situacaoCaixa: $('#situacaocaixa').val(),
+                imagem: target,
+                idCidade: $('#idcidade').val(), 
+                idCurso: $('#idcurso').val(), 
+                idCategoriaEvento: $('#idcategoriaevento').val(), 
+                informacaoEvento : $('#informacaoevento').val()
+            },
+            success:
+                    function (data) {
+                        console.log("resposta servlet->");
+                        //console.log(data);
+                        var jSon = JSON.parse(data);
+                        var id = jSon.idEvento;
+                        console.log("Testeeee: "+id);
+                        if (id > 0) {
+                          //ver o que vai fazer aqui
+                            $('#idevento').val(id);
+                            stepper.next();
+                        } else {
+                            Swal.fire({
+                                position: 'center',
+                                icon: 'error',
+                                title: 'Erro',
+                                text: 'Não foi possível gravar o Evento!',
+                                showConfirmButton: false,
+                                timer: 1000
+                            })
+                        }
+                    },
+            error:
+                    function (data) {
+                        //window.location.href = "${pageContext.request.contextPath}/InstituicaoListar";
+                    }
+        });
+    }
+
+
     function uploadFile() {
         // pega o documento html da pagina
         var target = document.getElementById("target");
@@ -374,6 +588,12 @@
     }
 
     $(document).ready(function () {
+        
+        
+        
+        
+        
+        
         menuAtivo();
     });
 

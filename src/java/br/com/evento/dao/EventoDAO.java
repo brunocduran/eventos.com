@@ -310,6 +310,47 @@ public class EventoDAO implements GenericDAO {
         return resultado;
     }
      
+     public Object carregarUltimoInserido() {
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        Evento oEvento = null;
+        String sql = "select * from evento order by idevento desc limit 1";
+        try {
+            stmt = conexao.prepareStatement(sql);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                oEvento = new Evento();
+                oEvento.setIdEvento(rs.getInt("idevento"));                        
+                oEvento.setNomeEvento(rs.getString("nomeevento"));
+                oEvento.setValorEvento(rs.getDouble("valorevento"));
+                oEvento.setValorEventoPrazo(rs.getDouble("valorevento"));
+                oEvento.setDataInicioEvento(rs.getDate("datainicioevento"));
+                oEvento.setDataTerminoEvento(rs.getDate("dataterminoevento"));
+                oEvento.setInformacaoEvento(rs.getString("informacaoevento"));
+                oEvento.setSituacaoEvento(rs.getString("situacaoevento"));
+                oEvento.setSaldoCaixa(rs.getDouble("saldocaixa"));
+                oEvento.setSituacaoCaixa(rs.getString("situacaocaixa"));
+                oEvento.setImagem(rs.getString("imagem"));  
+                
+                CidadeDAO oCidadeDAO = new CidadeDAO();
+                oEvento.setCidade((Cidade) oCidadeDAO.carregar(rs.getInt("idcidade")));
+                
+                CursoDAO oCursoDAO = new CursoDAO();
+                oEvento.setCurso((Curso) oCursoDAO.carregar(rs.getInt("idcurso")));
+                
+                CategoriaEventoDAO oCategoriaEventoDAO = new CategoriaEventoDAO();
+                oEvento.setCategoriaEvento((CategoriaEvento) oCategoriaEventoDAO.carregar(rs.getInt("idcategoriaevento")));
+                
+                //Depois fazer o carregar de participantes e atividades daquele evento
+      
+            }
+            return oEvento;
+        } catch (Exception ex) {
+            System.out.println("Problemas ao carregar último Evento na DAO! Erro:" + ex.getMessage());
+            return false;
+        }
+    }
+     
     
     
     

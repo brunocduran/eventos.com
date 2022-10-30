@@ -5,10 +5,14 @@
  */
 package br.com.evento.controller.evento;
 
+import br.com.evento.dao.CategoriaEventoDAO;
 import br.com.evento.dao.CidadeDAO;
 import br.com.evento.dao.CursoDAO;
+import br.com.evento.dao.FuncaoDAO;
 import br.com.evento.dao.GenericDAO;
+import br.com.evento.dao.OrganizadorDAO;
 import br.com.evento.model.Cidade;
+import br.com.evento.model.Evento;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -37,12 +41,18 @@ public class EventoNovo extends HttpServlet {
             throws ServletException, IOException {        
         response.setContentType("text/html;charset=iso-8859-1");
         try{
+            Evento oEvento = new Evento();
+            request.setAttribute("evento", oEvento); //mandar o objeto de evento vazio
             GenericDAO oCidadedao = new CidadeDAO();
             request.setAttribute("cidades", oCidadedao.listar());
             GenericDAO oCursoDAO = new CursoDAO();
-            request.setAttribute("cursos", oCursoDAO.listar());
-            
-            //falta fazer o de CATEGORIAEVENTO
+            request.setAttribute("cursos", oCursoDAO.listar());            
+            GenericDAO oCategoriaEventoDAO = new CategoriaEventoDAO();
+            request.setAttribute("categoriaeventos", oCategoriaEventoDAO.listar());
+            GenericDAO oOrganizadorDAO = new OrganizadorDAO();
+            request.setAttribute("organizadores", oOrganizadorDAO.listar());
+            GenericDAO oFuncaoDAO = new FuncaoDAO();
+            request.setAttribute("funcoes", oFuncaoDAO.listar());
             
             request.getRequestDispatcher("painel/cadastros/evento/eventoCadastrar.jsp").forward(request, response);
         } catch(Exception ex){

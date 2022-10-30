@@ -154,26 +154,6 @@ where p.idpessoa = pr.idpessoa
 and pr.permitelogin = 'S'
 and pr.situacao = 'A';
 
-create table evento (
-	idevento serial primary key, 
-	nomeevento varchar(100),
-	valorevento numeric(15,2),
-	valoreventoprazo numeric(15,2),
-	datainicioevento date, 
-	dataterminoevento date,
-	informacaoevento varchar(1000),
-	situacaoevento char(1),
-	saldocaixa numeric(15,2),
-	situacaocaixa char(1),
-	imagem text,
-	idcidade integer, 
-	idcurso integer,
-	idcategoriaevento integer,
-	constraint fk_cidade_evento foreign key (idcidade) references cidade(idcidade),
-	constraint fk_curso_evento foreign key (idcurso) references curso(idcurso),
-	constraint fk_categoria_evento foreign key (idcategoriaevento) references categoriaevento(idcategoriaevento)	
-);
-
 create table categoriaevento(
 	idcategoriaevento serial primary key,
 	nome varchar(100),
