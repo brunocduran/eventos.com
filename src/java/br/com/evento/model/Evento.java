@@ -1,5 +1,6 @@
 package br.com.evento.model;
 import br.com.evento.utils.Conversao;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 /**
@@ -98,6 +99,11 @@ public class Evento {
     public Date getDataInicioEvento() {
         return dataInicioEvento;
     }
+    
+    public String getDataInicioEventoFormatada() {
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        return formato.format(dataInicioEvento);
+    }
 
     public void setDataInicioEvento(Date dataInicioEvento) {
         this.dataInicioEvento = dataInicioEvento;
@@ -105,6 +111,11 @@ public class Evento {
 
     public Date getDataTerminoEvento() {
         return dataTerminoEvento;
+    }
+    
+    public String getDataTerminoEventoFormatada() {
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        return formato.format(dataTerminoEvento);
     }
 
     public void setDataTerminoEvento(Date dataTerminoEvento) {

@@ -44,8 +44,6 @@
                                                 </div>
                                             </div>
                                             <div class="bs-stepper-content">
-                                                <!-- Dados Iniciais do produto 
-                                                -->
                                                 <div id="dadosproduto-part" class="content" role="tabpanel" aria-labelledby="dadosproduto-part-trigger">
                                                     <div class="card-body">
                                                         <div class="form-group">
@@ -79,21 +77,21 @@
                                                         </div>
                                                         <div class="form-group">
                                                             <div class="form-line row">
-                                                                 <div class="col-sm">
+                                                                <div class="col-sm">
                                                                     <label for="valorevento" id="labelvalorevento">Valor</label>
                                                                     <input class="form-control" style="text-align:right;"
                                                                            type="number" min="0" max="100" step=".01"
-                                                                            value="<fmt:formatNumber value='${evento.valorEvento}'/>"
+                                                                           value="<fmt:formatNumber value='${evento.valorEvento}'/>"
                                                                            id="valorevento" name="valorevento">
                                                                 </div>
-                                                               <div class="col-sm">
+                                                                <div class="col-sm">
                                                                     <label for="valoreventoprazo" id="labelvaloreventoprazo">Valor Prazo</label>
-                                                                  <input class="form-control" style="text-align:right;"
-                                                                         type="number" min="0" max="100" step=".01"
-                                                                            value="<fmt:formatNumber value='${evento.valorEventoPrazo}'/>"
+                                                                    <input class="form-control" style="text-align:right;"
+                                                                           type="number" min="0" max="100" step=".01"
+                                                                           value="<fmt:formatNumber value='${evento.valorEventoPrazo}'/>"
                                                                            id="valoreventoprazo" name="valoreventoprazo">
                                                                 </div>
-                                                                
+
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
@@ -127,9 +125,9 @@
                                                                     <label id="labelcategoriaevento" for="idcategoriaevento">Categoria</label>
                                                                     <select class="form-control" name="idcategoriaevento" id="idcategoriaevento" required>
                                                                         <option value="nulo">Selecione</option>
-                                                                        <c:forEach var="categoriaevento" items="${categoriaeventos}">
-                                                                            <option value="${categoriaevento.idCategoriaEvento}" ${evento.categoriaEvento.idCategoriaEvento == categoriaevento.idCategoriaEvento ? "selected" : ""}>
-                                                                                ${categoriaevento.nome}
+                                                                        <c:forEach var="categoriaEvento" items="${categoriaeventos}">
+                                                                            <option value="${categoriaEvento.idCategoriaEvento}" ${evento.categoriaEvento.idCategoriaEvento == categoriaEvento.idCategoriaEvento ? "selected" : ""}>
+                                                                                ${categoriaEvento.nome}
                                                                             </option>
                                                                         </c:forEach>
                                                                     </select>
@@ -144,7 +142,6 @@
                                                                               placeholder="Digite detalhes do evento"
                                                                               maxlength="500">${evento.informacaoEvento}</textarea>
                                                                 </div>
-
                                                             </div>
                                                         </div>
                                                         <div class="col">
@@ -152,10 +149,11 @@
                                                                 <div class="form-group">
                                                                     <center>
                                                                         <img alt="imagem" clas="img-thumbnail" src="${evento.imagem}"
-                                                                             name="target" id="target" width="170" height="200">
+                                                                             name="target" id="target" width="200" height="200">
                                                                         <br></br>
                                                                         <input type="file" id="gallery-photo-add"
                                                                                class="inputfile" onchange="uploadFile()"/>
+                                                                        Tamanho recomendado para imagem: 500 x 500 px<br>
                                                                         <label for="gallery-photo-add" class="btn btn-primary">
                                                                             <i class="nav-icon fas fa-file-upload"></i>
                                                                             Selecionar Foto
@@ -182,26 +180,26 @@
                                                                     <label for="idorganizaor" id="labelorganizador">Organizador</label>
                                                                     <div class="input-group input-group-mb-3">                                                                        
                                                                         <select class="form-control" name="idorganizador" id="idorganizador" required>
-                                                                        <option value="nulo">Selecione</option>
-                                                                        <c:forEach var="organizador" items="${organizadores}">
-                                                                            <option value="${organizador.idOrganizador}"}>
-                                                                                ${organizador.nomeRazaoPessoa}
-                                                                            </option>
-                                                                        </c:forEach>
-                                                                    </select>                                                                       
+                                                                            <option value="nulo">Selecione</option>
+                                                                            <c:forEach var="organizador" items="${organizadores}">
+                                                                                <option value="${organizador.idOrganizador}"}>
+                                                                                    ${organizador.nomeRazaoPessoa}
+                                                                                </option>
+                                                                            </c:forEach>
+                                                                        </select>                                                                       
                                                                     </div>
                                                                 </div>                                                                
                                                                 <div class="col-sm">
                                                                     <label for="funcoes" id="funcoes">Função</label>
                                                                     <div class="input-group input-group-mb-3">                                                                        
                                                                         <select class="form-control" name="idfuncao" id="idfuncao" required>
-                                                                        <option value="nulo">Selecione</option>
-                                                                        <c:forEach var="funcao" items="${funcoes}">
-                                                                            <option value="${funcao.idFuncao}"}>
-                                                                                ${funcao.descricao}
-                                                                            </option>
-                                                                        </c:forEach>
-                                                                    </select>
+                                                                            <option value="nulo">Selecione</option>
+                                                                            <c:forEach var="funcao" items="${funcoes}">
+                                                                                <option value="${funcao.idFuncao}"}>
+                                                                                    ${funcao.descricao}
+                                                                                </option>
+                                                                            </c:forEach>
+                                                                        </select>
                                                                         <span class="input-group-append">
                                                                             <button type="button" onclick="validarCamposOrganizador()"
                                                                                     class="btn btn-primary btn-flat" id="adicionarcodigobarraproduto">Adicionar</button>
@@ -231,116 +229,117 @@
                                                                 </div>
                                                             </div> 
                                                         </div>-->
-                                                        <div class="form-group"></div>
-                                                        <hr>
+                                                            <div class="form-group"></div>
+                                                            <hr>
+                                                            <div align="right">
+                                                                <button class="btn btn-primary" onclick="stepper.previous()"><i class="fa fa-arrow-left"></i> Voltar </button>
+                                                                <button class="btn btn-success" onclick="stepper.next()"> Salvar e continuar <i class="fa fa-arrow-right"></i></button>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <!-- Fim código de barras -->
+                                                <!-- Inicio fotos produto -->
+                                                <div id="atividades-part" class="content" role="tabpanel" aria-labelledby="atividades-part-trigger">
+                                                    <div class="card-body">
+                                                        <div class="form-group">
+
+                                                            <div class="form-line row">
+                                                                <input class="form-control" type="hidden" name="idatividadeevento" id="idatividadeevento"
+                                                                       value="{evento.idatividadeevento}" readonly="readonly">
+
+                                                                <div class="col-sm">
+                                                                    <label for="nomeatividade" id="labelnomeatividade">Nome Atividade</label>
+                                                                    <input type="text" class="form-control" maxlength="100" value=""
+                                                                           id="nomeatividade" name="nomeatividade" placeholder="Digite o nome da atividade">
+                                                                </div>
+                                                                <div class="col-sm">
+                                                                    <label for="datainicioevento" id="labeldatainicioevento">Data Início</label>
+                                                                    <input class="form-control" type="date" name="datainicioevento" id="datainicioevento" value=""
+                                                                           maxLength="8" />
+                                                                </div>
+                                                                <div class="col-sm">
+                                                                    <label for="dataterminoevento" id="labeldataterminoevento">Data Término</label>
+                                                                    <input class="form-control" type="date" name="dataterminoevento" value=""
+                                                                           id="dataterminoevento" maxLength="5" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="form-line row">
+                                                                <div class="col-sm">
+
+                                                                    <label id="labeltipoatividade" for="idtipoatividade">Tipo Atividade</label>
+                                                                    <select class="form-control" id="idtipoatividade" name="idtipoatividade">
+                                                                        <option id="0" value="0">Selecione o tipo atividade</option>
+                                                                        {loop="tiposatividades"}
+                                                                        <option id="${value.idtipoatividade}" value="${value.idcidade}" 
+                                                                                {if="$value.idcidade == $evento.idcidade"} selected {/if}>
+                                                                            ${value.nomemarca}
+                                                                        </option>
+                                                                        {/loop}
+                                                                    </select>
+                                                                </div>
+
+                                                                <div class="col-sm">
+                                                                    <label for="cargahoraria" id="labelcargahoraria">Carga Horária</label>
+                                                                    <input type="text" class="form-control" maxlength="100" value=""
+                                                                           id="cargahoraria" name="cargahoraria" placeholder="00">
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="form-line row">                    
+                                                                <div class="col-sm">
+                                                                    <label for="resumo" id="labelreumo">Resumo</label>
+                                                                    <textarea class="form-control" id="resumo" name="resumo" rows="3"
+                                                                              placeholder="Digite detalhes da atividade"
+                                                                              maxlength="500"></textarea>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div align="right">
+                                                            <button class="btn btn-primary" onclick="adcDivAtividadeEvento()">Adicionar</button>
+                                                        </div>
+
+                                                        <hr>    
+
+                                                        <div id="espacoaddatividadeevento">
+                                                            <!--Configurar loop-->
+                                                            <div class="input-group input-group-mb-3">
+                                                                <input type="text" class="form-control" id="${value.idatividadeevento}"
+                                                                       value="${value.nomeatividadeevento}" disabled />
+                                                                <span class="input-group-append">
+                                                                    <button type="button" onclick="deletar(${value.idatividadeevento})"
+                                                                            class="btn btn-danger btn-flat">Remover</button>
+                                                                </span>
+                                                            </div>
+
+                                                        </div>
+                                                        <hr>                  
                                                         <div align="right">
                                                             <button class="btn btn-primary" onclick="stepper.previous()"><i class="fa fa-arrow-left"></i> Voltar </button>
-                                                            <button class="btn btn-success" onclick="stepper.next()"> Salvar e continuar <i class="fa fa-arrow-right"></i></button>
+                                                            <a class="btn btn-success" href="/painel/produto">Finalizar</a>
                                                         </div>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                            <!-- Fim código de barras -->
-                                            <!-- Inicio fotos produto -->
-                                            <div id="atividades-part" class="content" role="tabpanel" aria-labelledby="atividades-part-trigger">
-                                                <div class="card-body">
-                                                    <div class="form-group">
-
-                                                        <div class="form-line row">
-                                                            <input class="form-control" type="hidden" name="idatividadeevento" id="idatividadeevento"
-                                                                   value="{evento.idatividadeevento}" readonly="readonly">
-
-                                                            <div class="col-sm">
-                                                                <label for="nomeatividade" id="labelnomeatividade">Nome Atividade</label>
-                                                                <input type="text" class="form-control" maxlength="100" value=""
-                                                                       id="nomeatividade" name="nomeatividade" placeholder="Digite o nome da atividade">
-                                                            </div>
-                                                            <div class="col-sm">
-                                                                <label for="datainicioevento" id="labeldatainicioevento">Data Início</label>
-                                                                <input class="form-control" type="date" name="datainicioevento" id="datainicioevento" value=""
-                                                                       maxLength="8" />
-                                                            </div>
-                                                            <div class="col-sm">
-                                                                <label for="dataterminoevento" id="labeldataterminoevento">Data Término</label>
-                                                                <input class="form-control" type="date" name="dataterminoevento" value=""
-                                                                       id="dataterminoevento" maxLength="5" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <div class="form-line row">
-                                                            <div class="col-sm">
-
-                                                                <label id="labeltipoatividade" for="idtipoatividade">Tipo Atividade</label>
-                                                                <select class="form-control" id="idtipoatividade" name="idtipoatividade">
-                                                                    <option id="0" value="0">Selecione o tipo atividade</option>
-                                                                    {loop="tiposatividades"}
-                                                                    <option id="${value.idtipoatividade}" value="${value.idcidade}" 
-                                                                            {if="$value.idcidade == $evento.idcidade"} selected {/if}>
-                                                                        ${value.nomemarca}
-                                                                    </option>
-                                                                    {/loop}
-                                                                </select>
-                                                            </div>
-
-                                                            <div class="col-sm">
-                                                                <label for="cargahoraria" id="labelcargahoraria">Carga Horária</label>
-                                                                <input type="text" class="form-control" maxlength="100" value=""
-                                                                       id="cargahoraria" name="cargahoraria" placeholder="00">
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <div class="form-line row">                    
-                                                            <div class="col-sm">
-                                                                <label for="resumo" id="labelreumo">Resumo</label>
-                                                                <textarea class="form-control" id="resumo" name="resumo" rows="3"
-                                                                          placeholder="Digite detalhes da atividade"
-                                                                          maxlength="500"></textarea>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div align="right">
-                                                        <button class="btn btn-primary" onclick="adcDivAtividadeEvento()">Adicionar</button>
-                                                    </div>
-
-                                                    <hr>    
-
-                                                    <div id="espacoaddatividadeevento">
-                                                        <!--Configurar loop-->
-                                                        <div class="input-group input-group-mb-3">
-                                                            <input type="text" class="form-control" id="${value.idatividadeevento}"
-                                                                   value="${value.nomeatividadeevento}" disabled />
-                                                            <span class="input-group-append">
-                                                                <button type="button" onclick="deletar(${value.idatividadeevento})"
-                                                                        class="btn btn-danger btn-flat">Remover</button>
-                                                            </span>
-                                                        </div>
-
-                                                    </div>
-                                                    <hr>                  
-                                                    <div align="right">
-                                                        <button class="btn btn-primary" onclick="stepper.previous()"><i class="fa fa-arrow-left"></i> Voltar </button>
-                                                        <a class="btn btn-success" href="/painel/produto">Finalizar</a>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <!-- Fim fotos produto -->
+                                                <!-- Fim fotos produto -->
 
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                                <!-- /.card -->
                             </div>
-                            <!-- /.card -->
                         </div>
+                        <!-- /.row -->
+
                     </div>
                     <!-- /.row -->
-
                 </div>
-                <!-- /.row -->
             </div>
         </div>
     </div>
@@ -426,7 +425,7 @@
                 timer: 2000
             });
             $("#idcidade").focus();
-        }else if (document.getElementById("idcategoriaevento").value == 'nulo') {
+        } else if (document.getElementById("idcategoriaevento").value == 'nulo') {
             Swal.fire({
                 position: 'center',
                 icon: 'error',
@@ -437,11 +436,11 @@
             $("#idcidade").focus();
         } else {
             gravarDados();
-            
-        }  
+
+        }
     }
-    
-    
+
+
     function validarCamposOrganizador() {
         if (document.getElementById("idorganizador").value == 'nulo') {
             Swal.fire({
@@ -463,11 +462,11 @@
             $("#idcidade").focus();
         } else {
             gravarDadosOrganizador();
-            
-        }  
+
+        }
     }
-    
-    
+
+
     function gravarDadosOrganizador() {
         console.log("Gravando dados organizador....");
         $.ajax({
@@ -483,9 +482,9 @@
                         console.log("resposta servlet->");
                         console.log(data);
                         if (data == 1) {
-                           //ver o que vai fazer aqui
-                           adcDivOrganizador();
-                            
+                            //ver o que vai fazer aqui
+                            adcDivOrganizador();
+
                             stepper.next();
                         } else {
                             Swal.fire({
@@ -504,9 +503,9 @@
                     }
         });
     }
-    
-    
-        function gravarDados() {
+
+
+    function gravarDados() {
         console.log("Gravando dados....");
         var target = document.getElementById("target").src;
         console.log("Situacao caixa: " + $('#situacaocaixa').val());
@@ -524,10 +523,10 @@
                 saldoCaixa: $('#saldocaixa').val(),
                 situacaoCaixa: $('#situacaocaixa').val(),
                 imagem: target,
-                idCidade: $('#idcidade').val(), 
-                idCurso: $('#idcurso').val(), 
-                idCategoriaEvento: $('#idcategoriaevento').val(), 
-                informacaoEvento : $('#informacaoevento').val()
+                idCidade: $('#idcidade').val(),
+                idCurso: $('#idcurso').val(),
+                idCategoriaEvento: $('#idcategoriaevento').val(),
+                informacaoEvento: $('#informacaoevento').val()
             },
             success:
                     function (data) {
@@ -535,9 +534,9 @@
                         //console.log(data);
                         var jSon = JSON.parse(data);
                         var id = jSon.idEvento;
-                        console.log("Testeeee: "+id);
+                        console.log("Testeeee: " + id);
                         if (id > 0) {
-                          //ver o que vai fazer aqui
+                            //ver o que vai fazer aqui
                             $('#idevento').val(id);
                             stepper.next();
                         } else {
@@ -588,12 +587,12 @@
     }
 
     $(document).ready(function () {
-        
-        
-        
-        
-        
-        
+
+
+
+
+
+
         menuAtivo();
     });
 
