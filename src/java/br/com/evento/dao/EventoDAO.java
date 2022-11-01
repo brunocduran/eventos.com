@@ -182,8 +182,8 @@ public class EventoDAO implements GenericDAO {
                 oEvento.setCategoriaEvento((CategoriaEvento) oCategoriaEventoDAO.carregar(rs.getInt("idcategoriaevento")));
 
                 //Depois fazer o carregar de participantes e atividades daquele evento
-                OrganizadorEventoDAO oOrganizadorEventoDAO  = new OrganizadorEventoDAO(); 
-                oEvento.setOrganizadores(oOrganizadorEventoDAO.listarOrganizadorEvento(rs.getInt("idevento")));
+               // OrganizadorEventoDAO oOrganizadorEventoDAO  = new OrganizadorEventoDAO(); 
+                //oEvento.setOrganizadores(oOrganizadorEventoDAO.listarOrganizadorEvento(rs.getInt("idevento")));
                 
             }
             return oEvento;
@@ -399,6 +399,8 @@ public class EventoDAO implements GenericDAO {
                 oEvento.setCategoriaEvento((CategoriaEvento) oCategoriaEventoDAO.carregar(rs.getInt("idcategoriaevento")));
 
                 //Depois fazer o carregar de participantes e atividades daquele evento
+                 OrganizadorEventoDAO oOrganizadorEventoDAO  = new OrganizadorEventoDAO(); 
+                oEvento.setOrganizadores(oOrganizadorEventoDAO.listarOrganizadorEvento(rs.getInt("idevento")));
             }
             return oEvento;
         } catch (Exception ex) {

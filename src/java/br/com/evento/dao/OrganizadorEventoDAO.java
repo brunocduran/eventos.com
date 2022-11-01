@@ -186,14 +186,17 @@ public class OrganizadorEventoDAO {
             stmt.setInt(1, idEventoParametro);
             rs=stmt.executeQuery();
             while(rs.next()){
+                
                 Evento oEvento = null;
-                 try{
-                    EventoDAO oEventoDAO = new EventoDAO();
-                    int idEvento = rs.getInt("idevento");
-                    oEvento = (Evento) oEventoDAO.carregar(idEvento);
-                }catch(Exception ex){
-                    System.out.println("Problemas ao carregar evento no OrganizadorDAO! Erro:"+ex.getMessage());
-                }                 
+                oEvento.setIdEvento(idEventoParametro);
+              //   try{
+                //    EventoDAO oEventoDAO = new EventoDAO();
+                  //  int idEvento = rs.getInt("idevento");
+                   // oEvento = (Evento) oEventoDAO.carregar(idEvento);
+               // }catch(Exception ex){
+               //     System.out.println("Problemas ao carregar evento no OrganizadorDAO! Erro:"+ex.getMessage());
+                //}  
+                 
                  Organizador oOrganizador = null;
                  try{
                     OrganizadorDAO oOrganizadorDAO = new OrganizadorDAO();

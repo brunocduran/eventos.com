@@ -177,7 +177,11 @@
                                                         <div class="form-group">
                                                             <div class="form-line row">
                                                                 <div class="col-sm">
-                                                                    <label for="idorganizaor" id="labelorganizador">Organizador</label>
+                                                                    <input class="form-control" 
+                                                                       type="hidden"
+                                                                       name="idorganizadorevento" id="idorganizadorevento"
+                                                                       value="0" readonly="readonly">
+                                                                    <label for="idorganizador" id="labelorganizador">Organizador</label>
                                                                     <div class="input-group input-group-mb-3">                                                                        
                                                                         <select class="form-control" name="idorganizador" id="idorganizador" required>
                                                                             <option value="nulo">Selecione</option>
@@ -190,7 +194,7 @@
                                                                     </div>
                                                                 </div>                                                                
                                                                 <div class="col-sm">
-                                                                    <label for="funcoes" id="funcoes">Função</label>
+                                                                    <label for="iffuncao" id="funcoes">Função</label>
                                                                     <div class="input-group input-group-mb-3">                                                                        
                                                                         <select class="form-control" name="idfuncao" id="idfuncao" required>
                                                                             <option value="nulo">Selecione</option>
@@ -467,34 +471,47 @@
     }
 
 
-    function gravarDadosOrganizador() {
-        console.log("Gravando dados organizador....");
+    function gravarDadosOrganizador() {    
+        
         $.ajax({
             type: 'post',
             url: 'OrganizadorEventoCadastrar',
             data: {
+                idOrganizadorEvento: $('#idorganizadorevento').val(),
                 idEvento: $('#idevento').val(),
                 idOrganizador: $('#idorganizador').val(),
-                idFuncao: $('#ifduncao').val()
+                idFuncao: $('#idfuncao').val()
             },
             success:
                     function (data) {
-                        console.log("resposta servlet->");
-                        console.log(data);
-                        if (data == 1) {
-                            //ver o que vai fazer aqui
-                            adcDivOrganizador();
-
-                            stepper.next();
-                        } else {
+                       // console.log("resposta servlet->");
+                       // console.log(data);
+                        if (data == 0) {
                             Swal.fire({
                                 position: 'center',
                                 icon: 'error',
                                 title: 'Erro',
-                                text: 'Não foi possível gravar o Evento!',
+                                text: 'Não foi possível gravar o Organizador do Evento!',
                                 showConfirmButton: false,
                                 timer: 1000
                             })
+                        } else {
+                            var jSon = JSON.parse(data);                           
+                            console.log("JSON ORGANIZADOR " + data);
+                            var id = jSon.idOrganizadorEvento;
+                            if (id > 0) {                                
+                                var nomeOrganizador = jSon.organizador.nomeRazaoPessoa + " - " + jSon.funcao.descricao;
+                                adcDivOrganizador(id,nomeOrganizador);
+                            } else {
+                                Swal.fire({
+                                position: 'center',
+                                icon: 'error',
+                                title: 'Erro',
+                                text: 'Não foi possível gravar o Organizador do Evento!',
+                                showConfirmButton: false,
+                                timer: 1000
+                            })
+                            }
                         }
                     },
             error:
@@ -587,79 +604,94 @@
     }
 
     $(document).ready(function () {
-
-
-
-
-
-
         menuAtivo();
     });
 
 
     //ADCIONAR ORGANIZADOR#############################################################################################################
-    function adcDivOrganizador(idorganizador, nomeOrganizador) {
-        var html = '<div id="divOrg_123">'//alterar para o id do organizador
+    function adcDivOrganizador(idOrganizadorEvento, nomeOrganizador) {
+        var html = '<div id="divOrg_'+idOrganizadorEvento+'">'//alterar para o id do organizador
                 + '<div class="form-group"></div><div class="form-line row">'
                 + '<div class="col-sm">'
                 + '<div class="input-group input-group-mb-3">'
-                + '<input type="text" class="form-control" id="divOrg_123" value="Organizador" disabled/>'//alterar o id e value
+                + '<input type="text" class="form-control" id="nomeOrg_'+idOrganizadorEvento+'" value="'+nomeOrganizador+'" disabled/>'//alterar o id e value
                 + '<span class="input-group-append">'
-                + '<button type="button" onclick="deletarOrganizador(' + 123 + ')" class="btn btn-danger btn-flat">Remover</button>'//alterar o valor do deletar
+                + '<button type="button" onclick="deletarOrganizador(' + idOrganizadorEvento + ')" class="btn btn-danger btn-flat">Remover</button>'//alterar o valor do deletar
                 + '</span></div></div></div> '
                 + '</div>';
         $("#espacoaddorganizador").append(html);
     }
 
-    function deletarOrganizador(idorganizador) {
-        /*var url = window.location.pathname.substring(0, window.location.pathname.indexOf("/", 2)) + "/codigobarraproduto";
-         var dados = "idcodigobarraproduto=" + idcodigobarraproduto;
-         
-         Swal.fire({
-         title: 'Você tem certeza?',
-         text: 'Deseja retirar o organizador do evento?',
-         icon: 'warning',
-         showCancelButton: true,
-         confirmButtonColor: '#3085d6',
-         cancelButtonColor: '#d33',
-         confirmButtonText: 'Sim',
-         cancelButtonText: 'Cancelar'
-         }).then((result) => {
-         if (result.isConfirmed) {
-         $.ajax({
-         asyc: false,
-         type: "POST",
-         url: url + "/deletar",
-         data: dados,
-         dataType: "json",
-         error: function (xhr) {
-         Swal.fire({
-         position: 'center',
-         icon: 'error',
-         title: 'Erro',
-         text: 'Não foi possível excluir o codigo de barras do produto!',
-         showConfirmButton: true,
-         timer: 10000
-         }).then(function () {
-         window.location.href = url;
-         })
-         },
-         success: function (data) {
-         if (data.resultado == 'ok') {
-         removeLinhaCodBarraHTML(idcodigobarraproduto);
-         }
-         }
-         });
-         
-         }
-         ;
-         });*/
+    function deletarOrganizador(idorganizadorevento) {
+        var id = idorganizadorevento;
+        console.log(idorganizadorevento);
 
-        removeLinhaOrganizadorHTML(idorganizador);
+        var titulo = "";
+        var tituloConfirmacao = "";
+        var confirmButtonText = "";
+
+        titulo = "Você deseja realmente excluir o Organizador?";
+        confirmButtonText = "Sim, exclua o Organizador!";
+        tituloConfirmacao = "Organizador excluido com sucesso!";
+
+        Swal.fire({
+            title: 'Você tem certeza?',
+            text: titulo,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: confirmButtonText,
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: 'post',
+                    url: '${pageContext.request.contextPath}/OrganizadorEventoExcluir',
+                    data: {
+                        idOrganizadorEvento: id
+                    },
+                    success:
+                            function (data) {
+                                if (data == 1) {
+                                    Swal.fire({
+                                        position: 'center',
+                                        icon: 'success',
+                                        title: 'Sucesso',
+                                        text: tituloConfirmacao,
+                                        showConfirmButton: true,
+                                        timer: 10000
+                                    }).then(function () {
+                                       // window.location.href = "${pageContext.request.contextPath}/FuncaoListar";
+                                       removeLinhaOrganizadorHTML(idorganizadorevento);
+                                    })
+                                } else {
+                                    Swal.fire({
+                                        position: 'center',
+                                        icon: 'error',
+                                        title: 'Erro',
+                                        text: 'Não foi possível excluir o Organizador!',
+                                        showConfirmButton: true,
+                                        timer: 10000
+                                    }).then(function () {
+                                       // window.location.href = "${pageContext.request.contextPath}/FuncaoListar";
+                                    })
+                                }
+                            },
+                    error:
+                            function (data) {
+                                window.location.href = "${pageContext.request.contextPath}/FuncaoListar";
+                            }
+                });
+            }
+            ;
+        });
+
+        
     }
 
-    function removeLinhaOrganizadorHTML(idcodigobarraproduto) {
-        var id = "divOrg_" + idcodigobarraproduto;
+    function removeLinhaOrganizadorHTML(idorganizadorevento) {
+        var id = "divOrg_" + idorganizadorevento;
         // Removendo um nó a partir do pai
         var node = document.getElementById(id);
         if (node.parentNode) {
@@ -670,7 +702,7 @@
 
     //ADCIONAR ATIVIDADE EVENTO########################################################################################################
     function adcDivAtividadeEvento(idatividadeevento, nomeAtividadeEvento) {
-        var html = '<div id="divAtv_123">'//alterar para o id da atividade evento
+        var html = '<div id="divAtv_'+idatividadeevento+'">'//alterar para o id da atividade evento
                 + '<div class="form-group"></div><div class="form-line row">'
                 + '<div class="col-sm">'
                 + '<div class="input-group input-group-mb-3">'
@@ -680,6 +712,24 @@
                 + '</span></div></div></div> '
                 + '</div>';
         $("#espacoaddatividadeevento").append(html);
+    }
+    
+     function setDadosOrganizador(valor) {
+         // PAREI NESSA PARTE AQUI 
+        /*limparDadosModal();
+        document.getElementById('idfuncao').value = valor;
+        var idFuncao = valor;
+        if (idFuncao != "0") {
+            $.getJSON('OrganizadorEventoCarregar', {idOrganizadorEvento: idFuncao}, function (respostaServlet) {
+                console.log(respostaServlet);
+                var id = respostaServlet.idOrganizadorEvento;
+                if (id != "0") {
+                    $('#idfuncao').val(respostaServlet.idFuncao);
+                    $('#descricao').val(respostaServlet.descricao);
+                    $('#situacao').val(respostaServlet.situacao);
+                }
+            });
+        }*/
     }
 
     function deletarAtividadeEvento(idatividadeevento) {

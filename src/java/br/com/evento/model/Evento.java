@@ -191,8 +191,17 @@ public class Evento {
     public void setAtividadesEvento(List<AtividadeEvento> atividadesEvento) {
         this.atividadesEvento = atividadesEvento;
     }
+    
+    public String getDataInicioEventoFormatada() {
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        return formato.format(dataInicioEvento);
+    }
+    
+    public String getDataTerminoEventoFormatada() {
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        return formato.format(dataTerminoEvento);
+    }
 
-   
 
 }
     
