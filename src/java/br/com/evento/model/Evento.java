@@ -22,7 +22,7 @@ public class Evento {
     private Cidade cidade;
     private Curso curso;
     private CategoriaEvento categoriaEvento;
-    private List<Organizador> organizadores;
+    private List<OrganizadorEvento> organizadores;
     private List<AtividadeEvento> atividadesEvento;
 
     public Evento() {
@@ -45,7 +45,7 @@ public class Evento {
         
     }
 
-    public Evento(int idEvento, String nomeEvento, Double valorEvento, Double valorEventoPrazo, Date dataInicioEvento, Date dataTerminoEvento, String informacaoEvento, String situacaoEvento, String situacaoCaixa, Double saldoCaixa, String imagem, Cidade cidade, Curso curso, CategoriaEvento categoriaEvento, List<Organizador> organizadores, List<AtividadeEvento> atividadesEvento) {
+    public Evento(int idEvento, String nomeEvento, Double valorEvento, Double valorEventoPrazo, Date dataInicioEvento, Date dataTerminoEvento, String informacaoEvento, String situacaoEvento, String situacaoCaixa, Double saldoCaixa, String imagem, Cidade cidade, Curso curso, CategoriaEvento categoriaEvento, List<OrganizadorEvento> organizadores, List<AtividadeEvento> atividadesEvento) {
         this.idEvento = idEvento;
         this.nomeEvento = nomeEvento;
         this.valorEvento = valorEvento;
@@ -99,11 +99,6 @@ public class Evento {
     public Date getDataInicioEvento() {
         return dataInicioEvento;
     }
-    
-    public String getDataInicioEventoFormatada() {
-        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-        return formato.format(dataInicioEvento);
-    }
 
     public void setDataInicioEvento(Date dataInicioEvento) {
         this.dataInicioEvento = dataInicioEvento;
@@ -111,11 +106,6 @@ public class Evento {
 
     public Date getDataTerminoEvento() {
         return dataTerminoEvento;
-    }
-    
-    public String getDataTerminoEventoFormatada() {
-        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-        return formato.format(dataTerminoEvento);
     }
 
     public void setDataTerminoEvento(Date dataTerminoEvento) {
@@ -186,11 +176,11 @@ public class Evento {
         this.categoriaEvento = categoriaEvento;
     }
 
-    public List<Organizador> getOrganizadores() {
+    public List<OrganizadorEvento> getOrganizadores() {
         return organizadores;
     }
 
-    public void setOrganizadores(List<Organizador> organizadores) {
+    public void setOrganizadores(List<OrganizadorEvento> organizadores) {
         this.organizadores = organizadores;
     }
 
@@ -201,6 +191,8 @@ public class Evento {
     public void setAtividadesEvento(List<AtividadeEvento> atividadesEvento) {
         this.atividadesEvento = atividadesEvento;
     }
+
+   
 
 }
     

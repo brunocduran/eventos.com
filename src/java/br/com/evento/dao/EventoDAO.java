@@ -9,6 +9,7 @@ import br.com.evento.model.CategoriaEvento;
 import br.com.evento.model.Cidade;
 import br.com.evento.model.Curso;
 import br.com.evento.model.Evento;
+import br.com.evento.model.OrganizadorEvento;
 import br.com.evento.utils.SingleConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -181,6 +182,9 @@ public class EventoDAO implements GenericDAO {
                 oEvento.setCategoriaEvento((CategoriaEvento) oCategoriaEventoDAO.carregar(rs.getInt("idcategoriaevento")));
 
                 //Depois fazer o carregar de participantes e atividades daquele evento
+                OrganizadorEventoDAO oOrganizadorEventoDAO  = new OrganizadorEventoDAO(); 
+                oEvento.setOrganizadores(oOrganizadorEventoDAO.listarOrganizadorEvento(rs.getInt("idevento")));
+                
             }
             return oEvento;
         } catch (Exception ex) {
