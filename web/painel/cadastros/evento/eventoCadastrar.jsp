@@ -174,13 +174,14 @@
                                                 <!-- Inicio organizadores -->
                                                 <div id="organizadores-part" class="content" role="tabpanel" aria-labelledby="organizadores-part-trigger">
                                                     <div class="card-body">
-                                                        <div class="form-group">
+                                                        <div class="form-group">                                                            
                                                             <div class="form-line row">
                                                                 <div class="col-sm">
+
                                                                     <input class="form-control" 
-                                                                       type="hidden"
-                                                                       name="idorganizadorevento" id="idorganizadorevento"
-                                                                       value="0" readonly="readonly">
+                                                                           type="hidden"
+                                                                           name="idorganizadorevento" id="idorganizadorevento"
+                                                                           value="0" readonly="readonly">
                                                                     <label for="idorganizador" id="labelorganizador">Organizador</label>
                                                                     <div class="input-group input-group-mb-3">                                                                        
                                                                         <select class="form-control" name="idorganizador" id="idorganizador" required>
@@ -194,7 +195,7 @@
                                                                     </div>
                                                                 </div>                                                                
                                                                 <div class="col-sm">
-                                                                    <label for="iffuncao" id="funcoes">Função</label>
+                                                                    <label for="idfuncao" id="labelfuncao">Função</label>
                                                                     <div class="input-group input-group-mb-3">                                                                        
                                                                         <select class="form-control" name="idfuncao" id="idfuncao" required>
                                                                             <option value="nulo">Selecione</option>
@@ -206,7 +207,7 @@
                                                                         </select>
                                                                         <span class="input-group-append">
                                                                             <button type="button" onclick="validarCamposOrganizador()"
-                                                                                    class="btn btn-primary btn-flat" id="adicionarcodigobarraproduto">Adicionar</button>
+                                                                                    class="btn btn-primary btn-flat" id="btnadicionarorganizador">Adicionar</button>
                                                                         </span>
                                                                     </div>
                                                                 </div>
@@ -214,32 +215,18 @@
                                                         </div>
                                                         <hr>
                                                         <div id="espacoaddorganizador">
+                                                            <!-- falta fazer o loop para trazer os organizadores ao carregar-->
 
-                                                            <!-- Loop dos códigos de barras já cadastrados
 
-                                                            <div id="div_${value.idorganizadorevento}">
-                                                                <div class="form-group"></div>
-                                                                <div class="form-line row">
-                                                                    <div class="col-sm">
-                                                                        <div class="input-group input-group-mb-3">
-                                                                            <input type="text" class="form-control" id="${value.idorganizadorevento}"
-                                                                                   value="${value.nomeorganizador}" disabled />
-                                                                            <span class="input-group-append">
-                                                                                <button type="button" onclick="deletar(${value.idorganizadorevento})"
-                                                                                        class="btn btn-danger btn-flat">Remover</button>
-                                                                            </span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div> 
-                                                        </div>-->
-                                                            <div class="form-group"></div>
-                                                            <hr>
-                                                            <div align="right">
-                                                                <button class="btn btn-primary" onclick="stepper.previous()"><i class="fa fa-arrow-left"></i> Voltar </button>
-                                                                <button class="btn btn-success" onclick="stepper.next()"> Salvar e continuar <i class="fa fa-arrow-right"></i></button>
-                                                            </div>
+
                                                         </div>
+                                                        <div class="form-group"></div>
+                                                        <hr>
+                                                        <div align="right">
+                                                            <button class="btn btn-primary" onclick="stepper.previous()"><i class="fa fa-arrow-left"></i> Voltar </button>
+                                                            <button class="btn btn-success" onclick="stepper.next()"> Salvar e continuar <i class="fa fa-arrow-right"></i></button>
+                                                        </div>
+
 
                                                     </div>
                                                 </div>
@@ -382,7 +369,17 @@
         window.stepper = new Stepper(document.querySelector('.bs-stepper'))
     });
 
+    function menuAtivo() {
+        document.getElementById('titulopainel').innerHTML = "<strong>Evento</strong>";
+        document.getElementById('menuevento').classList.add("active");
+    }
 
+    $(document).ready(function () {
+        menuAtivo();
+    });
+
+
+    // INICIO DA PARTE DE EVENTO
     function validarCamposEvento() {
         if (document.getElementById("nomeevento").value == '') {
             Swal.fire({
@@ -444,84 +441,6 @@
         }
     }
 
-
-    function validarCamposOrganizador() {
-        if (document.getElementById("idorganizador").value == 'nulo') {
-            Swal.fire({
-                position: 'center',
-                icon: 'error',
-                title: 'Verifique o organizador!',
-                showConfirmButton: true,
-                timer: 2000
-            });
-            $("#idcidade").focus();
-        } else if (document.getElementById("idfuncao").value == 'nulo') {
-            Swal.fire({
-                position: 'center',
-                icon: 'error',
-                title: 'Verifique a funcao!',
-                showConfirmButton: true,
-                timer: 2000
-            });
-            $("#idcidade").focus();
-        } else {
-            gravarDadosOrganizador();
-
-        }
-    }
-
-
-    function gravarDadosOrganizador() {    
-        
-        $.ajax({
-            type: 'post',
-            url: 'OrganizadorEventoCadastrar',
-            data: {
-                idOrganizadorEvento: $('#idorganizadorevento').val(),
-                idEvento: $('#idevento').val(),
-                idOrganizador: $('#idorganizador').val(),
-                idFuncao: $('#idfuncao').val()
-            },
-            success:
-                    function (data) {
-                       // console.log("resposta servlet->");
-                       // console.log(data);
-                        if (data == 0) {
-                            Swal.fire({
-                                position: 'center',
-                                icon: 'error',
-                                title: 'Erro',
-                                text: 'Não foi possível gravar o Organizador do Evento!',
-                                showConfirmButton: false,
-                                timer: 1000
-                            })
-                        } else {
-                            var jSon = JSON.parse(data);                           
-                            console.log("JSON ORGANIZADOR " + data);
-                            var id = jSon.idOrganizadorEvento;
-                            if (id > 0) {                                
-                                var nomeOrganizador = jSon.organizador.nomeRazaoPessoa + " - " + jSon.funcao.descricao;
-                                adcDivOrganizador(id,nomeOrganizador);
-                            } else {
-                                Swal.fire({
-                                position: 'center',
-                                icon: 'error',
-                                title: 'Erro',
-                                text: 'Não foi possível gravar o Organizador do Evento!',
-                                showConfirmButton: false,
-                                timer: 1000
-                            })
-                            }
-                        }
-                    },
-            error:
-                    function (data) {
-                        //window.location.href = "${pageContext.request.contextPath}/InstituicaoListar";
-                    }
-        });
-    }
-
-
     function gravarDados() {
         console.log("Gravando dados....");
         var target = document.getElementById("target").src;
@@ -574,7 +493,6 @@
         });
     }
 
-
     function uploadFile() {
         // pega o documento html da pagina
         var target = document.getElementById("target");
@@ -597,26 +515,94 @@
         }
 
     }
+    // FIM DA PARTE DE EVENTO
 
-    function menuAtivo() {
-        document.getElementById('titulopainel').innerHTML = "<strong>Evento</strong>";
-        document.getElementById('menuevento').classList.add("active");
+
+    // INICIO DA PARTE DE ORGANIZADOR EVENTO
+    function validarCamposOrganizador() {
+        if (document.getElementById("idorganizador").value == 'nulo') {
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Verifique o organizador!',
+                showConfirmButton: true,
+                timer: 2000
+            });
+            $("#idcidade").focus();
+        } else if (document.getElementById("idfuncao").value == 'nulo') {
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Verifique a funcao!',
+                showConfirmButton: true,
+                timer: 2000
+            });
+            $("#idcidade").focus();
+        } else {
+            gravarDadosOrganizador();
+
+        }
     }
 
-    $(document).ready(function () {
-        menuAtivo();
-    });
+    function gravarDadosOrganizador() {
+        $.ajax({
+            type: 'post',
+            url: 'OrganizadorEventoCadastrar',
+            data: {
+                idOrganizadorEvento: $('#idorganizadorevento').val(),
+                idEvento: $('#idevento').val(),
+                idOrganizador: $('#idorganizador').val(),
+                idFuncao: $('#idfuncao').val()
+            },
+            success:
+                    function (data) {
+                        // console.log("resposta servlet->");
+                        // console.log(data);
+                        if (data == 0) {
+                            Swal.fire({
+                                position: 'center',
+                                icon: 'error',
+                                title: 'Erro',
+                                text: 'Não foi possível gravar o Organizador do Evento!',
+                                showConfirmButton: false,
+                                timer: 1000
+                            })
+                        } else {
+                            var jSon = JSON.parse(data);
+                            console.log("JSON ORGANIZADOR " + data);
+                            var id = jSon.idOrganizadorEvento;
+                            if (id > 0) {
+                                var nomeOrganizador = jSon.organizador.nomeRazaoPessoa + " - " + jSon.funcao.descricao;
+                                adcDivOrganizador(id, nomeOrganizador);
+                                limparDadosOrganizador();
+                            } else {
+                                Swal.fire({
+                                    position: 'center',
+                                    icon: 'error',
+                                    title: 'Erro',
+                                    text: 'Não foi possível gravar o Organizador do Evento!',
+                                    showConfirmButton: false,
+                                    timer: 1000
+                                })
+                            }
+                        }
+                    },
+            error:
+                    function (data) {
+                        //window.location.href = "${pageContext.request.contextPath}/InstituicaoListar";
+                    }
+        });
+    }
 
-
-    //ADCIONAR ORGANIZADOR#############################################################################################################
     function adcDivOrganizador(idOrganizadorEvento, nomeOrganizador) {
-        var html = '<div id="divOrg_'+idOrganizadorEvento+'">'//alterar para o id do organizador
+        var html = '<div id="divOrg_' + idOrganizadorEvento + '">'//alterar para o id do organizador
                 + '<div class="form-group"></div><div class="form-line row">'
                 + '<div class="col-sm">'
                 + '<div class="input-group input-group-mb-3">'
-                + '<input type="text" class="form-control" id="nomeOrg_'+idOrganizadorEvento+'" value="'+nomeOrganizador+'" disabled/>'//alterar o id e value
+                + '<input type="text" class="form-control" id="nomeOrg_' + idOrganizadorEvento + '" value="' + nomeOrganizador + '" disabled/>'//alterar o id e value
                 + '<span class="input-group-append">'
-                + '<button type="button" onclick="deletarOrganizador(' + idOrganizadorEvento + ')" class="btn btn-danger btn-flat">Remover</button>'//alterar o valor do deletar
+                + '<button type="button" onclick="setDadosOrganizador(' + idOrganizadorEvento + ')" class="btn btn-success btn-flat">Editar</button>'//alterar o valor do deletar
+                + '<button type="button" onclick="deletarOrganizador(' + idOrganizadorEvento + ')" class="btn btn-danger btn-flat">Remover</button>'
                 + '</span></div></div></div> '
                 + '</div>';
         $("#espacoaddorganizador").append(html);
@@ -662,8 +648,8 @@
                                         showConfirmButton: true,
                                         timer: 10000
                                     }).then(function () {
-                                       // window.location.href = "${pageContext.request.contextPath}/FuncaoListar";
-                                       removeLinhaOrganizadorHTML(idorganizadorevento);
+                                        // window.location.href = "${pageContext.request.contextPath}/FuncaoListar";
+                                        removeLinhaOrganizadorHTML(idorganizadorevento);
                                     })
                                 } else {
                                     Swal.fire({
@@ -674,7 +660,7 @@
                                         showConfirmButton: true,
                                         timer: 10000
                                     }).then(function () {
-                                       // window.location.href = "${pageContext.request.contextPath}/FuncaoListar";
+                                        // window.location.href = "${pageContext.request.contextPath}/FuncaoListar";
                                     })
                                 }
                             },
@@ -687,7 +673,7 @@
             ;
         });
 
-        
+
     }
 
     function removeLinhaOrganizadorHTML(idorganizadorevento) {
@@ -700,9 +686,42 @@
 
     }
 
-    //ADCIONAR ATIVIDADE EVENTO########################################################################################################
+    function setDadosOrganizador(valor) {
+        limparDadosOrganizador();
+        document.getElementById('idorganizadorevento').value = valor;
+        var idOrganizadorEvento = valor;
+        if (idOrganizadorEvento != "0") {
+            $.getJSON('OrganizadorEventoCarregar', {idOrganizadorEvento: idOrganizadorEvento}, function (respostaServlet) {
+                console.log(respostaServlet);
+                var id = respostaServlet.idOrganizadorEvento;
+                if (id != "0") {
+                    $('#idorganizadorevento').val(respostaServlet.idOrganizadorEvento);
+                    $('#idorganizador').val(respostaServlet.organizador.idOrganizador);
+                    $('#idfuncao').val(respostaServlet.funcao.idFuncao);
+                    removeLinhaOrganizadorHTML(respostaServlet.idOrganizadorEvento);
+                    $('#btnadicionarorganizador').text('Salvar');
+                    $('#labelorganizador').text('Editando Organizador');
+                    $('#labelfuncao').text('Editando Função');
+                }
+            });
+        }
+    }
+
+    function limparDadosOrganizador() {
+        $('#idorganizadorevento').val("0");
+        $('#idorganizador').val("nulo");
+        $('#idfuncao').val("nulo");
+        $('#btnadicionarorganizador').text('Adicionar');
+        $('#labelorganizador').text('Organizador');
+        $('#labelfuncao').text('Função');
+    }
+    // FIM DA PARTE DE ORGANIZADOR EVENTO
+
+
+
+    // INICIO DA PARTE DE ATIVIDADE EVENTO
     function adcDivAtividadeEvento(idatividadeevento, nomeAtividadeEvento) {
-        var html = '<div id="divAtv_'+idatividadeevento+'">'//alterar para o id da atividade evento
+        var html = '<div id="divAtv_' + idatividadeevento + '">'//alterar para o id da atividade evento
                 + '<div class="form-group"></div><div class="form-line row">'
                 + '<div class="col-sm">'
                 + '<div class="input-group input-group-mb-3">'
@@ -713,24 +732,7 @@
                 + '</div>';
         $("#espacoaddatividadeevento").append(html);
     }
-    
-     function setDadosOrganizador(valor) {
-         // PAREI NESSA PARTE AQUI 
-        /*limparDadosModal();
-        document.getElementById('idfuncao').value = valor;
-        var idFuncao = valor;
-        if (idFuncao != "0") {
-            $.getJSON('OrganizadorEventoCarregar', {idOrganizadorEvento: idFuncao}, function (respostaServlet) {
-                console.log(respostaServlet);
-                var id = respostaServlet.idOrganizadorEvento;
-                if (id != "0") {
-                    $('#idfuncao').val(respostaServlet.idFuncao);
-                    $('#descricao').val(respostaServlet.descricao);
-                    $('#situacao').val(respostaServlet.situacao);
-                }
-            });
-        }*/
-    }
+
 
     function deletarAtividadeEvento(idatividadeevento) {
         /*var url = window.location.pathname.substring(0, window.location.pathname.indexOf("/", 2)) + "/codigobarraproduto";
