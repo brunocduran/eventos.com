@@ -298,8 +298,8 @@
     }
 
     function menuAtivo() {
-        document.getElementById('titulopainel').innerHTML = "<strong>Categoria Evento</strong>";
-        document.getElementById('menucategoriaEvento').classList.add("active");
+        document.getElementById('titulopainel').innerHTML = "<strong>Categoria do Evento</strong>";
+        document.getElementById('menucategoriaevento').classList.add("active");
     }
 
     $(document).ready(function () {

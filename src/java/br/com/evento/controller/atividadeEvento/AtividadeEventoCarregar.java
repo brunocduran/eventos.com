@@ -3,10 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.evento.controller.evento;
+package br.com.evento.controller.atividadeEvento;
 
-import br.com.evento.dao.EventoDAO;
-import br.com.evento.dao.GenericDAO;
+import br.com.evento.dao.AtividadeEventoDAO;
+import br.com.evento.model.AtividadeEvento;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -17,10 +19,10 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author igorb
+ * @author bruno
  */
-@WebServlet(name = "EventoListar", urlPatterns = {"/EventoListar"})
-public class EventoListar extends HttpServlet {
+@WebServlet(name = "AtividadeEventoCarregar", urlPatterns = {"/AtividadeEventoCarregar"})
+public class AtividadeEventoCarregar extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,13 +35,17 @@ public class EventoListar extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         response.setContentType("text/html;charset=iso-8859-1");
-        try{
-            EventoDAO dao = new EventoDAO();
-            request.setAttribute("eventos", dao.listar());
-            request.getRequestDispatcher("painel/cadastros/evento/evento.jsp").forward(request, response);
-        } catch(Exception ex){
-            System.out.println("Problema no servlet ao listar eventos"+ex.getMessage());
+        response.setContentType("text/html;charset=iso-8859-1");
+        try {
+            int idAtividadeEvento = Integer.parseInt(request.getParameter("idAtividadeEvento"));
+            AtividadeEventoDAO dao = new AtividadeEventoDAO();
+            AtividadeEvento oAtividadeEvento = (AtividadeEvento) dao.carregar(idAtividadeEvento);
+            
+            Gson ogson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+            String jSon = ogson.toJson(oAtividadeEvento);
+            response.getWriter().write(jSon);
+        } catch (Exception ex) {
+            System.out.println("Erro no servlet ao AtividadeEventoCarregar: " + ex.getMessage());
             ex.printStackTrace();
         }
     }

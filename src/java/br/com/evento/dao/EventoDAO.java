@@ -15,6 +15,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +23,7 @@ import java.util.List;
  *
  * @author igorb
  */
-public class EventoDAO implements GenericDAO {
+public class EventoDAO {
 
     private Connection conexao;
 
@@ -30,10 +31,9 @@ public class EventoDAO implements GenericDAO {
         conexao = SingleConnection.getConnection();
     }
 
-    @Override
-    public Boolean cadastrar(Object objeto) {
+    public int cadastrar(Object objeto) throws ParseException {
         Evento oEvento = (Evento) objeto;
-        Boolean retorno = false;
+        int retorno = 0;
         if (oEvento.getIdEvento() == 0) {
             retorno = this.inserir(oEvento);
         } else {
@@ -42,12 +42,13 @@ public class EventoDAO implements GenericDAO {
         return retorno;
     }
 
-    @Override
-    public Boolean inserir(Object objeto) {
+    public int inserir(Object objeto) {
         Evento oEvento = (Evento) objeto;
         PreparedStatement stmt = null;
+        ResultSet rs = null;
+        Integer idEvento = null;
         String sql = "INSERT INTO evento (nomeevento, valorevento, valoreventoprazo, datainicioevento, dataterminoevento, informacaoevento, situacaoevento, saldocaixa, "
-                + "situacaocaixa, imagem, idcidade, idcurso, idcategoriaevento) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                + "situacaocaixa, imagem, idcidade, idcurso, idcategoriaevento) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) returning idevento";
         try {
             stmt = conexao.prepareStatement(sql);
             stmt.setString(1, oEvento.getNomeEvento());
@@ -64,9 +65,11 @@ public class EventoDAO implements GenericDAO {
             stmt.setInt(12, oEvento.getCurso().getIdCurso());
             stmt.setInt(13, oEvento.getCategoriaEvento().getIdCategoriaEvento());
 
-            stmt.execute();
+            rs = stmt.executeQuery();
             conexao.commit();
-            return true;
+            while (rs.next()) {
+                idEvento = rs.getInt("idevento");
+            }
         } catch (Exception ex) {
             try {
                 System.out.println("Problemas ao cadastrar a Evento na DAO! Erro: " + ex.getMessage());
@@ -77,13 +80,13 @@ public class EventoDAO implements GenericDAO {
                 e.printStackTrace();
             }
         }
-        return false;
+        return idEvento;
     }
 
-    @Override
-    public Boolean alterar(Object objeto) {
+    public int alterar(Object objeto) {
         Evento oEvento = (Evento) objeto;
         PreparedStatement stmt = null;
+        Integer idEvento = oEvento.getIdEvento();
         String sql = "UPDATE evento set nomeevento=?, valorevento=?, valoreventoprazo=?, datainicioevento=?, dataterminoevento=?, informacaoevento=?, situacaoevento=?, "
                 + "saldocaixa=?, situacaocaixa=?, imagem=?, idcidade=?, idcurso=?, idcategoriaevento=? WHERE idevento = ?";
         try {
@@ -104,7 +107,6 @@ public class EventoDAO implements GenericDAO {
             stmt.setInt(14, oEvento.getIdEvento());
             stmt.execute();
             conexao.commit();
-            return true;
         } catch (Exception ex) {
             try {
                 System.out.println("Problemas ao alterar a evento na DAO! Erro: " + ex.getMessage());
@@ -114,11 +116,10 @@ public class EventoDAO implements GenericDAO {
                 System.out.println("Erro:" + e.getMessage());
                 e.printStackTrace();
             }
-            return false;
         }
+        return idEvento;
     }
 
-    @Override
     public Boolean excluir(int numero) {
         int idEvento = numero;
         PreparedStatement stmt = null;
@@ -147,7 +148,6 @@ public class EventoDAO implements GenericDAO {
         }
     }
 
-    @Override
     public Object carregar(int numero) {
         int idEvento = numero;
         PreparedStatement stmt = null;
@@ -182,9 +182,8 @@ public class EventoDAO implements GenericDAO {
                 oEvento.setCategoriaEvento((CategoriaEvento) oCategoriaEventoDAO.carregar(rs.getInt("idcategoriaevento")));
 
                 //Depois fazer o carregar de participantes e atividades daquele evento
-               // OrganizadorEventoDAO oOrganizadorEventoDAO  = new OrganizadorEventoDAO(); 
+                // OrganizadorEventoDAO oOrganizadorEventoDAO  = new OrganizadorEventoDAO(); 
                 //oEvento.setOrganizadores(oOrganizadorEventoDAO.listarOrganizadorEvento(rs.getInt("idevento")));
-                
             }
             return oEvento;
         } catch (Exception ex) {
@@ -193,7 +192,6 @@ public class EventoDAO implements GenericDAO {
         }
     }
 
-    @Override
     public List<Object> listar() {
         List<Object> resultado = new ArrayList<>();
         PreparedStatement stmt = null;
@@ -399,7 +397,7 @@ public class EventoDAO implements GenericDAO {
                 oEvento.setCategoriaEvento((CategoriaEvento) oCategoriaEventoDAO.carregar(rs.getInt("idcategoriaevento")));
 
                 //Depois fazer o carregar de participantes e atividades daquele evento
-                 OrganizadorEventoDAO oOrganizadorEventoDAO  = new OrganizadorEventoDAO(); 
+                OrganizadorEventoDAO oOrganizadorEventoDAO = new OrganizadorEventoDAO();
                 oEvento.setOrganizadores(oOrganizadorEventoDAO.listarOrganizadorEvento(rs.getInt("idevento")));
             }
             return oEvento;

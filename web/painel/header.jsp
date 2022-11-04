@@ -265,34 +265,23 @@
                                     </a>
                                 </li>
                             </c:if>
-
-                            <c:if test="${sessionScope.tipousuario == 'Administrador' or sessionScope.tipousuario == 'Organizador'}">
-                                <li class="nav-item">
-                                    <a href="${pageContext.request.contextPath}/painel/cadastros/evento/eventoCadastrar.jsp" class="nav-link" id="menuevento">
-                                        <i class="nav-icon far fa-calendar-alt"></i>
-                                        <p>
-                                            Evento
-                                        </p>
-                                    </a>
-                                </li>
-                            </c:if>
                                 
                               <c:if test="${sessionScope.tipousuario == 'Administrador' or sessionScope.tipousuario == 'Organizador'}">
                                 <li class="nav-item">
                                     <a href="${pageContext.request.contextPath}/CategoriaEventoListar" class="nav-link" id="menucategoriaevento">
                                         <i class="nav-icon fas fa-cube"></i>
                                         <p>
-                                            Categoria Evento
+                                            Categoria do Evento
                                         </p>
                                     </a>
                                 </li>
                             </c:if>
                               <c:if test="${sessionScope.tipousuario == 'Administrador' or sessionScope.tipousuario == 'Organizador'}">
                                 <li class="nav-item">
-                                    <a href="${pageContext.request.contextPath}/EventoListar" class="nav-link" id="menueventolistar">
-                                        <i class="nav-icon fas fa-cube"></i>
+                                    <a href="${pageContext.request.contextPath}/EventoListar" class="nav-link" id="menuevento">
+                                        <i class="nav-icon far fa-calendar-alt"></i>
                                         <p>
-                                            Evento Listar
+                                            Evento
                                         </p>
                                     </a>
                                 </li>

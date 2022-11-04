@@ -3,6 +3,7 @@ package br.com.evento.utils;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -27,6 +28,12 @@ public class Conversao {
         SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
         Date novaData = new Date(System.currentTimeMillis());
         return novaData;
+    }
+    
+    public static Date horaAtual(){
+        SimpleDateFormat fmt = new SimpleDateFormat("HH:mm:ss");
+        Date hora = Calendar.getInstance().getTime();
+        return hora;
     }
     
     public static double valorDinheiro(String valor){

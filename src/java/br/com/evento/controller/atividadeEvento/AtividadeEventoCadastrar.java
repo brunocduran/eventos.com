@@ -3,23 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.evento.controller.evento;
+package br.com.evento.controller.atividadeEvento;
 
 import br.com.evento.dao.AtividadeEventoDAO;
-import br.com.evento.dao.CategoriaEventoDAO;
-import br.com.evento.dao.CidadeDAO;
-import br.com.evento.dao.CursoDAO;
-import br.com.evento.dao.EventoDAO;
-import br.com.evento.dao.FuncaoDAO;
-import br.com.evento.dao.GenericDAO;
-import br.com.evento.dao.OrganizadorDAO;
-import br.com.evento.dao.OrganizadorEventoDAO;
-import br.com.evento.dao.TipoAtividadeDAO;
+import br.com.evento.model.AtividadeEvento;
 import br.com.evento.model.Evento;
+import br.com.evento.model.TipoAtividade;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -28,10 +22,10 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author igorb
+ * @author bruno
  */
-@WebServlet(name = "EventoCarregar", urlPatterns = {"/EventoCarregar"})
-public class EventoCarregar extends HttpServlet {
+@WebServlet(name = "AtividadeEventoCadastrar", urlPatterns = {"/AtividadeEventoCadastrar"})
+public class AtividadeEventoCadastrar extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,36 +38,49 @@ public class EventoCarregar extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=iso-8859-1");
+         response.setContentType("text/html;charset=iso-8859-1");
+        String mensagem = null;
+        int idAtividadeEvento = 0;
         try{
+            AtividadeEvento oAtividadeEvento = new AtividadeEvento();
+            oAtividadeEvento.setIdAtividadeEvento(Integer.parseInt(request.getParameter("idAtividadeEvento")));
+            Double cargaHoraria = Double.parseDouble(request.getParameter("cargaHoraria"));
+            String nomeAtividade = request.getParameter("nomeAtividade");
+            String resumo = request.getParameter("resumo");
+            Date dataAtividade = Date.valueOf(request.getParameter("dataAtividade"));
+            String horaAtividade = request.getParameter("horaAtividade");
+            int idTipoAtividade = Integer.parseInt(request.getParameter("idTipoAtividade"));
             int idEvento = Integer.parseInt(request.getParameter("idEvento"));
-            EventoDAO oEventoDAO = new EventoDAO();
-            request.setAttribute("evento", oEventoDAO.carregar(idEvento));
-            GenericDAO oCidadedao = new CidadeDAO();
-            request.setAttribute("cidades", oCidadedao.listar());
-            GenericDAO oCursoDAO = new CursoDAO();
-            request.setAttribute("cursos", oCursoDAO.listar());            
-            GenericDAO oCategoriaEventoDAO = new CategoriaEventoDAO();
-            request.setAttribute("categoriaeventos", oCategoriaEventoDAO.listar());
-            GenericDAO oOrganizadorDAO = new OrganizadorDAO();
-            request.setAttribute("organizadores", oOrganizadorDAO.listar());
-            GenericDAO oFuncaoDAO = new FuncaoDAO();
-            request.setAttribute("funcoes", oFuncaoDAO.listar());
-            GenericDAO oTipoAtividadeDAO = new TipoAtividadeDAO();
-            request.setAttribute("tiposatividades", oTipoAtividadeDAO.listar());
             
+            //cria objeto de evento.
+            Evento oEvento = new Evento();
+            oEvento.setIdEvento(idEvento);                    
             
-            //Carregar OrganizadorEvento
-            OrganizadorEventoDAO oOrganizadorEventoDAO = new OrganizadorEventoDAO();
-            request.setAttribute("organizadoresEvento", oOrganizadorEventoDAO.listarOrganizadorEvento(idEvento));
+            //cria objeto de tipo atividade.
+            TipoAtividade oTipoAtividade = new TipoAtividade();
+            oTipoAtividade.setIdTipoAtividade(idTipoAtividade);
             
-            //Carregar AtividadeEvento
-            AtividadeEventoDAO oAtividadeEventoDAO = new AtividadeEventoDAO();
-            request.setAttribute("atividadesEvento", oAtividadeEventoDAO.listarAtividadeEvento(idEvento));
-
-            request.getRequestDispatcher("/painel/cadastros/evento/eventoCadastrar.jsp").forward(request, response);
+            oAtividadeEvento.setCargaHoraria(cargaHoraria);
+            oAtividadeEvento.setNomeAtividade(nomeAtividade);
+            oAtividadeEvento.setResumo(resumo);
+            oAtividadeEvento.setDataAtividade(dataAtividade);
+            oAtividadeEvento.setHoraAtividade(horaAtividade);
+            oAtividadeEvento.setEvento(oEvento);
+            oAtividadeEvento.setTipoAtividade(oTipoAtividade);
+                             
+            AtividadeEventoDAO dao = new AtividadeEventoDAO();         
+            idAtividadeEvento = dao.cadastrar(oAtividadeEvento);
+            
+            if (idAtividadeEvento > 0){
+                AtividadeEvento oAtividadeEventoCadastrado = (AtividadeEvento) dao.carregar(idAtividadeEvento);
+                Gson ogson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+                String jSon = ogson.toJson(oAtividadeEventoCadastrado);
+                response.getWriter().write(jSon);   
+            }else{
+                response.getWriter().write("0");
+            }
         }catch(Exception ex){
-            System.out.println("Erro servlet evento carregar"+ex.getMessage());
+            System.out.println("Problemas no servlet AtividadeEventoCadastrar! Erro: "+ex.getMessage());
             ex.printStackTrace();
         }
     }
