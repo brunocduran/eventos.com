@@ -181,7 +181,7 @@
 
     function menuAtivo() {
         document.getElementById('titulopainel').innerHTML = "<strong>Evento</strong>";
-        document.getElementById('menueventolistar').classList.add("active");
+        document.getElementById('menuevento').classList.add("active");
     }
 
     $(document).ready(function () {

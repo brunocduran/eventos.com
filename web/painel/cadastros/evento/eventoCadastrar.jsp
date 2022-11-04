@@ -44,6 +44,7 @@
                                                 </div>
                                             </div>
                                             <div class="bs-stepper-content">
+                                                <!-- Inicio Evento -->
                                                 <div id="dadosproduto-part" class="content" role="tabpanel" aria-labelledby="dadosproduto-part-trigger">
                                                     <div class="card-body">
                                                         <div class="form-group">
@@ -169,7 +170,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <!--</form>-->
                                                 <!-- Fim dos dados iniciais do evento -->
                                                 <!-- Inicio organizadores -->
                                                 <div id="organizadores-part" class="content" role="tabpanel" aria-labelledby="organizadores-part-trigger">
@@ -215,10 +215,22 @@
                                                         </div>
                                                         <hr>
                                                         <div id="espacoaddorganizador">
-                                                            <!-- falta fazer o loop para trazer os organizadores ao carregar-->
-
-
-
+                                                            <!-- Loop para carregar os organizadores-->
+                                                            <c:forEach var="organizadorEvento" items="${organizadoresEvento}">
+                                                                <div id="divOrg_${organizadorEvento.idOrganizadorEvento}">
+                                                                    <div class="form-group"></div><div class="form-line row">
+                                                                        <div class="col-sm">
+                                                                            <div class="input-group input-group-mb-3">
+                                                                                <input type="text" class="form-control" id="nomeOrg_${organizadorEvento.idOrganizadorEvento}" value="${organizadorEvento.organizador.nomeRazaoPessoa} - ${organizadorEvento.funcao.descricao}" disabled/>
+                                                                                <span class="input-group-append">
+                                                                                    <button type="button" onclick="setDadosOrganizador('${organizadorEvento.idOrganizadorEvento}')" class="btn btn-success btn-flat">Editar</button>
+                                                                                    <button type="button" onclick="deletarOrganizador('${organizadorEvento.idOrganizadorEvento}')" class="btn btn-danger btn-flat">Remover</button>
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </c:forEach> 
                                                         </div>
                                                         <div class="form-group"></div>
                                                         <hr>
@@ -230,30 +242,30 @@
 
                                                     </div>
                                                 </div>
-                                                <!-- Fim código de barras -->
-                                                <!-- Inicio fotos produto -->
+                                                <!-- Fim organizadores -->
+                                                <!-- Inicio atividades -->
                                                 <div id="atividades-part" class="content" role="tabpanel" aria-labelledby="atividades-part-trigger">
                                                     <div class="card-body">
                                                         <div class="form-group">
 
                                                             <div class="form-line row">
                                                                 <input class="form-control" type="hidden" name="idatividadeevento" id="idatividadeevento"
-                                                                       value="{evento.idatividadeevento}" readonly="readonly">
+                                                                       value="0" readonly="readonly">
 
                                                                 <div class="col-sm">
                                                                     <label for="nomeatividade" id="labelnomeatividade">Nome Atividade</label>
-                                                                    <input type="text" class="form-control" maxlength="100" value=""
+                                                                    <input type="text" class="form-control" maxlength="100"
                                                                            id="nomeatividade" name="nomeatividade" placeholder="Digite o nome da atividade">
                                                                 </div>
                                                                 <div class="col-sm">
-                                                                    <label for="datainicioevento" id="labeldatainicioevento">Data Início</label>
-                                                                    <input class="form-control" type="date" name="datainicioevento" id="datainicioevento" value=""
+                                                                    <label for="dataatividadeevento" id="labeldata">Data</label>
+                                                                    <input class="form-control" type="date" name="dataatividade" id="dataatividade" 
                                                                            maxLength="8" />
                                                                 </div>
                                                                 <div class="col-sm">
-                                                                    <label for="dataterminoevento" id="labeldataterminoevento">Data Término</label>
-                                                                    <input class="form-control" type="date" name="dataterminoevento" value=""
-                                                                           id="dataterminoevento" maxLength="5" />
+                                                                    <label for="horaatividadeevento" id="labelhora">Hora</label>
+                                                                    <input class="form-control" type="time" name="horaatividade" id="horaatividade"
+                                                                           maxLength="8" />
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -261,22 +273,22 @@
                                                             <div class="form-line row">
                                                                 <div class="col-sm">
 
-                                                                    <label id="labeltipoatividade" for="idtipoatividade">Tipo Atividade</label>
+                                                                    <label id="labeltipoatividade" for="idtipoatividade">Tipo de Atividade</label>
                                                                     <select class="form-control" id="idtipoatividade" name="idtipoatividade">
-                                                                        <option id="0" value="0">Selecione o tipo atividade</option>
-                                                                        {loop="tiposatividades"}
-                                                                        <option id="${value.idtipoatividade}" value="${value.idcidade}" 
-                                                                                {if="$value.idcidade == $evento.idcidade"} selected {/if}>
-                                                                            ${value.nomemarca}
-                                                                        </option>
-                                                                        {/loop}
+                                                                        <option value="nulo">Selecione</option>
+                                                                        <c:forEach var="tipoatividade" items="${tiposatividades}">
+                                                                            <option value="${tipoatividade.idTipoAtividade}"}>
+                                                                                ${tipoatividade.descricao}
+                                                                            </option>
+                                                                        </c:forEach>
                                                                     </select>
                                                                 </div>
-
                                                                 <div class="col-sm">
                                                                     <label for="cargahoraria" id="labelcargahoraria">Carga Horária</label>
-                                                                    <input type="text" class="form-control" maxlength="100" value=""
-                                                                           id="cargahoraria" name="cargahoraria" placeholder="00">
+                                                                    <input class="form-control" style="text-align:right;"
+                                                                           type="number" min="0" max="100" step=".01"
+                                                                           value="<fmt:formatNumber value='0'/>"
+                                                                           id="cargahoraria" name="cargahoraria">
                                                                 </div>
 
                                                             </div>
@@ -293,43 +305,52 @@
                                                         </div>
 
                                                         <div align="right">
-                                                            <button class="btn btn-primary" onclick="adcDivAtividadeEvento()">Adicionar</button>
+                                                            <button class="btn btn-primary" onclick="validarCamposAtividade()" id="btnadicionaratividade">Adicionar</button>
                                                         </div>
 
                                                         <hr>    
 
                                                         <div id="espacoaddatividadeevento">
-                                                            <!--Configurar loop-->
-                                                            <div class="input-group input-group-mb-3">
-                                                                <input type="text" class="form-control" id="${value.idatividadeevento}"
-                                                                       value="${value.nomeatividadeevento}" disabled />
-                                                                <span class="input-group-append">
-                                                                    <button type="button" onclick="deletar(${value.idatividadeevento})"
-                                                                            class="btn btn-danger btn-flat">Remover</button>
-                                                                </span>
-                                                            </div>
-
+                                                            <!-- Loop para carregar as atividades-->
+                                                            <c:forEach var="atividadeEvento" items="${atividadesEvento}">
+                                                                <div id="divAtv_${atividadeEvento.idAtividadeEvento}">
+                                                                    <div class="form-group"></div>
+                                                                    <div class="form-line row">
+                                                                        <div class="col-sm">
+                                                                            <div class="input-group input-group-mb-3">
+                                                                                <div style="background-color: #E9ECEF; width: 100%; border-color: #cacbcc; border-width: 1px; border-style: solid; padding: 10px;">
+                                                                                    <b>Atividade:</b> ${atividadeEvento.nomeAtividade} <br>
+                                                                                    <b>Data:</b> ${atividadeEvento.dataAtividadeFormatada}<br>
+                                                                                    <b>Hora:</b> ${atividadeEvento.horaAtividade}<br>
+                                                                                    <b>Carga horária:</b> ${atividadeEvento.cargaHoraria}<br>
+                                                                                    <b>Tipo de Atividade:</b> ${atividadeEvento.tipoAtividade.descricao}<br>
+                                                                                    <b>Resumo:</b> ${atividadeEvento.resumo}
+                                                                                    <hr>
+                                                                                    <div align="right">
+                                                                                        <button type="button" onclick="setAtividadeEvento('${atividadeEvento.idAtividadeEvento}')" class="btn btn-success btn-flat">Editar</button>
+                                                                                        <button type="button" onclick="deletarAtividadeEvento('${atividadeEvento.idAtividadeEvento}')" class="btn btn-danger btn-flat">Remover</button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </c:forEach> 
                                                         </div>
                                                         <hr>                  
                                                         <div align="right">
                                                             <button class="btn btn-primary" onclick="stepper.previous()"><i class="fa fa-arrow-left"></i> Voltar </button>
-                                                            <a class="btn btn-success" href="/painel/produto">Finalizar</a>
+                                                            <a class="btn btn-success" href="${pageContext.request.contextPath}/EventoListar">Finalizar</a>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <!-- Fim fotos produto -->
-
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <!-- /.card -->
                             </div>
                         </div>
-                        <!-- /.row -->
-
                     </div>
-                    <!-- /.row -->
                 </div>
             </div>
         </div>
@@ -431,6 +452,15 @@
                 position: 'center',
                 icon: 'error',
                 title: 'Verifique a categoria!',
+                showConfirmButton: true,
+                timer: 2000
+            });
+            $("#idcidade").focus();
+        } else if (document.getElementById("datainicioevento").value > document.getElementById("dataterminoevento").value) {
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Data de termino anterior a data de início!',
                 showConfirmButton: true,
                 timer: 2000
             });
@@ -720,65 +750,238 @@
 
 
     // INICIO DA PARTE DE ATIVIDADE EVENTO
-    function adcDivAtividadeEvento(idatividadeevento, nomeAtividadeEvento) {
-        var html = '<div id="divAtv_' + idatividadeevento + '">'//alterar para o id da atividade evento
-                + '<div class="form-group"></div><div class="form-line row">'
+    function validarCamposAtividade() {
+        if (document.getElementById("nomeatividade").value == '') {
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Verifique o nome da atividade!',
+                showConfirmButton: true,
+                timer: 2000
+            });
+            $("#idcidade").focus();
+        } else if (document.getElementById("dataatividade").value == '') {
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Verifique a data da atividade!',
+                showConfirmButton: true,
+                timer: 2000
+            });
+            $("#idcidade").focus();
+        } else if (document.getElementById("horaatividade").value == '') {
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Verifique a hora da atividade!',
+                showConfirmButton: true,
+                timer: 2000
+            });
+            $("#idcidade").focus();
+        } else if (document.getElementById("idtipoatividade").value == 'nulo') {
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Verifique o tipo da atividade!',
+                showConfirmButton: true,
+                timer: 2000
+            });
+            $("#idcidade").focus();
+        } else if (document.getElementById("cargahoraria").value == '') {
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Verifique a carga horária da atividade!',
+                showConfirmButton: true,
+                timer: 2000
+            });
+            $("#idcidade").focus();
+        } else if (document.getElementById("cargahoraria").value == '0') {
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Verifique a carga horária da atividade!',
+                showConfirmButton: true,
+                timer: 2000
+            });
+            $("#idcidade").focus();
+        } else {
+            gravarDadosAtividade();
+
+        }
+    }
+
+    function gravarDadosAtividade() {
+        $.ajax({
+            type: 'post',
+            url: 'AtividadeEventoCadastrar',
+            data: {
+                idAtividadeEvento: $('#idatividadeevento').val(),
+                idEvento: $('#idevento').val(),
+                idTipoAtividade: $('#idtipoatividade').val(),
+                cargaHoraria: $('#cargahoraria').val(),
+                nomeAtividade: $('#nomeatividade').val(),
+                resumo: $('#resumo').val(),
+                dataAtividade: $('#dataatividade').val(),
+                horaAtividade: $('#horaatividade').val()
+            },
+            success:
+                    function (data) {
+                        // console.log("resposta servlet->");
+                        // console.log(data);
+                        if (data == 0) {
+                            Swal.fire({
+                                position: 'center',
+                                icon: 'error',
+                                title: 'Erro',
+                                text: 'Não foi possível gravar a Atividade do Evento!',
+                                showConfirmButton: false,
+                                timer: 1000
+                            })
+                        } else {
+                            var jSon = JSON.parse(data);
+                            console.log("JSON ATIVIDADE " + data);
+                            var id = jSon.idAtividadeEvento;
+                            if (id > 0) {
+                                var nomeAtividade = "<b>Atividade:</b> " + jSon.nomeAtividade + "<br><b>Data:</b> " + jSon.dataAtividade.replace(/[^\d]/g, "").replace(/^(\d{4})(\d{2})(\d{2})/, "$3/$2/$1")
+                                        + "<br><b>Hora:</b> " + jSon.horaAtividade + "<br><b>Carga horária:</b> " + jSon.cargaHoraria + "<br><b>Tipo de Atividade:</b> " + jSon.tipoAtividade.descricao + "<br><b>Resumo:</b> " + jSon.resumo;
+                                adcDivAtividadeEvento(id, nomeAtividade);
+                                limparDadosAtividade();
+                            } else {
+                                Swal.fire({
+                                    position: 'center',
+                                    icon: 'error',
+                                    title: 'Erro',
+                                    text: 'Não foi possível gravar a Atividade do Evento!',
+                                    showConfirmButton: false,
+                                    timer: 1000
+                                })
+                            }
+                        }
+                    },
+            error:
+                    function (data) {
+                        //window.location.href = "${pageContext.request.contextPath}/InstituicaoListar";
+                    }
+        });
+    }
+
+    function adcDivAtividadeEvento(idAtividadeEvento, nomeAtividadeEvento) {
+        var html = '<div id="divAtv_' + idAtividadeEvento + '">'
+                + '<div class="form-group"></div>'
+                + '<div class="form-line row">'
                 + '<div class="col-sm">'
                 + '<div class="input-group input-group-mb-3">'
-                + '<input type="text" class="form-control" id="divAtv_123" value="Atividade Evento" disabled/>'//alterar o id e value
-                + '<span class="input-group-append">'
-                + '<button type="button" onclick="deletarAtividadeEvento(' + 123 + ')" class="btn btn-danger btn-flat">Remover</button>'//alterar o valor do deletar
-                + '</span></div></div></div> '
-                + '</div>';
+                + '<div style="background-color: #E9ECEF; width: 100%; border-color: #cacbcc; border-width: 1px; border-style: solid; padding: 10px;">'
+                + nomeAtividadeEvento
+                + '<hr>'
+                + '<div align="right">'
+                + '<button type="button" onclick="setAtividadeEvento(' + idAtividadeEvento + ')" class="btn btn-success btn-flat">Editar</button>'
+                + '<button type="button" onclick="deletarAtividadeEvento(' + idAtividadeEvento + ')" class="btn btn-danger btn-flat">Remover</button>'
+                + '</div></div></div></div></div></div>';
         $("#espacoaddatividadeevento").append(html);
     }
 
+    function setAtividadeEvento(valor) {
+        limparDadosAtividade();
+        document.getElementById('idatividadeevento').value = valor;
+        var idAtividadeEvento = valor;
+        if (idAtividadeEvento != "0") {
+            $.getJSON('AtividadeEventoCarregar', {idAtividadeEvento: idAtividadeEvento}, function (respostaServlet) {
+                console.log(respostaServlet);
+                var id = respostaServlet.idAtividadeEvento;
+                if (id != "0") {
+                    $('#idatividadeevento').val(respostaServlet.idAtividadeEvento);
+                    $('#idtipoatividade').val(respostaServlet.tipoAtividade.idTipoAtividade);
+                    $('#cargahoraria').val(respostaServlet.cargaHoraria);
+                    $('#nomeatividade').val(respostaServlet.nomeAtividade);
+                    $('#resumo').val(respostaServlet.resumo);
+                    $('#dataatividade').val(respostaServlet.dataAtividade);
+                    $('#horaatividade').val(respostaServlet.horaAtividade);
+                    removeLinhaAtividadeEventoHTML(respostaServlet.idAtividadeEvento);
+                    $('#btnadicionaratividade').text('Salvar');
+                    $('#labelnomeatividade').text('Editando Atividade');
+                }
+            });
+        }
+    }
+
+    function limparDadosAtividade() {
+        $('#idatividadeevento').val("0");
+        $('#idtipoatividade').val("nulo");
+        $('#cargahoraria').val("0");
+        $('#nomeatividade').val("");
+        $('#resumo').val("");
+        $('#dataatividade').val("");
+        $('#horaatividade').val("");
+        $('#btnadicionaratividade').text('Adicionar');
+        $('#labelnomeatividade').text('Nome Atividade');
+    }
 
     function deletarAtividadeEvento(idatividadeevento) {
-        /*var url = window.location.pathname.substring(0, window.location.pathname.indexOf("/", 2)) + "/codigobarraproduto";
-         var dados = "idcodigobarraproduto=" + idcodigobarraproduto;
-         
-         Swal.fire({
-         title: 'Você tem certeza?',
-         text: 'Deseja retirar o organizador do evento?',
-         icon: 'warning',
-         showCancelButton: true,
-         confirmButtonColor: '#3085d6',
-         cancelButtonColor: '#d33',
-         confirmButtonText: 'Sim',
-         cancelButtonText: 'Cancelar'
-         }).then((result) => {
-         if (result.isConfirmed) {
-         $.ajax({
-         asyc: false,
-         type: "POST",
-         url: url + "/deletar",
-         data: dados,
-         dataType: "json",
-         error: function (xhr) {
-         Swal.fire({
-         position: 'center',
-         icon: 'error',
-         title: 'Erro',
-         text: 'Não foi possível excluir o codigo de barras do produto!',
-         showConfirmButton: true,
-         timer: 10000
-         }).then(function () {
-         window.location.href = url;
-         })
-         },
-         success: function (data) {
-         if (data.resultado == 'ok') {
-         removeLinhaCodBarraHTML(idcodigobarraproduto);
-         }
-         }
-         });
-         
-         }
-         ;
-         });*/
+        var id = idatividadeevento;
+        console.log(idatividadeevento);
 
-        removeLinhaAtividadeEventoHTML(idatividadeevento);
+        var titulo = "";
+        var tituloConfirmacao = "";
+        var confirmButtonText = "";
+
+        titulo = "Você deseja realmente excluir a Atividade do Evento?";
+        confirmButtonText = "Sim, exclua a Atividade do Evento!";
+        tituloConfirmacao = "Atividade do Evento excluida com sucesso!";
+
+        Swal.fire({
+            title: 'Você tem certeza?',
+            text: titulo,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: confirmButtonText,
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: 'post',
+                    url: '${pageContext.request.contextPath}/AtividadeEventoExcluir',
+                    data: {
+                        idAtividadeEvento: id
+                    },
+                    success:
+                            function (data) {
+                                if (data == 1) {
+                                    Swal.fire({
+                                        position: 'center',
+                                        icon: 'success',
+                                        title: 'Sucesso',
+                                        text: tituloConfirmacao,
+                                        showConfirmButton: true,
+                                        timer: 10000
+                                    }).then(function () {
+                                        removeLinhaAtividadeEventoHTML(idatividadeevento);
+                                    })
+                                } else {
+                                    Swal.fire({
+                                        position: 'center',
+                                        icon: 'error',
+                                        title: 'Erro',
+                                        text: 'Não foi possível excluir a Atividade do Evento!',
+                                        showConfirmButton: true,
+                                        timer: 10000
+                                    }).then(function () {
+                                    })
+                                }
+                            },
+                    error:
+                            function (data) {
+                                window.location.href = "${pageContext.request.contextPath}/EventoListar";
+                            }
+                });
+            }
+            ;
+        });
+
+
     }
 
     function removeLinhaAtividadeEventoHTML(idatividadeevento) {
@@ -788,8 +991,6 @@
         if (node.parentNode) {
             node.parentNode.removeChild(node);
         }
-
-//#################################################################################################################################     
 
     }
 </script>

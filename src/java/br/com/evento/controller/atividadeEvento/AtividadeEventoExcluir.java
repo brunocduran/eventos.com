@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.evento.controller.evento;
+package br.com.evento.controller.atividadeEvento;
 
-import br.com.evento.dao.EventoDAO;
-import br.com.evento.dao.GenericDAO;
+import br.com.evento.dao.AtividadeEventoDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -17,10 +16,10 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author igorb
+ * @author bruno
  */
-@WebServlet(name = "EventoListar", urlPatterns = {"/EventoListar"})
-public class EventoListar extends HttpServlet {
+@WebServlet(name = "AtividadeEventoExcluir", urlPatterns = {"/AtividadeEventoExcluir"})
+public class AtividadeEventoExcluir extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,15 +32,20 @@ public class EventoListar extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         response.setContentType("text/html;charset=iso-8859-1");
+        response.setContentType("text/html;charset=iso-8859-1");
+        int idAtividadeEvento = Integer.parseInt(request.getParameter("idAtividadeEvento"));
+        String mensagem = null;
         try{
-            EventoDAO dao = new EventoDAO();
-            request.setAttribute("eventos", dao.listar());
-            request.getRequestDispatcher("painel/cadastros/evento/evento.jsp").forward(request, response);
-        } catch(Exception ex){
-            System.out.println("Problema no servlet ao listar eventos"+ex.getMessage());
-            ex.printStackTrace();
-        }
+           AtividadeEventoDAO dao = new AtividadeEventoDAO();
+           if(dao.excluir(idAtividadeEvento)){
+               response.getWriter().write("1");
+           }else{
+               response.getWriter().write("0");
+           }    
+       }catch(Exception e){
+           System.out.println("Problema no servlet de excluir AtividadeEvento! Erro: "+e.getMessage());
+           e.printStackTrace();
+       }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

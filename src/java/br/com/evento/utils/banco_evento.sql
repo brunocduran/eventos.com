@@ -191,3 +191,16 @@ create table organizadorevento(
 	constraint fk_organizador_organizadorevento foreign key (idorganizador) references organizador(idorganizador),
 	constraint fk_funcao_organizadorevento foreign key (idfuncao) references funcao(idfuncao)
 );
+
+create table atividadeevento(
+        idatividadeevento serial primary key,
+        cargahoraria numeric(15,2),
+        nomeatividade varchar(100),
+        resumo varchar(1000),
+        dataatividade date,
+        horaatividade varchar(5),
+        idevento integer,
+        idtipoatividade integer,
+        constraint fk_evento_atividadeevento foreign key (idevento) references evento(idevento),
+        constraint fk_tipoatividade_atividadeevento foreign key (idtipoatividade) references tipoatividade(idtipoatividade)
+);

@@ -37,7 +37,7 @@ public class EventoExcluir extends HttpServlet {
         int idEvento = Integer.parseInt(request.getParameter("idevento"));
         String mensagem = null;
         try{
-            GenericDAO dao = new EventoDAO();
+            EventoDAO dao = new EventoDAO();
             if(dao.excluir(idEvento)){
                 response.getWriter().write("1");
             }else{

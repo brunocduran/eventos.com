@@ -5,12 +5,15 @@
  */
 package br.com.evento.controller.evento;
 
+import br.com.evento.dao.AtividadeEventoDAO;
 import br.com.evento.dao.CategoriaEventoDAO;
 import br.com.evento.dao.CidadeDAO;
 import br.com.evento.dao.CursoDAO;
 import br.com.evento.dao.FuncaoDAO;
 import br.com.evento.dao.GenericDAO;
 import br.com.evento.dao.OrganizadorDAO;
+import br.com.evento.dao.TipoAtividadeDAO;
+import br.com.evento.model.AtividadeEvento;
 import br.com.evento.model.Cidade;
 import br.com.evento.model.Evento;
 import java.io.IOException;
@@ -53,6 +56,8 @@ public class EventoNovo extends HttpServlet {
             request.setAttribute("organizadores", oOrganizadorDAO.listar());
             GenericDAO oFuncaoDAO = new FuncaoDAO();
             request.setAttribute("funcoes", oFuncaoDAO.listar());
+            GenericDAO oTipoAtividadeDAO = new TipoAtividadeDAO();
+            request.setAttribute("tiposatividades", oTipoAtividadeDAO.listar());
             
             request.getRequestDispatcher("painel/cadastros/evento/eventoCadastrar.jsp").forward(request, response);
         } catch(Exception ex){

@@ -175,11 +175,10 @@ public class OrganizadorEventoDAO {
     }
 
     public List<OrganizadorEvento> listarOrganizadorEvento(int numero) {
+        List<OrganizadorEvento> resultado = new ArrayList<>();
         int idEventoParametro = numero;
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        List<OrganizadorEvento> resultado = new ArrayList<>();
-        OrganizadorEvento oOrganizadorEvento = null;
         String sql = "select * from organizadorevento where idevento = ?";        
         try {
             stmt = conexao.prepareStatement(sql);
@@ -187,40 +186,40 @@ public class OrganizadorEventoDAO {
             rs=stmt.executeQuery();
             while(rs.next()){
                 
-                Evento oEvento = null;
-                oEvento.setIdEvento(idEventoParametro);
-              //   try{
-                //    EventoDAO oEventoDAO = new EventoDAO();
-                  //  int idEvento = rs.getInt("idevento");
-                   // oEvento = (Evento) oEventoDAO.carregar(idEvento);
-               // }catch(Exception ex){
-               //     System.out.println("Problemas ao carregar evento no OrganizadorDAO! Erro:"+ex.getMessage());
-                //}  
-                 
-                 Organizador oOrganizador = null;
-                 try{
-                    OrganizadorDAO oOrganizadorDAO = new OrganizadorDAO();
-                    int idOrganizador = rs.getInt("idorganizador");
-                    oOrganizador = (Organizador) oOrganizadorDAO.carregar(idOrganizador);
-                }catch(Exception ex){
-                    System.out.println("Problemas ao carregar organizador no OrganizadorDAO! Erro:"+ex.getMessage());
+                OrganizadorEvento oOrganizadorEvento = new OrganizadorEvento();
+                
+                oOrganizadorEvento.setIdOrganizadorEvento(rs.getInt("idorganizadorevento"));
+                
+                
+                EventoDAO oEventoDAO = null;
+                try {
+                    oEventoDAO = new EventoDAO();
+                } catch (Exception ex) {
+                    System.out.println("Erro buscar Evento da listarOrganizadorEvento na OrganizadorEventoDAO " + ex.getMessage());
+                    ex.printStackTrace();
                 }
-                 
-                  Funcao oFuncao = null;
-                 try{
-                    FuncaoDAO oFuncaoDAO = new FuncaoDAO();
-                    int idFuncao = rs.getInt("idfuncao");
-                    oFuncao = (Funcao) oFuncaoDAO.carregar(idFuncao);
-                }catch(Exception ex){
-                    System.out.println("Problemas ao carregar funcao no OrganizadorDAO! Erro:"+ex.getMessage());
+                oOrganizadorEvento.setEvento((Evento) oEventoDAO.carregar(rs.getInt("idevento")));
+                
+                
+                OrganizadorDAO oOrganizadorDAO = null;
+                try {
+                    oOrganizadorDAO = new OrganizadorDAO();
+                } catch (Exception ex) {
+                    System.out.println("Erro buscar Organizador da listarOrganizadorEvento na OrganizadorEventoDAO " + ex.getMessage());
+                    ex.printStackTrace();
                 }
-                 
-                 oOrganizadorEvento = new OrganizadorEvento(
-                         rs.getInt("idorganizadorevento"), 
-                         oEvento, 
-                         oOrganizador, 
-                         oFuncao);
-                 
+                oOrganizadorEvento.setOrganizador((Organizador) oOrganizadorDAO.carregar(rs.getInt("idorganizador")));
+                
+                
+                FuncaoDAO oFuncaoDAO = null;
+                try {
+                    oFuncaoDAO = new FuncaoDAO();
+                } catch (Exception ex) {
+                    System.out.println("Erro buscar Funcao da listarOrganizadorEvento na OrganizadorEventoDAO " + ex.getMessage());
+                    ex.printStackTrace();
+                }
+                oOrganizadorEvento.setFuncao((Funcao) oFuncaoDAO.carregar(rs.getInt("idfuncao")));
+                
                 resultado.add(oOrganizadorEvento);
             }
         } catch(Exception e){

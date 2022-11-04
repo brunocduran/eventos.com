@@ -80,11 +80,13 @@ public class EventoCadastrar extends HttpServlet {
             
             EventoDAO dao = new EventoDAO();
             
-            if (dao.cadastrar(oEvento)){
+            int idEventoAtual = dao.cadastrar(oEvento);
+            
+            if (idEventoAtual>0){
                 //response.getWriter().write("1");
-                Evento oUltimoEvento = (Evento) dao.carregarUltimoInserido();            
+                Evento oEventoAtual = (Evento) dao.carregar(idEventoAtual);            
                 Gson ogson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-                String jSon = ogson.toJson(oUltimoEvento);
+                String jSon = ogson.toJson(oEventoAtual);
                // System.out.println("JSON DO ULTIMO INSERIDO: "+jSon);
                 response.getWriter().write(jSon);   
             }else{
