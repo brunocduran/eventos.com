@@ -101,7 +101,7 @@
                         <i class="fas fa-map-marker-alt"> </i> <span class="h6 text-decoration-none text-truncate">${evento.cidade.nomeCidade} - ${evento.cidade.estado.siglaEstado}</span>
                         <div class="d-flex align-items-center justify-content-center mt-2">
 
-                            <a class="h4 text-decoration-none text-truncate" href="">${evento.nomeEvento}</a>
+                            <a class="h4 text-decoration-none text-truncate" href="${pageContext.request.contextPath}/EventoCarregarHome?idEvento=${evento.idEvento}">${evento.nomeEvento}</a>
                         </div>
                         <div class="d-flex align-items-center justify-content-center mb-1">
                             <small class="border data-evento">
