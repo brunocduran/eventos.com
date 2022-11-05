@@ -204,3 +204,15 @@ create table atividadeevento(
         constraint fk_evento_atividadeevento foreign key (idevento) references evento(idevento),
         constraint fk_tipoatividade_atividadeevento foreign key (idtipoatividade) references tipoatividade(idtipoatividade)
 );
+
+CREATE TABLE configuracaobanner(
+    idconfiguracaobanner serial primary key,
+	idevento int,
+	titulobanner varchar(50),
+	msgbanner varchar(100),
+	imagem text,
+	tipobanner varchar(30),
+	datainicial date,
+	datafinal date,
+	constraint fk_evento FOREIGN key (idevento) references evento(idevento)
+);
