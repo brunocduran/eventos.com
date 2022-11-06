@@ -110,7 +110,8 @@ public class Usuario {
                     urlParaAutenticar.equalsIgnoreCase("/PessoaBuscarCpfCnpj") ||
                     urlParaAutenticar.equalsIgnoreCase("/ParticipanteCadastrar") ||
                     urlParaAutenticar.equalsIgnoreCase("/CidadeBuscarPorEstado") ||
-                     urlParaAutenticar.equalsIgnoreCase("/ParticipanteCadastrar") ||
+                    urlParaAutenticar.equalsIgnoreCase("/ParticipanteCadastrar") ||
+                    urlParaAutenticar.equalsIgnoreCase("/EventoCarregarHome") ||
                     urlParaAutenticar.equalsIgnoreCase("/PessoaVerificarLogin")){
                 status = true;
             }           
@@ -151,7 +152,7 @@ public class Usuario {
                             urlParaAutenticar.equalsIgnoreCase("/EstadoListar") ||
                             urlParaAutenticar.equalsIgnoreCase("/PessoaBuscarCpfCnpj") ||
                             urlParaAutenticar.equalsIgnoreCase("/PessoaVerificarLogin") ||
-                            urlParaAutenticar.equalsIgnoreCase("/ParticipanteCadastrar") ||
+                            urlParaAutenticar.equalsIgnoreCase("/ParticipanteCadastrar") ||     
                             urlParaAutenticar.equalsIgnoreCase("/ParticipanteLogadoCarregar")){
                             status = true; //permite acesso ao usuario tipo participante
                         }

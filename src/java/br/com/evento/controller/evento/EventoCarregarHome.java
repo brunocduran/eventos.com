@@ -41,8 +41,7 @@ public class EventoCarregarHome extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-    response.setContentType("text/html;charset=iso-8859-1");
-        System.out.println("***************Servelet eventoCarregarHome********************");
+    response.setContentType("text/html;charset=iso-8859-1");        
         try{
             int idEvento = Integer.parseInt(request.getParameter("idEvento"));
             EventoDAO oEventoDAO = new EventoDAO();
