@@ -42,6 +42,7 @@ public class EventoCarregarHome extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     response.setContentType("text/html;charset=iso-8859-1");
+        System.out.println("***************Servelet eventoCarregarHome********************");
         try{
             int idEvento = Integer.parseInt(request.getParameter("idEvento"));
             EventoDAO oEventoDAO = new EventoDAO();
@@ -68,7 +69,7 @@ public class EventoCarregarHome extends HttpServlet {
             AtividadeEventoDAO oAtividadeEventoDAO = new AtividadeEventoDAO();
             request.setAttribute("atividadesEvento", oAtividadeEventoDAO.listarAtividadeEvento(idEvento));
 
-            request.getRequestDispatcher("/painel/cadastros/evento/eventoDetalhe.jsp").forward(request, response);
+            request.getRequestDispatcher("/home/eventoDetalhado.jsp").forward(request, response);
         }catch(Exception ex){
             System.out.println("Erro servlet evento carregar"+ex.getMessage());
             ex.printStackTrace();

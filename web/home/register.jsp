@@ -5,166 +5,166 @@
 <jsp:include page="/home/navbar.jsp"/>
 
 <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-                        <div class="navbar-nav mr-auto py-0">
-                            <a href="${pageContext.request.contextPath}/index.jsp" class="nav-item nav-link">Home</a>
-                           
-                            <a href="${pageContext.request.contextPath}/home/contact.jsp" class="nav-item nav-link">Contato</a>
+    <div class="navbar-nav mr-auto py-0">
+        <a href="${pageContext.request.contextPath}/index.jsp" class="nav-item nav-link">Home</a>
+
+        <a href="${pageContext.request.contextPath}/home/contact.jsp" class="nav-item nav-link">Contato</a>
+    </div>
+
+</div>
+</div>
+</nav>
+</div>
+</div>
+</div>
+
+
+<!-- Checkout Start -->
+<div class="container-fluid">
+    <div class="row px-xl-5">
+        <div class="col-lg-12">
+            <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Cadastro</span></h5>
+            <div class="bg-light p-30 mb-5">
+                <!--<div class="modal-body">-->
+                <div class="form-group">
+                    <input class="form-control" type="hidden" name="idpessoa" id="idpessoa" value="0" readonly="readonly"/>
+                    <input class="form-control" type="hidden" name="idparticipante" id="idparticipante" value="0" readonly="readonly"/>
+                    <input class="form-control" type="hidden" name="situacao" id="situacao" value="" readonly="readonly"/>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-line row">
+                        <div class="col-sm">
+                            <label id="labelcpfcnpj">CPF/CNPJ</label>
+                            <input class="form-control" type="text" name="cpfcnpjpessoa" id="cpfcnpjpessoa" value=""/>
                         </div>
-                       
+                        <div class="col-sm">
+                            <label>RG/IE</label>
+                            <input class="form-control" type="text" name="rgiepessoa" id="rgiepessoa" value=""/>
+                        </div>
                     </div>
-            </div>
-            </nav>
-            </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-line row">
+                        <div class="col-sm">
+                            <label>Nome/Razão Social</label>
+                            <input class="form-control" type="text" name="nomerazaopessoa" id="nomerazaopessoa"/>
+                        </div>
+                        <div class="col-sm">
+                            <label>Logradouro</label>
+                            <input class="form-control" type="text" name="logradouropessoa" id="logradouropessoa"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-line row">                                                                 
+                        <div class="col-sm">
+                            <label>Número</label>
+                            <input class="form-control" type="text" name="numlogradouropessoa" id="numlogradouropessoa" value=""/>
+                        </div>
+                        <div class="col-sm">
+                            <label>Bairro</label>
+                            <input class="form-control" type="text" name="bairropessoa" id="bairropessoa" value=""/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-line row">
+                        <div class="col-sm">
+                            <label>CEP</label>
+                            <input class="form-control" type="text" name="ceppessoa" id="ceppessoa" value="" placeholder="00000-000" oninput="criaMascaraCEP()" maxLength="8"/>
+                        </div>
+                        <div class="col-sm">
+                            <label>Estado</label>
+                            <select class="form-control" name="idestado" id="idestado" onchange="BuscarCidadesPorEstado()" required>
+                                <option value="nulo">Selecione</option>
+                                <c:forEach var="estado" items="${estados}">
+                                    <option value="${estado.idEstado}" >
+                                        ${estado.nomeEstado}
+                                    </option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                        <div class="col-sm">
+                            <label>Cidade</label>
+                            <select class="form-control" name="idcidade" id="idcidade" required>
+                                <option value="nulo">Selecione</option>
+                                <c:forEach var="cidade" items="${cidades}">
+                                    <option value="${cidade.idCidade}"}>
+                                        ${cidade.nomeCidade} 
+                                    </option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-line row">
+                        <div class="col-sm">
+                            <label class="m-t-0 header-title">Data Nascimento/Fundação</label>
+                            <input class="form-control" type="date" name="datanascfundpessoa" id="datanascfundpessoa" value=""/>
+                        </div>
+                        <div class="col-sm">                                        
+                            <label>Telefone</label>
+                            <input class="form-control" type="tel" name="telefonepessoa" id="telefonepessoa" value="" placeholder="(00) 00000-0000" oninput="criaMascaraTelefone()" maxLength="11"/>
+                        </div>
+                        <div class="col-sm">
+                            <label>E-mail</label>
+                            <input class="form-control" type="email" name="emailpessoa" id="emailpessoa" placeholder="exemplo@email.com"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-line row">  
+                        <div class="col-sm">
+                            <label>Sexo</label>
+                            <select class="form-control" name="sexoparticipante" id="sexoparticipante">
+                                <option value="N" ${participante.sexoParticipante == 'N' ? "selected" : ""}>Prefiro não dizer</option>  
+                                <option value="F" ${participante.sexoParticipante == 'F' ? "selected" : ""}>Feminino</option>
+                                <option value="M" ${participante.sexoParticipante == 'M' ? "selected" : ""}>Masculino</option>               
+                            </select>
+                        </div>   
+                        <div class="col-sm">
+                            <label id="labellogin">Login</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroupPrepend2">@</span>
+                                </div>
+                                <input class="form-control" type="text" name="login" id="login" value="" size="20" maxlength="20" required/>
+                            </div>
+                        </div>
+                        <div class="col-sm">
+                            <label>Senha</label>
+                            <input class="form-control" type="password" name="senha" id="senha" value="" size="20" maxlength="20" required/>
+                        </div>
+                    </div>                                
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <a href="#" onclick="validarCampos()">
+                        <button type="button" class="btn btn-success">Salvar</button>
+                    </a>
+                </div>
+
+
+            </div>                  
         </div>
+
     </div>
+</div>
 
 
-    <!-- Checkout Start -->
-    <div class="container-fluid">
-        <div class="row px-xl-5">
-            <div class="col-lg-12">
-                <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Cadastro</span></h5>
-                <div class="bg-light p-30 mb-5">
-                    <!--<div class="modal-body">-->
-                            <div class="form-group">
-                                <input class="form-control" type="hidden" name="idpessoa" id="idpessoa" value="0" readonly="readonly"/>
-                                <input class="form-control" type="hidden" name="idparticipante" id="idparticipante" value="0" readonly="readonly"/>
-                                <input class="form-control" type="hidden" name="situacao" id="situacao" value="" readonly="readonly"/>
-                            </div>
+<script>
 
-                            <div class="form-group">
-                                <div class="form-line row">
-                                    <div class="col-sm">
-                                        <label id="labelcpfcnpj">CPF/CNPJ</label>
-                                        <input class="form-control" type="text" name="cpfcnpjpessoa" id="cpfcnpjpessoa" value=""/>
-                                    </div>
-                                    <div class="col-sm">
-                                        <label>RG/IE</label>
-                                        <input class="form-control" type="text" name="rgiepessoa" id="rgiepessoa" value=""/>
-                                    </div>
-                                </div>
-                            </div>
+    var cidade = ''; //variavel para controle do carregamento de cidades
 
-                            <div class="form-group">
-                                <div class="form-line row">
-                                    <div class="col-sm">
-                                        <label>Nome/Razão Social</label>
-                                        <input class="form-control" type="text" name="nomerazaopessoa" id="nomerazaopessoa"/>
-                                    </div>
-                                    <div class="col-sm">
-                                        <label>Logradouro</label>
-                                        <input class="form-control" type="text" name="logradouropessoa" id="logradouropessoa"/>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="form-line row">                                                                 
-                                    <div class="col-sm">
-                                        <label>Número</label>
-                                        <input class="form-control" type="text" name="numlogradouropessoa" id="numlogradouropessoa" value=""/>
-                                    </div>
-                                    <div class="col-sm">
-                                        <label>Bairro</label>
-                                        <input class="form-control" type="text" name="bairropessoa" id="bairropessoa" value=""/>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="form-line row">
-                                    <div class="col-sm">
-                                        <label>CEP</label>
-                                        <input class="form-control" type="text" name="ceppessoa" id="ceppessoa" value="" placeholder="00000-000" oninput="criaMascaraCEP()" maxLength="8"/>
-                                    </div>
-                                    <div class="col-sm">
-                                        <label>Estado</label>
-                                        <select class="form-control" name="idestado" id="idestado" onchange="BuscarCidadesPorEstado()" required>
-                                            <option value="nulo">Selecione</option>
-                                            <c:forEach var="estado" items="${estados}">
-                                                <option value="${estado.idEstado}" >
-                                                    ${estado.nomeEstado}
-                                                </option>
-                                            </c:forEach>
-                                        </select>
-                                    </div>
-                                    <div class="col-sm">
-                                        <label>Cidade</label>
-                                        <select class="form-control" name="idcidade" id="idcidade" required>
-                                            <option value="nulo">Selecione</option>
-                                            <c:forEach var="cidade" items="${cidades}">
-                                                <option value="${cidade.idCidade}"}>
-                                                    ${cidade.nomeCidade} 
-                                                </option>
-                                            </c:forEach>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="form-line row">
-                                    <div class="col-sm">
-                                        <label class="m-t-0 header-title">Data Nascimento/Fundação</label>
-                                        <input class="form-control" type="date" name="datanascfundpessoa" id="datanascfundpessoa" value=""/>
-                                    </div>
-                                    <div class="col-sm">                                        
-                                        <label>Telefone</label>
-                                        <input class="form-control" type="tel" name="telefonepessoa" id="telefonepessoa" value="" placeholder="(00) 00000-0000" oninput="criaMascaraTelefone()" maxLength="11"/>
-                                    </div>
-                                    <div class="col-sm">
-                                        <label>E-mail</label>
-                                        <input class="form-control" type="email" name="emailpessoa" id="emailpessoa" placeholder="exemplo@email.com"/>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="form-line row">  
-                                    <div class="col-sm">
-                                        <label>Sexo</label>
-                                        <select class="form-control" name="sexoparticipante" id="sexoparticipante">
-                                            <option value="N" ${participante.sexoParticipante == 'N' ? "selected" : ""}>Prefiro não dizer</option>  
-                                            <option value="F" ${participante.sexoParticipante == 'F' ? "selected" : ""}>Feminino</option>
-                                            <option value="M" ${participante.sexoParticipante == 'M' ? "selected" : ""}>Masculino</option>               
-                                        </select>
-                                    </div>   
-                                    <div class="col-sm">
-                                        <label id="labellogin">Login</label>
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" id="inputGroupPrepend2">@</span>
-                                            </div>
-                                            <input class="form-control" type="text" name="login" id="login" value="" size="20" maxlength="20" required/>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm">
-                                        <label>Senha</label>
-                                        <input class="form-control" type="password" name="senha" id="senha" value="" size="20" maxlength="20" required/>
-                                    </div>
-                                </div>                                
-                            </div>
-                                        
-                                        <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                <a href="#" onclick="validarCampos()">
-                                    <button type="button" class="btn btn-success">Salvar</button>
-                                </a>
-                            </div>
-
-                           
-                        </div>                  
-            </div>
-            
-        </div>
-    </div>
-    
-                                        
-                                        <script>
-    
-     var cidade = ''; //variavel para controle do carregamento de cidades
-
-   function validarCampos() {
+    function validarCampos() {
         console.log("entrei na validação de campos");
 
         url = "PessoaVerificarLogin?login=" + document.getElementById("login").value;
@@ -319,7 +319,7 @@
         if (idEst != 'null') {
             console.log("estado = " + idEst);
             url = "CidadeBuscarPorEstado?idestado=" + idEst;
-            console.log("URL "+url);
+            console.log("URL " + url);
             $.getJSON(url, function (result) {
                 $.each(result, function (index, value) {
                     $('#idcidade').append('<option id="cidade_' + value.idCidade + '"value="' + value.idCidade + '">' + value.nomeCidade + '</option>');
@@ -356,10 +356,10 @@
                 : document.getElementById(`ceppessoa`).value = valorSemPonto;
     }
 
-    
 
-    
-    //verificao do login
+
+
+//verificao do login
     $('#login').blur(function verificarLogin() {
         var login = $('#login').val();
 
@@ -392,34 +392,34 @@
             }
         }
     });
-    
+
     function carregarPessoa(v) {
-        //console.log("Entrou");
+//console.log("Entrou");
         var idM = v;
         var tipoPessoa = 'pessoa';
-        //console.log("Usuario = " + idM);
+//console.log("Usuario = " + idM);
         $(document).ready(function () {
-                    tipoPessoa = 'pessoa';
-                    $.getJSON('PessoaBuscarCpfCnpj', {cpfcnpjpessoa: idM, tipopessoa: tipoPessoa}, function (respostaPessoa) {
-                        console.log(respostaPessoa);
-                        var id = respostaPessoa.idPessoa;
-                        if (id != "0")
-                        {
-                            document.getElementById('labelcpfcnpj').innerHTML = "<FONT COLOR='red'>CPF/CNPJ indisponível</FONT>";
-                            document.getElementById('cpfcnpjpessoa').classList.remove("is-valid");
-                            document.getElementById('cpfcnpjpessoa').classList.add("is-invalid");
-                        } else {
-                            document.getElementById('labelcpfcnpj').innerHTML = "<FONT COLOR='green'>CPF/CNPJ válido</FONT>";
-                            document.getElementById('cpfcnpjpessoa').classList.add("is-valid");
-                            document.getElementById('cpfcnpjpessoa').classList.remove("is-invalid");
-                        }
+            tipoPessoa = 'pessoa';
+            $.getJSON('PessoaBuscarCpfCnpj', {cpfcnpjpessoa: idM, tipopessoa: tipoPessoa}, function (respostaPessoa) {
+                console.log(respostaPessoa);
+                var id = respostaPessoa.idPessoa;
+                if (id != "0")
+                {
+                    document.getElementById('labelcpfcnpj').innerHTML = "<FONT COLOR='red'>CPF/CNPJ indisponível</FONT>";
+                    document.getElementById('cpfcnpjpessoa').classList.remove("is-valid");
+                    document.getElementById('cpfcnpjpessoa').classList.add("is-invalid");
+                } else {
+                    document.getElementById('labelcpfcnpj').innerHTML = "<FONT COLOR='green'>CPF/CNPJ válido</FONT>";
+                    document.getElementById('cpfcnpjpessoa').classList.add("is-valid");
+                    document.getElementById('cpfcnpjpessoa').classList.remove("is-invalid");
+                }
 
-                    });
-                
+            });
+
         });
     }
-    
+
 
 </script>
 
-   <jsp:include page="/home/footer.jsp"/>
+<jsp:include page="/home/footer.jsp"/>
