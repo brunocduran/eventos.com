@@ -14,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -34,17 +35,28 @@ public class OrganizadorLogadoCarregar extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=iso-8859-1");
-        try{
+        try {
             int idOrganizador = Integer.parseInt(request.getParameter("idOrganizador"));
-            OrganizadorDAO oOrganizadorDAO = new OrganizadorDAO();
-            request.setAttribute("organizador", oOrganizadorDAO.carregar(idOrganizador));
-            
-            EstadoDAO oEstadoDAO = new EstadoDAO();
-            request.setAttribute("estados", oEstadoDAO.listar());
 
-            request.getRequestDispatcher("/painel/cadastros/organizador/organizadorCadastrar.jsp").forward(request, response);
-        }catch(Exception ex){
-            System.out.println("Erro no Servlet ao carregar OrganizadorLogado "+ex.getMessage());
+            HttpSession sessao = request.getSession();
+            int idUsuario = Integer.parseInt(sessao.getAttribute("idusuario").toString());
+            String tipoUsuario = sessao.getAttribute("tipousuario").toString();
+
+            if (idOrganizador == idUsuario) {
+                OrganizadorDAO oOrganizadorDAO = new OrganizadorDAO();
+                request.setAttribute("organizador", oOrganizadorDAO.carregar(idOrganizador));
+
+                EstadoDAO oEstadoDAO = new EstadoDAO();
+                request.setAttribute("estados", oEstadoDAO.listar());
+
+                request.getRequestDispatcher("/painel/cadastros/organizador/organizadorCadastrar.jsp").forward(request, response);
+            } else {
+                request.getRequestDispatcher("/Painel").forward(request, response);
+
+            }
+
+        } catch (Exception ex) {
+            System.out.println("Erro no Servlet ao carregar OrganizadorLogado " + ex.getMessage());
             ex.printStackTrace();
         }
     }

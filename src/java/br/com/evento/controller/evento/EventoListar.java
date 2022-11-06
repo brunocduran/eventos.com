@@ -14,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -36,7 +37,19 @@ public class EventoListar extends HttpServlet {
          response.setContentType("text/html;charset=iso-8859-1");
         try{
             EventoDAO dao = new EventoDAO();
-            request.setAttribute("eventos", dao.listar());
+            int parametroListar = 0;
+            
+            HttpSession sessao = request.getSession();
+            int idUsuario = Integer.parseInt(sessao.getAttribute("idusuario").toString());
+            String tipoUsuario = sessao.getAttribute("tipousuario").toString();
+            
+            if (tipoUsuario.equalsIgnoreCase("Organizador")){
+                parametroListar = idUsuario;
+            }else{
+                parametroListar = 0;
+            }            
+            
+            request.setAttribute("eventos", dao.listar(parametroListar));
             request.getRequestDispatcher("painel/cadastros/evento/evento.jsp").forward(request, response);
         } catch(Exception ex){
             System.out.println("Problema no servlet ao listar eventos"+ex.getMessage());

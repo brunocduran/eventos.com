@@ -192,13 +192,25 @@ public class EventoDAO {
         }
     }
 
-    public List<Object> listar() {
+    public List<Object> listar(int idusuario) {
         List<Object> resultado = new ArrayList<>();
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        String sql = "select * from evento order by nomeevento";
+        String sql = "";
+
+        if (idusuario == 0) {
+            sql = "select * from evento order by nomeevento";
+        } else {
+            sql = "select evento.* from evento, organizadorevento where evento.idevento = organizadorevento.idevento "
+                    + " and organizadorevento.idorganizador = ?";
+        }
         try {
             stmt = conexao.prepareStatement(sql);
+
+            if (idusuario != 0) {
+                stmt.setInt(1, idusuario);
+            }
+
             rs = stmt.executeQuery();
             while (rs.next()) {
                 Evento oEvento = new Evento();

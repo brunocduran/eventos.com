@@ -25,6 +25,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -46,7 +47,12 @@ public class EventoCarregar extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=iso-8859-1");
         try{
-            int idEvento = Integer.parseInt(request.getParameter("idEvento"));
+            HttpSession sessao = request.getSession();
+            int idUsuario = Integer.parseInt(sessao.getAttribute("idusuario").toString());
+            String tipoUsuario = sessao.getAttribute("tipousuario").toString();
+            int verificaEvento = 0; 
+                    
+            int idEvento = Integer.parseInt(request.getParameter("idEvento"));   
             EventoDAO oEventoDAO = new EventoDAO();
             request.setAttribute("evento", oEventoDAO.carregar(idEvento));
             GenericDAO oCidadedao = new CidadeDAO();
@@ -61,8 +67,7 @@ public class EventoCarregar extends HttpServlet {
             request.setAttribute("funcoes", oFuncaoDAO.listar());
             GenericDAO oTipoAtividadeDAO = new TipoAtividadeDAO();
             request.setAttribute("tiposatividades", oTipoAtividadeDAO.listar());
-            
-            
+ 
             //Carregar OrganizadorEvento
             OrganizadorEventoDAO oOrganizadorEventoDAO = new OrganizadorEventoDAO();
             request.setAttribute("organizadoresEvento", oOrganizadorEventoDAO.listarOrganizadorEvento(idEvento));
@@ -70,8 +75,18 @@ public class EventoCarregar extends HttpServlet {
             //Carregar AtividadeEvento
             AtividadeEventoDAO oAtividadeEventoDAO = new AtividadeEventoDAO();
             request.setAttribute("atividadesEvento", oAtividadeEventoDAO.listarAtividadeEvento(idEvento));
+        
+            if (tipoUsuario.equalsIgnoreCase("Organizador")){
+                verificaEvento = oOrganizadorEventoDAO.verificaOrgEvento(idUsuario, idEvento);
+            }else{
+                verificaEvento = 1;
+            }
 
-            request.getRequestDispatcher("/painel/cadastros/evento/eventoCadastrar.jsp").forward(request, response);
+            if (verificaEvento >= 1){
+                request.getRequestDispatcher("/painel/cadastros/evento/eventoCadastrar.jsp").forward(request, response);
+            }else{
+                request.getRequestDispatcher("/Painel").forward(request, response);
+            }
         }catch(Exception ex){
             System.out.println("Erro servlet evento carregar"+ex.getMessage());
             ex.printStackTrace();
