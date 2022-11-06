@@ -50,6 +50,7 @@ public class FilterAutenticacao implements Filter{
                     urlParaAutenticar.contains("/PessoaVerificarLogin") ||
                     urlParaAutenticar.equalsIgnoreCase("/CidadeBuscarPorEstado") ||
                     urlParaAutenticar.equalsIgnoreCase("/Cadastrar") ||
+                    urlParaAutenticar.equalsIgnoreCase("/EventoCarregarHome") ||
                     urlParaAutenticar.equalsIgnoreCase("/Home") ||
                     urlParaAutenticar.equalsIgnoreCase("/index.jsp"))){             
               
