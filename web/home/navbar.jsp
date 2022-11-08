@@ -4,16 +4,19 @@
 <!-- Topbar Start -->
     <div class="container-fluid">         
             <div class="col-lg-6 text-center text-lg-right">                
-                <div class="d-inline-flex align-items-center d-block d-lg-none"> 
+                <div class="d-inline-flex py-1 align-items-center d-block d-lg-none"> 
                    <c:if test="${sessionScope.idusuario != null}">
-                        <a href="${pageContext.request.contextPath}/painel/home.jsp" class="btn px-0 ml-2">
-                               <i class="nav-icon fas fa-lock"></i>
-                          </a>  
+                        <a href="${pageContext.request.contextPath}/painel/home.jsp">
+                      <span class="h6 ml-2 text-decoration-none text-truncate">
+                      Painel:
+                      <i class="fas fa-user-circle"></i>    
+                      ${sessionScope.nomeusuario} - ${sessionScope.tipousuario}</span>  
                     </c:if>                
                     <c:if test="${sessionScope.idusuario == null}">
-                       <a href="${pageContext.request.contextPath}/painel/login.jsp" class="btn px-0 ml-2">
-                                 <i class="nav-icon fas fa-lock"></i>
-                       </a>  
+                       
+                       <a href="${pageContext.request.contextPath}/painel/login.jsp">
+                    <span class="h6 ml-2 text-decoration-none text-truncate">
+                    <i class="nav-icon fas fa-lock"></i> Login</span></a>
                     </c:if>
                 </div>
             </div>
@@ -74,7 +77,7 @@
             </div>
             <div class="col-lg-9">
                 <nav class="navbar navbar-expand-lg bg-dark navbar-dark py-3 py-lg-0 px-0">
-                    <a href="" class="text-decoration-none d-block d-lg-none">
+                    <a href="${pageContext.request.contextPath}/index.jsp" class="text-decoration-none d-block d-lg-none">
                         <span class="h1 text-uppercase text-primary bg-dark px-2">EVENTOS</span>
                         <span class="h1 text-uppercase text-dark bg-primary px-2 ml-n1">.COM</span>
                     </a>
