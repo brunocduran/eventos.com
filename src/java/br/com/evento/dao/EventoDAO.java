@@ -323,16 +323,26 @@ public class EventoDAO {
         }
         return resultado;
     }
-    
+
     public List<Object> listarEventoCategoria(int numero) {
         int idCategoriaEvento = numero;
         List<Object> resultado = new ArrayList<>();
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        String sql = "select * from evento where evento.idcategoriaevento = ? order by datainicioevento";
+        String sql;
+
+        if (idCategoriaEvento == 0) {
+            sql = "select * from evento order by datainicioevento";
+        } else {
+            sql = "select * from evento where evento.idcategoriaevento = ? order by datainicioevento";
+        }
+
         try {
             stmt = conexao.prepareStatement(sql);
-            stmt.setInt(1, idCategoriaEvento);
+            if (idCategoriaEvento != 0) {
+                stmt.setInt(1, idCategoriaEvento);
+            }
+
             rs = stmt.executeQuery();
             while (rs.next()) {
                 Evento oEvento = new Evento();

@@ -19,7 +19,13 @@
 
 <!-- Products Start -->
 <div class="container-fluid pt-5 pb-3">
-    <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Nome</span></h2>
+    <c:if test="${categoria.idCategoriaEvento != null}">
+    <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">${categoria.nome}</span></h2>
+    </c:if>
+    <c:if test="${categoria.idCategoriaEvento == null}">
+    <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Todos Eventos</span></h2>
+    </c:if>
+    
     <div class="row px-xl-5">
         <c:forEach var="evento" items="${eventos}">
             <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
