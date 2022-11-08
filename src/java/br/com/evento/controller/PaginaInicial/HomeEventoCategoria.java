@@ -40,7 +40,6 @@ public class HomeEventoCategoria extends HttpServlet {
             EventoDAO oEventoDAO = new EventoDAO();
             request.setAttribute("categoria", oCategoriaEventoDAO.carregar(idCategoriaEvento));
             request.setAttribute("categorias", oCategoriaEventoDAO.listarAtivos());
-            
             request.setAttribute("eventos", oEventoDAO.listarEventoCategoria(idCategoriaEvento));
             request.getRequestDispatcher("/home/eventoCategoria.jsp").forward(request, response);
             
