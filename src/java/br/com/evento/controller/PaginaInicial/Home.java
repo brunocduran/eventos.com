@@ -6,6 +6,7 @@
 package br.com.evento.controller.PaginaInicial;
 
 import br.com.evento.dao.CategoriaEventoDAO;
+import br.com.evento.dao.ConfiguracaoBannerDAO;
 import br.com.evento.dao.EventoDAO;
 import br.com.evento.dao.GenericDAO;
 import br.com.evento.dao.InstituicaoDAO;
@@ -39,10 +40,15 @@ public class Home extends HttpServlet {
         try{
             InstituicaoDAO dao = new InstituicaoDAO();
             CategoriaEventoDAO oCategoriaEventoDAO = new CategoriaEventoDAO();
+            ConfiguracaoBannerDAO oConfiguracaoBannerDAO = new ConfiguracaoBannerDAO();
+            
             EventoDAO oEventoDAO = new EventoDAO();
             request.setAttribute("instituicoes", dao.listarCarrossel());
             request.setAttribute("categorias", oCategoriaEventoDAO.listarAtivos());
             request.setAttribute("eventos", oEventoDAO.listarHome());
+            request.setAttribute("bannersCentrais", oConfiguracaoBannerDAO.listarHome("C"));
+            request.setAttribute("bannerSuperior", oConfiguracaoBannerDAO.listarHome("S"));
+            request.setAttribute("bannerInferior", oConfiguracaoBannerDAO.listarHome("I"));
             request.getRequestDispatcher("/home/home.jsp").forward(request, response);
             
         } catch(Exception ex){

@@ -265,8 +265,8 @@
                                     </a>
                                 </li>
                             </c:if>
-                                
-                              <c:if test="${sessionScope.tipousuario == 'Administrador' or sessionScope.tipousuario == 'Organizador'}">
+
+                            <c:if test="${sessionScope.tipousuario == 'Administrador' or sessionScope.tipousuario == 'Organizador'}">
                                 <li class="nav-item">
                                     <a href="${pageContext.request.contextPath}/CategoriaEventoListar" class="nav-link" id="menucategoriaevento">
                                         <i class="nav-icon fas fa-cube"></i>
@@ -276,12 +276,23 @@
                                     </a>
                                 </li>
                             </c:if>
-                              <c:if test="${sessionScope.tipousuario == 'Administrador' or sessionScope.tipousuario == 'Organizador'}">
+                            <c:if test="${sessionScope.tipousuario == 'Administrador' or sessionScope.tipousuario == 'Organizador'}">
                                 <li class="nav-item">
                                     <a href="${pageContext.request.contextPath}/EventoListar" class="nav-link" id="menuevento">
                                         <i class="nav-icon far fa-calendar-alt"></i>
                                         <p>
                                             Evento
+                                        </p>
+                                    </a>
+                                </li>
+                            </c:if>
+
+                            <c:if test="${sessionScope.tipousuario == 'Administrador' or sessionScope.tipousuario == 'Organizador'}">
+                                <li class="nav-item">
+                                    <a href="${pageContext.request.contextPath}/ConfiguracaoBannerListar" class="nav-link" id="menuconfiguracaobanner">
+                                        <i class="nav-icon far fa-calendar-alt"></i>
+                                        <p>
+                                            Configuração Banner
                                         </p>
                                     </a>
                                 </li>

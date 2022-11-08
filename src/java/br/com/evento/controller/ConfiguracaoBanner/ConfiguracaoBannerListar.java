@@ -40,7 +40,7 @@ public class ConfiguracaoBannerListar extends HttpServlet {
             request.setAttribute("configuracaobanners", dao.listar());
             EventoDAO oEventoDAO = new EventoDAO();
             request.setAttribute("eventos", oEventoDAO.listar(0));
-            request.getRequestDispatcher("painel/cadastros/configuracaoBanner/configuracaobanner.jsp").forward(request, response);
+            request.getRequestDispatcher("painel/cadastros/configuracaoBanner/configuracaoBanner.jsp").forward(request, response);
         } catch(Exception ex){
             System.out.println("Problemas no Servlet ao listar Configuracao de Banner! Erro: "+ ex.getMessage());
         }

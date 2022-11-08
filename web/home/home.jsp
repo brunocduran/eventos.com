@@ -23,61 +23,65 @@
         <div class="col-lg-8">
             <div id="header-carousel" class="carousel slide carousel-fade mb-30 mb-lg-0" data-ride="carousel">
                 <ol class="carousel-indicators">
-                    <li data-target="#header-carousel" data-slide-to="0" class="active"></li>
-                    <li data-target="#header-carousel" data-slide-to="1"></li>
-                    <li data-target="#header-carousel" data-slide-to="2"></li>
+                    <!--<li data-target="#header-carousel" data-slide-to="0" class="active"></li>-->
+                    <c:forEach var="i" begin="0" end="3">
+                        <li data-target="#header-carousel" data-slide-to="${i}" class="${i == 0 ? 'active' : ''}"></li>      
+                    </c:forEach>
                 </ol>
                 <div class="carousel-inner">
+                    <c:forEach var="banner" items="${bannersCentrais}">
                     <div class="carousel-item position-relative active" style="height: 430px;">
-                        <img class="position-absolute w-100 h-100" src="${pageContext.request.contextPath}/home/img/carousel-2.jpg" style="object-fit: cover;">
+                        <img class="position-absolute w-100 h-100" src="${banner.imagem}" style="object-fit: cover;">
                         <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                             <div class="p-3" style="max-width: 700px;">
-                                <h1 class="display-4 text-white mb-3 animate__animated animate__fadeInDown texto-banner">II Arraiá da FEF</h1>
-                                <p class="mx-md-5 px-5 animate__animated animate__bounceIn texto-banner">03 de Junho de 2022 às 19:00 no Salão de Eventos da Pastoral da Igreja Aparecida</p>
+                                <h1 class="display-4 text-white mb-3 animate__animated animate__fadeInDown texto-banner">${banner.tituloBanner}</h1>
+                                <p class="mx-md-5 px-5 animate__animated animate__bounceIn texto-banner">
+                                  ${banner.msgBanner}  
+                                </p>
+                                
+                                <p class="mx-md-5 px-5 animate__animated animate__bounceIn texto-banner">
+                                 <c:if test="${banner.evento.dataInicioEvento == banner.evento.dataTerminoEvento}">
+                                    ${banner.evento.dataInicioEventoFormatada}
+                                </c:if>
+                                <c:if test="${banner.evento.dataInicioEvento != banner.evento.dataTerminoEvento}">
+                                    ${banner.evento.dataInicioEventoFormatada} à ${banner.evento.dataTerminoEventoFormatada}
+                                </c:if>     
+                                    
+                                </p>
+                                <p class="mx-md-5 px-5 animate__animated animate__bounceIn texto-banner">
+                                  ${banner.evento.cidade.nomeCidade} - ${banner.evento.cidade.estado.siglaEstado}  
+                                </p>
                                 <a class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp" href="#">Inscreva-se</a>
                             </div>
                         </div>
                     </div>
-                    <div class="carousel-item position-relative" style="height: 430px;">
-                        <img class="position-absolute w-100 h-100" src="${pageContext.request.contextPath}/home/img/carousel-1.jpg" style="object-fit: cover;">
-                        <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                            <div class="p-3" style="max-width: 700px;">
-                                <h1 class="display-4 text-white mb-3 animate__animated animate__fadeInDown texto-banner">IV SEMANA INTEGRADA DE CURSOS</h1>
-                                <p class="mx-md-5 px-5 animate__animated animate__bounceIn texto-banner">10 de Abril de 2022 às 19:00 no Salão de Eventos da Pastoral da Igreja Aparecida</p>
-                                <a class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp" href="#">Inscreva-se</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="carousel-item position-relative" style="height: 430px;">
-                        <img class="position-absolute w-100 h-100" src="${pageContext.request.contextPath}/home/img/carousel-3.jpg" style="object-fit: cover;">
-                        <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                            <div class="p-3" style="max-width: 700px;">
-                                <h1 class="display-4 text-white mb-3 animate__animated animate__fadeInDown texto-banner">X SEMANA ACADÊMICA USP</h1>
-                                <p class="mx-md-5 px-5 animate__animated animate__bounceIn texto-banner">De 10 a 16 de Agosto de 2022 - Campus USP São Paulo</p>
-                                <a class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp" href="#">Inscreva-se</a>
-                            </div>
-                        </div>
-                    </div>
+                    </c:forEach>
+                  
+                    
                 </div>
             </div>
         </div>
         <div class="col-lg-4">
+            <c:forEach var="banner" items="${bannerSuperior}">
             <div class="product-offer mb-30" style="height: 200px;">
-                <img class="img-fluid" src="${pageContext.request.contextPath}/home/img/offer-1.jpg" alt="">
+                <img class="img-fluid" src="${banner.imagem}" alt="">
                 <div class="offer-text">
-                    <h6 class="text-white text-uppercase texto-banner">UFSCAR</h6>
-                    <h3 class="text-white mb-3 texto-banner">Semana da Biologia</h3>
+                    <h6 class="text-white text-uppercase texto-banner">${banner.evento.curso.instituicao.nomeInstituicao}</h6>
+                    <h3 class="text-white mb-3 texto-banner">${banner.tituloBanner}</h3>
                     <a href="" class="btn btn-primary">Inscreva-se</a>
                 </div>
             </div>
+            </c:forEach>
+             <c:forEach var="banner" items="${bannerInferior}">
             <div class="product-offer mb-30" style="height: 200px;">
-                <img class="img-fluid" src="${pageContext.request.contextPath}/home/img/offer-2.jpg" alt="">
+                <img class="img-fluid" src="${banner.imagem}" alt="">
                 <div class="offer-text">
-                    <h6 class="text-white text-uppercase texto-banner">UNIBR</h6>
-                    <h3 class="text-white mb-3 texto-banner">Semana Integrada</h3>
+                    <h6 class="text-white text-uppercase texto-banner">${banner.evento.curso.instituicao.nomeInstituicao}</h6>
+                    <h3 class="text-white mb-3 texto-banner">${banner.tituloBanner}</h3>
                     <a href="" class="btn btn-primary">Inscreva-se</a>
                 </div>
             </div>
+            </c:forEach>
         </div>
     </div>
 </div>

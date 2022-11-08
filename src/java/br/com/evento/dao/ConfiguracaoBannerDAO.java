@@ -206,4 +206,52 @@ public class ConfiguracaoBannerDAO implements GenericDAO{
         return resultado;
     }
     
+    public List<Object> listarHome(String tipoBanner) {
+        List<Object> resultado = new ArrayList<>();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String sql = "select * from configuracaobanner where tipobanner = ?";
+        
+        if (tipoBanner.equalsIgnoreCase("S") || tipoBanner.equalsIgnoreCase("I")){
+            sql += " limit 1";
+        }
+        
+        try{
+            stmt = conexao.prepareStatement(sql);
+            stmt.setString(1, tipoBanner);
+            rs = stmt.executeQuery();
+            
+            while (rs.next()) {
+                ConfiguracaoBanner oConfiguracaoBanner = new ConfiguracaoBanner();
+                
+               oConfiguracaoBanner.setIdConfiguracaoBanner(rs.getInt("idconfiguracaobanner"));
+               oConfiguracaoBanner.setTituloBanner(rs.getString("titulobanner"));
+               oConfiguracaoBanner.setMsgBanner(rs.getString("msgbanner"));
+               oConfiguracaoBanner.setImagem(rs.getString("imagem"));
+               oConfiguracaoBanner.setTipoBanner(rs.getString("tipobanner"));
+               oConfiguracaoBanner.setDataInicial(rs.getDate("datainicial"));
+               oConfiguracaoBanner.setDataFinal(rs.getDate("datafinal"));
+               
+                
+        
+                EventoDAO oEventoDAO = null;
+                try {
+                    oEventoDAO = new EventoDAO();
+                } catch (Exception ex) {
+                    System.out.println("Erro buscar evento " + ex.getMessage());
+                    ex.printStackTrace();
+                }
+                oConfiguracaoBanner.setEvento((Evento) oEventoDAO.carregar(rs.getInt("idevento")));
+                
+                
+                resultado.add(oConfiguracaoBanner);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Problemas ao listar configuracao do banner na DAO! Erro: " + ex.getMessage());
+        }
+        return resultado;
+    }
+ 
 }
+
+
