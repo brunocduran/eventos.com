@@ -52,18 +52,11 @@ public class EventoCarregarHome extends HttpServlet {
             request.setAttribute("cursos", oCursoDAO.listar());            
             GenericDAO oCategoriaEventoDAO = new CategoriaEventoDAO();
             request.setAttribute("categoriaeventos", oCategoriaEventoDAO.listar());
-            GenericDAO oOrganizadorDAO = new OrganizadorDAO();
-            request.setAttribute("organizadores", oOrganizadorDAO.listar());
             GenericDAO oFuncaoDAO = new FuncaoDAO();
             request.setAttribute("funcoes", oFuncaoDAO.listar());
             GenericDAO oTipoAtividadeDAO = new TipoAtividadeDAO();
             request.setAttribute("tiposatividades", oTipoAtividadeDAO.listar());
-            
-            
-            //Carregar OrganizadorEvento
-            OrganizadorEventoDAO oOrganizadorEventoDAO = new OrganizadorEventoDAO();
-            request.setAttribute("organizadoresEvento", oOrganizadorEventoDAO.listarOrganizadorEvento(idEvento));
-            
+          
             //Carregar AtividadeEvento
             AtividadeEventoDAO oAtividadeEventoDAO = new AtividadeEventoDAO();
             request.setAttribute("atividadesEvento", oAtividadeEventoDAO.listarAtividadeEvento(idEvento));

@@ -24,11 +24,11 @@
 
     <div class="row px-xl-5"> <!--inicio div da imagem e detalhes-->
 
-        <div class="col-lg-5 mb-30"> <!--inicio da imagem-->
+        <div class="col-lg-6 mb-30"> <!--inicio da imagem-->
             <img class="w-100 h-100" src="${evento.imagem}" alt="imagem" name="target" id="target">                
         </div> <!--final da imagem-->
 
-        <div class="col-lg-7 h-auto mb-30"><!--inicio dos detalhes evento-->
+        <div class="col-lg-6 h-auto mb-30"><!--inicio dos detalhes evento-->
             <div class="h-100 bg-light p-30">
 
                 <div class="form-group">
