@@ -18,8 +18,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author johat
  */
-@WebServlet(name = "ConfiguracaoExcluir", urlPatterns = {"/ConfiguracaoExcluir"})
-public class ConfiguracaoExcluir extends HttpServlet {
+@WebServlet(name = "ConfiguracaoBannerExcluir", urlPatterns = {"/ConfiguracaoBannerExcluir"})
+public class ConfiguracaoBannerExcluir extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,10 +38,11 @@ public class ConfiguracaoExcluir extends HttpServlet {
         try{
             ConfiguracaoBannerDAO dao = new ConfiguracaoBannerDAO();
             if(dao.excluir(idConfiguracaoBanner)){
-                response.getWriter().write("1");
+               response.sendRedirect("ConfiguracaoBannerListar");
             }else{
                 response.getWriter().write("0");
             }
+            
         }catch(Exception e){
             System.out.println("Problemas na Servelet Excluir Configuracao de Banner! Erro: "+e.getMessage());
             e.printStackTrace();
