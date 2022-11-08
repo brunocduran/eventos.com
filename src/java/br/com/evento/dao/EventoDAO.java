@@ -324,6 +324,78 @@ public class EventoDAO {
         return resultado;
     }
 
+    public List<Object> listarEventoCategoria(int numero) {
+        int idCategoriaEvento = numero;
+        List<Object> resultado = new ArrayList<>();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String sql;
+
+        if (idCategoriaEvento == 0) {
+            sql = "select * from evento order by datainicioevento";
+        } else {
+            sql = "select * from evento where evento.idcategoriaevento = ? order by datainicioevento";
+        }
+
+        try {
+            stmt = conexao.prepareStatement(sql);
+            if (idCategoriaEvento != 0) {
+                stmt.setInt(1, idCategoriaEvento);
+            }
+
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                Evento oEvento = new Evento();
+
+                oEvento.setIdEvento(rs.getInt("idEvento"));
+                oEvento.setNomeEvento(rs.getString("nomeEvento"));
+                oEvento.setValorEvento(rs.getDouble("valorEvento"));
+                oEvento.setValorEventoPrazo(rs.getDouble("valorEvento"));
+                oEvento.setDataInicioEvento(rs.getDate("dataInicioEvento"));
+                oEvento.setDataTerminoEvento(rs.getDate("dataTerminoEvento"));
+                oEvento.setInformacaoEvento(rs.getString("informacaoEvento"));
+                oEvento.setSituacaoEvento(rs.getString("situacaoEvento"));
+                oEvento.setSaldoCaixa(rs.getDouble("saldoCaixa"));
+                oEvento.setSituacaoCaixa(rs.getString("situacaoCaixa"));
+                oEvento.setImagem(rs.getString("imagem"));
+
+                CidadeDAO oCidadeDAO = null;
+                try {
+                    oCidadeDAO = new CidadeDAO();
+                } catch (Exception ex) {
+                    System.out.println("Erro buscar cidade " + ex.getMessage());
+                    ex.printStackTrace();
+                }
+                oEvento.setCidade((Cidade) oCidadeDAO.carregar(rs.getInt("idcidade")));
+
+                CursoDAO oCursoDAO = null;
+                try {
+                    oCursoDAO = new CursoDAO();
+                } catch (Exception ex) {
+                    System.out.println("Erro buscar curso " + ex.getMessage());
+                    ex.printStackTrace();
+                }
+
+                oEvento.setCurso((Curso) oCursoDAO.carregar(rs.getInt("idcurso")));
+
+                CategoriaEventoDAO oCategoriaEventoDAO = null;
+                try {
+                    oCategoriaEventoDAO = new CategoriaEventoDAO();
+                } catch (Exception ex) {
+                    System.out.println("Erro buscar curso " + ex.getMessage());
+                    ex.printStackTrace();
+                }
+
+                oEvento.setCategoriaEvento((CategoriaEvento) oCategoriaEventoDAO.carregar(rs.getInt("idcategoriaevento")));
+
+                resultado.add(oEvento);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Problemas ao listar Cidade na DAO! Erro: " + ex.getMessage());
+        }
+        return resultado;
+    }
+
     public List<Object> listarEventoOrganizador(int idOrganizador) {
         List<Object> resultado = new ArrayList<>();
         PreparedStatement stmt = null;
