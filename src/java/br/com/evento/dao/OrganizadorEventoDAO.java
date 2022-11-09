@@ -249,5 +249,59 @@ public class OrganizadorEventoDAO {
         }
         return resultado;
     }
+    
+    public Object carregarOrganizadorLogado(int numero) {
+        int idEventoNovo = numero;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        OrganizadorEvento oOrganizadorEvento = null;
+        String sql = "select * from organizadorevento where idevento=? limit 1";
+
+        try {
+            stmt = conexao.prepareStatement(sql);
+            stmt.setInt(1, idEventoNovo);
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Evento oEvento = null;
+                try {
+                    EventoDAO oEventoDAO = new EventoDAO();
+                    int idEvento = rs.getInt("idevento");
+                    oEvento = (Evento) oEventoDAO.carregar(idEvento);
+                } catch (Exception ex) {
+                    System.out.println("Problemas ao carregar evento no OrganizadorDAO! Erro:" + ex.getMessage());
+                }
+
+                Organizador oOrganizador = null;
+                try {
+                    OrganizadorDAO oOrganizadorDAO = new OrganizadorDAO();
+                    int idOrganizador = rs.getInt("idorganizador");
+                    oOrganizador = (Organizador) oOrganizadorDAO.carregar(idOrganizador);
+                } catch (Exception ex) {
+                    System.out.println("Problemas ao carregar organizador no OrganizadorDAO! Erro:" + ex.getMessage());
+                }
+
+                Funcao oFuncao = null;
+                try {
+                    FuncaoDAO oFuncaoDAO = new FuncaoDAO();
+                    int idFuncao = rs.getInt("idfuncao");
+                    oFuncao = (Funcao) oFuncaoDAO.carregar(idFuncao);
+                } catch (Exception ex) {
+                    System.out.println("Problemas ao carregar funcao no OrganizadorDAO! Erro:" + ex.getMessage());
+                }
+
+                oOrganizadorEvento = new OrganizadorEvento(
+                        rs.getInt("idorganizadorevento"),
+                        oEvento,
+                        oOrganizador,
+                        oFuncao);
+
+            }
+            return oOrganizadorEvento;
+        } catch (SQLException ex) {
+            System.out.println("Problemas ao carregar organizadorevento na DAO! Erro " + ex.getMessage());
+            return null;
+        }
+    }
 
 }

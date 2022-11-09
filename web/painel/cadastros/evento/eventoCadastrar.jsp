@@ -471,6 +471,18 @@
         }
     }
 
+    function carregarOrganizadorLogado() {
+        var idEv = document.getElementById('idevento').value;
+        $.getJSON('OrganizadorEventoCarregarOrganizadorLogado', {idEvento: idEv}, function (respostaServlet) {
+            console.log(respostaServlet);
+            if (respostaServlet != null) {
+                var idOrg = respostaServlet.idOrganizadorEvento;
+                var nome = respostaServlet.organizador.nomeRazaoPessoa + ' - ' + respostaServlet.funcao.descricao;
+                adcDivOrganizador(idOrg, nome);
+            }
+        });
+    }
+
     function gravarDados() {
         console.log("Gravando dados....");
         var target = document.getElementById("target").src;
@@ -497,7 +509,7 @@
             success:
                     function (data) {
                         console.log("resposta servlet->");
-                        //console.log(data);
+                        //console.log("JSON EVENTO: " + data);
                         var jSon = JSON.parse(data);
                         var id = jSon.idEvento;
                         console.log("Testeeee: " + id);
@@ -505,6 +517,13 @@
                             //ver o que vai fazer aqui
                             $('#idevento').val(id);
                             stepper.next();
+                            
+                            var div = $.trim($('#espacoaddorganizador').html()).length;
+                            console.log("tamanho div: " + div);
+                            if (div == 43) {
+                                carregarOrganizadorLogado();
+                            }
+
                         } else {
                             Swal.fire({
                                 position: 'center',
