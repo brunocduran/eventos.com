@@ -34,11 +34,13 @@
                                             <i class="fas fa-edit"></i><Strong> Alterar </Strong> </a>
                                     </td>
                                     <td align="center">
-                                        <a href="${pageContext.request.contextPath}/ConfiguracaoBannerExcluir?idConfiguracaoBanner=${configuracaoBanner.idConfiguracaoBanner}"
-                                           class="btn btn-group-lg btn-primary"   >
-                                            Excluir</a></td>
-                                    
-
+                                        <a href="${pageContext.request.contextPath}/ConfiguracaoBannerExcluir?idConfiguracaoBanner=${configuracaoBanner.idConfiguracaoBanner}" class="btn btn-danger">
+                                            <i class="fas fa-fw fa-times"></i>
+                                            <Strong>
+                                                Excluir
+                                            </Strong>
+                                        </a>
+                                    </td>
                                 </tr>
                             </c:forEach>
                         </tbody>
@@ -98,7 +100,7 @@
                                     <option value="C" >Central</option>
                                     <option value="S">Lateral Superior</option>
                                     <option value="I">Lateral Inferior</option>
-                                    
+
                                 </select>
                             </div>
 
@@ -408,7 +410,7 @@
                             }).then(function () {
                                 window.location.href = "${pageContext.request.contextPath}/ConfiguracaoBannerListar";
                             })
-                        } else {
+                        } else if (data == 0){
                             Swal.fire({
                                 position: 'center',
                                 icon: 'error',
@@ -419,6 +421,18 @@
                             }).then(function () {
                                 window.location.href = "${pageContext.request.contextPath}/ConfiguracaoBannerListar";
                             })
+                        }else{
+                         Swal.fire({
+                                position: 'center',
+                                icon: 'error',
+                                title: 'Erro',
+                                text: 'Já existe um banner nesse período!',
+                                showConfirmButton: true,
+                                timer: 10000
+                            }).then(function () {
+                                
+                            })
+                            
                         }
                     },
             error:

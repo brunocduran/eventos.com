@@ -11,6 +11,7 @@ import br.com.evento.utils.SingleConnection;
 import br.com.evento.model.ConfiguracaoBanner;
 import br.com.evento.model.Evento;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,11 +22,11 @@ import java.util.List;
  *
  * @author johat
  */
-public class ConfiguracaoBannerDAO implements GenericDAO{
-    
+public class ConfiguracaoBannerDAO implements GenericDAO {
+
     private Connection conexao;
-    
-    public ConfiguracaoBannerDAO() throws Exception{
+
+    public ConfiguracaoBannerDAO() throws Exception {
         conexao = SingleConnection.getConnection();
     }
 
@@ -33,9 +34,9 @@ public class ConfiguracaoBannerDAO implements GenericDAO{
     public Boolean cadastrar(Object objeto) {
         ConfiguracaoBanner oConfiguracaoBanner = (ConfiguracaoBanner) objeto;
         Boolean retorno = false;
-        if(oConfiguracaoBanner.getIdConfiguracaoBanner() == 0){
+        if (oConfiguracaoBanner.getIdConfiguracaoBanner() == 0) {
             retorno = this.inserir(oConfiguracaoBanner);
-        }else{
+        } else {
             retorno = this.alterar(oConfiguracaoBanner);
         }
         return retorno;
@@ -47,15 +48,15 @@ public class ConfiguracaoBannerDAO implements GenericDAO{
         PreparedStatement stmt = null;
         String sql = "INSERT INTO configuracaobanner (titulobanner, msgbanner, imagem, tipobanner, datainicial, datafinal, idevento) "
                 + "values (?,?,?,?,?,?,?)";
-                
+
         try {
             stmt = conexao.prepareStatement(sql);
             stmt.setString(1, oConfiguracaoBanner.getTituloBanner());
             stmt.setString(2, oConfiguracaoBanner.getMsgBanner());
             stmt.setString(3, oConfiguracaoBanner.getImagem());
             stmt.setString(4, oConfiguracaoBanner.getTipoBanner());
-            stmt.setDate(5, new java.sql.Date (oConfiguracaoBanner.getDataInicial().getTime()));
-            stmt.setDate(6, new java.sql.Date (oConfiguracaoBanner.getDataFinal().getTime()));
+            stmt.setDate(5, new java.sql.Date(oConfiguracaoBanner.getDataInicial().getTime()));
+            stmt.setDate(6, new java.sql.Date(oConfiguracaoBanner.getDataFinal().getTime()));
             stmt.setInt(7, oConfiguracaoBanner.getEvento().getIdEvento());
 
             stmt.execute();
@@ -80,9 +81,8 @@ public class ConfiguracaoBannerDAO implements GenericDAO{
         PreparedStatement stmt = null;
         String sql = "update configuracaobanner set titulobanner=?, msgbanner=?, imagem=?, tipobanner=?, datainicial=?, datafinal=?,"
                 + "idevento=? where idconfiguracaobanner = ? ";
-        
-        
-        try{
+
+        try {
             stmt = conexao.prepareStatement(sql);
             stmt.setString(1, oConfiguracaoBanner.getTituloBanner());
             stmt.setString(2, oConfiguracaoBanner.getMsgBanner());
@@ -105,7 +105,7 @@ public class ConfiguracaoBannerDAO implements GenericDAO{
                 e.printStackTrace();
             }
             return false;
-        }  
+        }
     }
 
     @Override
@@ -146,18 +146,17 @@ public class ConfiguracaoBannerDAO implements GenericDAO{
             rs = stmt.executeQuery();
             while (rs.next()) {
                 oConfiguracaoBanner = new ConfiguracaoBanner();
-                oConfiguracaoBanner.setIdConfiguracaoBanner(rs.getInt("idconfiguracaobanner")); 
+                oConfiguracaoBanner.setIdConfiguracaoBanner(rs.getInt("idconfiguracaobanner"));
                 oConfiguracaoBanner.setTituloBanner(rs.getString("titulobanner"));
-                oConfiguracaoBanner.setMsgBanner(rs.getString("msgbanner")); 
-                oConfiguracaoBanner.setImagem(rs.getString("imagem")); 
-                oConfiguracaoBanner.setTipoBanner(rs.getString("tipobanner")); 
-                oConfiguracaoBanner.setDataInicial(rs.getDate("datainicial")); 
-                oConfiguracaoBanner.setDataInicial(rs.getDate("datafinal")); 
-                
-                
+                oConfiguracaoBanner.setMsgBanner(rs.getString("msgbanner"));
+                oConfiguracaoBanner.setImagem(rs.getString("imagem"));
+                oConfiguracaoBanner.setTipoBanner(rs.getString("tipobanner"));
+                oConfiguracaoBanner.setDataInicial(rs.getDate("datainicial"));
+                oConfiguracaoBanner.setDataFinal(rs.getDate("datafinal"));
+
                 EventoDAO oEventoDAO = new EventoDAO();
-                oConfiguracaoBanner.setEvento((Evento) oEventoDAO.carregar(rs.getInt("idevento"))); 
-      
+                oConfiguracaoBanner.setEvento((Evento) oEventoDAO.carregar(rs.getInt("idevento")));
+
             }
             return oConfiguracaoBanner;
         } catch (Exception ex) {
@@ -172,22 +171,20 @@ public class ConfiguracaoBannerDAO implements GenericDAO{
         PreparedStatement stmt = null;
         ResultSet rs = null;
         String sql = "select * from configuracaobanner order by titulobanner";
-        try{
+        try {
             stmt = conexao.prepareStatement(sql);
             rs = stmt.executeQuery();
             while (rs.next()) {
                 ConfiguracaoBanner oConfiguracaoBanner = new ConfiguracaoBanner();
-                
-               oConfiguracaoBanner.setIdConfiguracaoBanner(rs.getInt("idconfiguracaobanner"));
-               oConfiguracaoBanner.setTituloBanner(rs.getString("titulobanner"));
-               oConfiguracaoBanner.setMsgBanner(rs.getString("msgbanner"));
-               oConfiguracaoBanner.setImagem(rs.getString("imagem"));
-               oConfiguracaoBanner.setTipoBanner(rs.getString("tipobanner"));
-               oConfiguracaoBanner.setDataInicial(rs.getDate("datainicial"));
-               oConfiguracaoBanner.setDataFinal(rs.getDate("datafinal"));
-               
-                
-        
+
+                oConfiguracaoBanner.setIdConfiguracaoBanner(rs.getInt("idconfiguracaobanner"));
+                oConfiguracaoBanner.setTituloBanner(rs.getString("titulobanner"));
+                oConfiguracaoBanner.setMsgBanner(rs.getString("msgbanner"));
+                oConfiguracaoBanner.setImagem(rs.getString("imagem"));
+                oConfiguracaoBanner.setTipoBanner(rs.getString("tipobanner"));
+                oConfiguracaoBanner.setDataInicial(rs.getDate("datainicial"));
+                oConfiguracaoBanner.setDataFinal(rs.getDate("datafinal"));
+
                 EventoDAO oEventoDAO = null;
                 try {
                     oEventoDAO = new EventoDAO();
@@ -196,8 +193,7 @@ public class ConfiguracaoBannerDAO implements GenericDAO{
                     ex.printStackTrace();
                 }
                 oConfiguracaoBanner.setEvento((Evento) oEventoDAO.carregar(rs.getInt("idevento")));
-                
-                
+
                 resultado.add(oConfiguracaoBanner);
             }
         } catch (SQLException ex) {
@@ -205,35 +201,36 @@ public class ConfiguracaoBannerDAO implements GenericDAO{
         }
         return resultado;
     }
-    
+
     public List<Object> listarHome(String tipoBanner) {
         List<Object> resultado = new ArrayList<>();
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        String sql = "select * from configuracaobanner where tipobanner = ?";
-        
-        if (tipoBanner.equalsIgnoreCase("S") || tipoBanner.equalsIgnoreCase("I")){
+        String sql = "select * from configuracaobanner where tipobanner = ? and configuracaobanner.datafinal >= cast('TODAY' as date)";
+
+        if (tipoBanner.equalsIgnoreCase("S") || tipoBanner.equalsIgnoreCase("I")) {
             sql += " limit 1";
         }
+        else{
+            sql += " order by configuracaobanner.datainicial";     
+        }
         
-        try{
+        try {
             stmt = conexao.prepareStatement(sql);
             stmt.setString(1, tipoBanner);
             rs = stmt.executeQuery();
-            
+
             while (rs.next()) {
                 ConfiguracaoBanner oConfiguracaoBanner = new ConfiguracaoBanner();
-                
-               oConfiguracaoBanner.setIdConfiguracaoBanner(rs.getInt("idconfiguracaobanner"));
-               oConfiguracaoBanner.setTituloBanner(rs.getString("titulobanner"));
-               oConfiguracaoBanner.setMsgBanner(rs.getString("msgbanner"));
-               oConfiguracaoBanner.setImagem(rs.getString("imagem"));
-               oConfiguracaoBanner.setTipoBanner(rs.getString("tipobanner"));
-               oConfiguracaoBanner.setDataInicial(rs.getDate("datainicial"));
-               oConfiguracaoBanner.setDataFinal(rs.getDate("datafinal"));
-               
-                
-        
+
+                oConfiguracaoBanner.setIdConfiguracaoBanner(rs.getInt("idconfiguracaobanner"));
+                oConfiguracaoBanner.setTituloBanner(rs.getString("titulobanner"));
+                oConfiguracaoBanner.setMsgBanner(rs.getString("msgbanner"));
+                oConfiguracaoBanner.setImagem(rs.getString("imagem"));
+                oConfiguracaoBanner.setTipoBanner(rs.getString("tipobanner"));
+                oConfiguracaoBanner.setDataInicial(rs.getDate("datainicial"));
+                oConfiguracaoBanner.setDataFinal(rs.getDate("datafinal"));
+
                 EventoDAO oEventoDAO = null;
                 try {
                     oEventoDAO = new EventoDAO();
@@ -242,8 +239,7 @@ public class ConfiguracaoBannerDAO implements GenericDAO{
                     ex.printStackTrace();
                 }
                 oConfiguracaoBanner.setEvento((Evento) oEventoDAO.carregar(rs.getInt("idevento")));
-                
-                
+
                 resultado.add(oConfiguracaoBanner);
             }
         } catch (SQLException ex) {
@@ -251,7 +247,70 @@ public class ConfiguracaoBannerDAO implements GenericDAO{
         }
         return resultado;
     }
- 
+
+    public int verificaCadastroBanner(Date datainicial, Date datafinal, String tipoBanner, int idConfiguracaoBanner) {
+        //int idOrganizadorParametro = idorganizador;
+        //int idEventoParametro = idevento;
+        int retorno = 0;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String sql = "select coalesce(count(configuracaobanner.idconfiguracaobanner),0) as idconfiguracaobanner from configuracaobanner "
+                + "where ((configuracaobanner.datainicial between ? and ?) or"
+                + "(configuracaobanner.datafinal between ? and ?))"
+                + "and configuracaobanner.tipobanner = ?";
+
+        if (idConfiguracaoBanner > 0) {
+            sql = sql + " and configuracaobanner.idconfiguracaobanner <> ?";
+        }
+
+        try {
+            stmt = conexao.prepareStatement(sql);
+            stmt.setDate(1, datainicial);
+            stmt.setDate(2, datafinal);
+            stmt.setDate(3, datainicial);
+            stmt.setDate(4, datafinal);
+            stmt.setString(5, tipoBanner);
+            
+            if (idConfiguracaoBanner > 0) {
+                stmt.setInt(6, idConfiguracaoBanner);
+            }
+
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                retorno = rs.getInt("idconfiguracaobanner");
+            }
+            return retorno;
+        } catch (SQLException ex) {
+            System.out.println("Problemas no método verificaCadastroBanner na ConfiguracaoBannerDAO " + ex.getMessage());
+            return 0;
+        }
+
+    }
+    
+     public int[] configuracoesBanner(String tipoBanner) {
+        int retorno[] = new int[2];
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String sql = "select cast(min(configuracaobanner.idconfiguracaobanner) as integer) as min_idconfiguracaobanner,"
+                + "cast(count(configuracaobanner.idconfiguracaobanner) as integer) as qtd_configuracaobanner "
+                + "from configuracaobanner where tipobanner = ? and configuracaobanner.datafinal >= cast('TODAY' as date)";
+        try {
+            stmt = conexao.prepareStatement(sql);
+            stmt.setString(1, tipoBanner);
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                retorno[0] = rs.getInt("min_idconfiguracaobanner");
+                retorno[1] = rs.getInt("qtd_configuracaobanner");
+               
+            }
+        } catch (SQLException ex) {
+            retorno[0] = 0;
+            retorno[1] = 0;
+            System.out.println("Problemas ao listar configuracao do listarHomeMinimo na DAO! Erro: " + ex.getMessage());
+        }
+        return retorno;
+    }
+
 }
-
-

@@ -24,13 +24,13 @@
             <div id="header-carousel" class="carousel slide carousel-fade mb-30 mb-lg-0" data-ride="carousel">
                 <ol class="carousel-indicators">
                     <!--<li data-target="#header-carousel" data-slide-to="0" class="active"></li>-->
-                    <c:forEach var="i" begin="0" end="3">
+                    <c:forEach var="i" begin="0" end="${sessionScope.qtdBanner - 1}">
                         <li data-target="#header-carousel" data-slide-to="${i}" class="${i == 0 ? 'active' : ''}"></li>      
                     </c:forEach>
                 </ol>
                 <div class="carousel-inner">
-                    <c:forEach var="banner" items="${bannersCentrais}">
-                    <div class="carousel-item position-relative active" style="height: 430px;">
+                    <c:forEach var="banner" items="${bannersCentrais}">                        
+                    <div class="carousel-item position-relative <c:out value="${sessionScope.minID == banner.idConfiguracaoBanner ? 'active' : ''}"/>"  style="height: 430px;">
                         <img class="position-absolute w-100 h-100" src="${banner.imagem}" style="object-fit: cover;">
                         <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                             <div class="p-3" style="max-width: 700px;">
@@ -51,7 +51,7 @@
                                 <p class="mx-md-5 px-5 animate__animated animate__bounceIn texto-banner">
                                   ${banner.evento.cidade.nomeCidade} - ${banner.evento.cidade.estado.siglaEstado}  
                                 </p>
-                                <a class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp" href="#">Inscreva-se</a>
+                                <a class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp" href="${pageContext.request.contextPath}/EventoCarregarHome?idEvento=${banner.evento.idEvento}">Inscreva-se</a>
                             </div>
                         </div>
                     </div>
@@ -68,7 +68,7 @@
                 <div class="offer-text">
                     <h6 class="text-white text-uppercase texto-banner">${banner.evento.curso.instituicao.nomeInstituicao}</h6>
                     <h3 class="text-white mb-3 texto-banner">${banner.tituloBanner}</h3>
-                    <a href="" class="btn btn-primary">Inscreva-se</a>
+                    <a href="${pageContext.request.contextPath}/EventoCarregarHome?idEvento=${banner.evento.idEvento}" class="btn btn-primary">Inscreva-se</a>
                 </div>
             </div>
             </c:forEach>
@@ -78,7 +78,7 @@
                 <div class="offer-text">
                     <h6 class="text-white text-uppercase texto-banner">${banner.evento.curso.instituicao.nomeInstituicao}</h6>
                     <h3 class="text-white mb-3 texto-banner">${banner.tituloBanner}</h3>
-                    <a href="" class="btn btn-primary">Inscreva-se</a>
+                    <a href="${pageContext.request.contextPath}/EventoCarregarHome?idEvento=${banner.evento.idEvento}" class="btn btn-primary">Inscreva-se</a>
                 </div>
             </div>
             </c:forEach>

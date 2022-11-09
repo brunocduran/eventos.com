@@ -19,7 +19,11 @@ import javax.mail.internet.MimeMessage;
  * @author FEF
  */
 public class JavaMailApp {
-    public static void main(String[] args) {
+    
+    
+    public static void enviar(String[] args) {
+        
+      //  public static void main(String[] args) {
     Properties props = new Properties();
     /** Parâmetros de conexão com servidor Gmail */
     props.put("mail.smtp.host", "smtp.gmail.com");

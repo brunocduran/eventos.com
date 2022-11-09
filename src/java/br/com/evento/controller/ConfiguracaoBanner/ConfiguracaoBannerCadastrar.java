@@ -39,38 +39,52 @@ public class ConfiguracaoBannerCadastrar extends HttpServlet {
             throws ServletException, IOException, Exception {
         response.setContentType("text/html;charset=iso-8859-1");
         String mensagem = null;
-        try{
-           int idConfiguracaoBanner = Integer.parseInt(request.getParameter("idconfiguracaobanner"));
-           String tituloBanner = request.getParameter("titulobanner");
-           String msgBanner = request.getParameter("msgbanner");
-           String imagem = request.getParameter("imagem");
-           String tipoBanner = request.getParameter("tipobanner");
-           Date dataInicial = Date.valueOf(request.getParameter("datainicial"));
-           Date dataFinal = Date.valueOf(request.getParameter("datafinal"));
-           int idEvento = Integer.parseInt(request.getParameter("idevento"));
-           
+        try {
+            int idConfiguracaoBanner = Integer.parseInt(request.getParameter("idconfiguracaobanner"));
+            String tituloBanner = request.getParameter("titulobanner");
+            String msgBanner = request.getParameter("msgbanner");
+            String imagem = request.getParameter("imagem");
+            String tipoBanner = request.getParameter("tipobanner");
+            Date dataInicial = Date.valueOf(request.getParameter("datainicial"));
+            Date dataFinal = Date.valueOf(request.getParameter("datafinal"));
+            int idEvento = Integer.parseInt(request.getParameter("idevento"));
+
             Evento oEvento = new Evento();
-           oEvento.setIdEvento(idEvento);
-           
-           ConfiguracaoBanner oConfiguracaoBanner = new ConfiguracaoBanner(idConfiguracaoBanner,oEvento,tituloBanner,msgBanner,
-           imagem,tipoBanner,dataInicial,dataFinal);
-           
+            oEvento.setIdEvento(idEvento);
+
             ConfiguracaoBannerDAO dao = new ConfiguracaoBannerDAO();
+            int verificaBanner = 0;
             
-            if(dao.cadastrar(oConfiguracaoBanner)){
+            if (!tipoBanner.equalsIgnoreCase("C")){
+                if (idConfiguracaoBanner > 0){
+                    verificaBanner = dao.verificaCadastroBanner(dataInicial, dataFinal, tipoBanner, idConfiguracaoBanner);
+                }else{
+                    verificaBanner = dao.verificaCadastroBanner(dataInicial, dataFinal, tipoBanner,0);        
+                }
+            }else{
+                verificaBanner = 0;
+            }
+            
+            if (verificaBanner == 0) {
+                ConfiguracaoBanner oConfiguracaoBanner = new ConfiguracaoBanner(idConfiguracaoBanner, oEvento, tituloBanner, msgBanner,
+                   imagem, tipoBanner, dataInicial, dataFinal);
+
+                if (dao.cadastrar(oConfiguracaoBanner)) {
                 //mensagem = "Cadastrado com Sucesso!";
                 response.getWriter().write("1");
-            }else{
+                } else {
                 //mensagem = "Problemas ao cadastrar Despesa!";
                 response.getWriter().write("0");
+                }               
+
+            }else{
+                response.getWriter().write("2");           
             }
-            } catch(Exception e){
-            System.out.println("Problemas no servelet Cadastrar Configuracao de Banner! Erro: "+e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Problemas no servelet Cadastrar Configuracao de Banner! Erro: " + e.getMessage());
             e.printStackTrace();
         }
     }
-    
-    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

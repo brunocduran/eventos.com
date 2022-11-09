@@ -287,10 +287,10 @@
                                 </li>
                             </c:if>
 
-                            <c:if test="${sessionScope.tipousuario == 'Administrador' or sessionScope.tipousuario == 'Organizador'}">
+                            <c:if test="${sessionScope.tipousuario == 'Administrador'}">
                                 <li class="nav-item">
                                     <a href="${pageContext.request.contextPath}/ConfiguracaoBannerListar" class="nav-link" id="menuconfiguracaobanner">
-                                        <i class="nav-icon far fa-calendar-alt"></i>
+                                        <i class="nav-icon far fa-image"></i>
                                         <p>
                                             Configuração Banner
                                         </p>

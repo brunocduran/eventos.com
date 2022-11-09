@@ -3,13 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.evento.controller.PaginaInicial;
+package br.com.evento.controller.organizadorEvento;
 
-import br.com.evento.dao.CategoriaEventoDAO;
-import br.com.evento.dao.ConfiguracaoBannerDAO;
-import br.com.evento.dao.EventoDAO;
-import br.com.evento.dao.GenericDAO;
-import br.com.evento.dao.InstituicaoDAO;
+import br.com.evento.dao.OrganizadorEventoDAO;
+import br.com.evento.model.OrganizadorEvento;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -20,10 +19,10 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author igorb
+ * @author bruno
  */
-@WebServlet(name = "Home", urlPatterns = {"/Home"})
-public class Home extends HttpServlet {
+@WebServlet(name = "OrganizadorEventoCarregarOrganizadorLogado", urlPatterns = {"/OrganizadorEventoCarregarOrganizadorLogado"})
+public class OrganizadorEventoCarregarOrganizadorLogado extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,27 +36,16 @@ public class Home extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=iso-8859-1");
-        try {
-            InstituicaoDAO dao = new InstituicaoDAO();
-            CategoriaEventoDAO oCategoriaEventoDAO = new CategoriaEventoDAO();
-            ConfiguracaoBannerDAO oConfiguracaoBannerDAO = new ConfiguracaoBannerDAO();
-
-            EventoDAO oEventoDAO = new EventoDAO();
-            request.setAttribute("instituicoes", dao.listarCarrossel());
-            request.setAttribute("categorias", oCategoriaEventoDAO.listarAtivos());
-            request.setAttribute("eventos", oEventoDAO.listarHome());
-            request.setAttribute("bannersCentrais", oConfiguracaoBannerDAO.listarHome("C"));
-            request.setAttribute("bannerSuperior", oConfiguracaoBannerDAO.listarHome("S"));
-            request.setAttribute("bannerInferior", oConfiguracaoBannerDAO.listarHome("I"));
-
-            int configBanner[] = oConfiguracaoBannerDAO.configuracoesBanner("C");
-            request.getSession().setAttribute("minID", configBanner[0]);
-            request.getSession().setAttribute("qtdBanner", configBanner[1]);
-
-            request.getRequestDispatcher("/home/home.jsp").forward(request, response);
-
-        } catch (Exception ex) {
-            System.out.println("Problema no servlet ao listar instituicoes" + ex.getMessage());
+        try{
+            int idEvento = Integer.parseInt(request.getParameter("idEvento"));
+            OrganizadorEventoDAO dao = new OrganizadorEventoDAO();
+            OrganizadorEvento oOrganizadorEvento = (OrganizadorEvento) dao.carregarOrganizadorLogado(idEvento);
+            
+            Gson ogson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+            String jSon = ogson.toJson(oOrganizadorEvento);
+            response.getWriter().write(jSon);
+        }catch(Exception ex){
+            System.out.println("Erro ao buscar organizador na OrganizadorEventoCarregarOrganizadorLogado - "+ex.getMessage());
             ex.printStackTrace();
         }
     }
