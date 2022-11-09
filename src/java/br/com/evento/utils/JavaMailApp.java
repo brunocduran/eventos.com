@@ -45,7 +45,7 @@ public class JavaMailApp {
       message.setFrom(new InternetAddress("projetoextensaoevento@gmail.com"));
       //Remetente
 
-      Address[] toUser = InternetAddress.parse("jgcochutm@gmail.com"); //Destinatário(s)
+      Address[] toUser = InternetAddress.parse("jgcochutm@gmail.com,igorbiancobuosi@hotmail.com"); //Destinatário(s)
                  
 
       message.setRecipients(Message.RecipientType.TO, toUser);
