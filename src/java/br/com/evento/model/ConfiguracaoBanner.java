@@ -32,8 +32,8 @@ public class ConfiguracaoBanner {
         this.msgBanner = "";
         this.imagem = "";
         this.tipoBanner = "";
-        this.dataInicial = Conversao.dataAtual();
-        this.dataFinal = Conversao.dataAtual();
+        this.dataInicial = null;
+        this.dataFinal = null;
         
     }
 

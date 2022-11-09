@@ -37,11 +37,11 @@ public class Home extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=iso-8859-1");
-        try{
+        try {
             InstituicaoDAO dao = new InstituicaoDAO();
             CategoriaEventoDAO oCategoriaEventoDAO = new CategoriaEventoDAO();
             ConfiguracaoBannerDAO oConfiguracaoBannerDAO = new ConfiguracaoBannerDAO();
-            
+
             EventoDAO oEventoDAO = new EventoDAO();
             request.setAttribute("instituicoes", dao.listarCarrossel());
             request.setAttribute("categorias", oCategoriaEventoDAO.listarAtivos());
@@ -49,10 +49,15 @@ public class Home extends HttpServlet {
             request.setAttribute("bannersCentrais", oConfiguracaoBannerDAO.listarHome("C"));
             request.setAttribute("bannerSuperior", oConfiguracaoBannerDAO.listarHome("S"));
             request.setAttribute("bannerInferior", oConfiguracaoBannerDAO.listarHome("I"));
+
+            int configBanner[] = oConfiguracaoBannerDAO.configuracoesBanner("C");
+            request.getSession().setAttribute("minID", configBanner[0]);
+            request.getSession().setAttribute("qtdBanner", configBanner[1]);
+
             request.getRequestDispatcher("/home/home.jsp").forward(request, response);
-            
-        } catch(Exception ex){
-            System.out.println("Problema no servlet ao listar instituicoes"+ex.getMessage());
+
+        } catch (Exception ex) {
+            System.out.println("Problema no servlet ao listar instituicoes" + ex.getMessage());
             ex.printStackTrace();
         }
     }

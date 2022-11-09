@@ -12,7 +12,7 @@
             <div class="small-box bg-info">
               <div class="inner">                  
                 <h3>${sessionScope.qtdInstituicoes}</h3>                
-                <p><c:out value="${sessionScope.qtdInstituicoes <= 1 ? 'Instituição' : 'Instituições'}"/></p>
+                <p> <c:out value="${sessionScope.qtdInstituicoes <= 1 ? 'Instituição' : 'Instituições'}"/></p>
               </div>              
               <div class="icon">
                 <i class="ion ion-home"></i>

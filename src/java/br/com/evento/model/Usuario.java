@@ -136,7 +136,12 @@ public class Usuario {
                         if (urlParaAutenticar.equalsIgnoreCase("/AdministradorListar") ||
                             urlParaAutenticar.equalsIgnoreCase("/AdministradorCarregar") ||
                             urlParaAutenticar.equalsIgnoreCase("/AdministradorExcluir") || 
-                            urlParaAutenticar.equalsIgnoreCase("/AdministradorListar") ){
+                            urlParaAutenticar.equalsIgnoreCase("/AdministradorListar") ||                                
+                                 urlParaAutenticar.equalsIgnoreCase("/ConfiguracaoBannerListar") ||
+                                 urlParaAutenticar.equalsIgnoreCase("/ConfiguracaoBannerCarregar") ||
+                                 urlParaAutenticar.equalsIgnoreCase("/ConfiguracaoBannerCadastrar") ||
+                                 urlParaAutenticar.equalsIgnoreCase("/ConfiguracaoBannerExcluir")     
+                                ){
                             status = false; //se tentar acessar algumas dessas, sera barrado
                         }                            
                     }                    

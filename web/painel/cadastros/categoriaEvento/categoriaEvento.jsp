@@ -41,7 +41,8 @@
                                                 <Strong>
                                                     <c:out value="${categoriaEvento.situacao == 'A' ? 'Inativar' : 'Ativar'}"/>
                                                 </Strong>
-                                            </button></a>
+                                            </button>
+                                        </a>
                                     </td>
                                 </tr>
                             </c:forEach>
