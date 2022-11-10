@@ -33,7 +33,7 @@
                                             <i class="fas fa-edit"></i><Strong> Alterar </Strong> </a>
                                     </td>
                                     <td align="center">
-                                        <a href="#" onclick="deletar(${evento.idEvento}, '${evento.situacaoEvento}')">
+                                        <a href="${pageContext.request.contextPath}/EventoGerenciar?idEvento=${evento.idEvento}" onclick="deletar(${evento.idEvento}, '${evento.situacaoEvento}')">
                                             <button class="btn
                                                     <c:out value="${evento.situacaoEvento == 'A' ? 'btn-danger':'btn-success'}"/>">
                                                 <i class="fas fa-fw
