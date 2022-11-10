@@ -290,9 +290,25 @@
                             <c:if test="${sessionScope.tipousuario == 'Administrador'}">
                                 <li class="nav-item">
                                     <a href="${pageContext.request.contextPath}/ConfiguracaoBannerListar" class="nav-link" id="menuconfiguracaobanner">
-                                        <i class="nav-icon far fa-image"></i>
+                                        <i class="nav-icon fas fa-image"></i>
                                         <p>
                                             Configuração Banner
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="${pageContext.request.contextPath}/DoacaoListar" class="nav-link" id="menuconfiguracaobanner">
+                                        <i class="nav-icon fas fa-hand-holding-usd"></i>
+                                        <p>
+                                            Doação
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="${pageContext.request.contextPath}/DespesaListar" class="nav-link" id="menuconfiguracaobanner">
+                                        <i class="nav-icon fas fa-money-check-alt"></i>
+                                        <p>
+                                            Despesa
                                         </p>
                                     </a>
                                 </li>
