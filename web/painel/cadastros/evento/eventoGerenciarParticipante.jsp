@@ -88,78 +88,17 @@
                                                         <h4><b>Informações:</b> ${evento.informacaoEvento}</h4>
                                                     </div>                        
                                                 </div>
-                                            </div> 
-                                            <div class="form-group">
-                                                <div class="form-line row">
-                                                    <div class="col-sm">
-                                                        <h4><b>Status:</b>
-                                                            <l id="status">
-                                                                <c:if test="${evento.situacaoEvento == 'A'}">
-                                                                    Ativo
-                                                                </c:if>
-
-                                                                <c:if test="${evento.situacaoEvento == 'I'}">
-                                                                    Inativo
-                                                                </c:if>
-
-                                                                <c:if test="${evento.situacaoEvento == 'E'}">
-                                                                    Encerrado
-                                                                </c:if>
-
-                                                                <c:if test="${evento.situacaoEvento == 'F'}">
-                                                                    Finalizado
-                                                                </c:if> 
-                                                            </l>
-                                                        </h4>
-                                                    </div>                        
-                                                </div>
-                                            </div> 
+                                            </div>
                                         </div><!--final dos detalhes evento-->
                                     </div><!--final div da imagem e detalhes-->
-                                    <div class="row"><!--inicio div da detalhes organizador -->
-                                        <div class="col">
-                                            <div class="form-group">
-                                                <div class="form-line row">
-                                                    <div class="col-sm">
-                                                        <hr>
-                                                        <h3><b><a data-toggle="collapse" href="#collapseOrganizador" aria-expanded="false" aria-controls="collapseOrganizador" style="color: black;">Organizadores</a></b></h3>
-                                                        <div class="tab-content collapse multi-collapse" id="collapseOrganizador">
-                                                            <div id="espacoaddatividadeevento">
-                                                                <!-- Loop para carregar as atividades-->
-                                                                <%! int qtdOrganizador = 0;%>
-                                                                <% qtdOrganizador = 0; %>
-                                                                <c:forEach var="organizadorEvento" items="${organizadoresEvento}">
-                                                                    <% qtdOrganizador++;%>
-                                                                    <div id="divOrg_${organizadorEvento.idOrganizadorEvento}">
-                                                                        <div class="form-group"></div><div class="form-line row">
-                                                                            <div class="col-sm">
-                                                                                <div class="input-group input-group-mb-3">
-                                                                                    <input type="text" class="form-control" id="nomeOrg_${organizadorEvento.idOrganizadorEvento}" value="${organizadorEvento.organizador.nomeRazaoPessoa} - ${organizadorEvento.funcao.descricao}" disabled/>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </c:forEach> 
-                                                                <%
-                                                                    if (qtdOrganizador == 0)
-                                                                        out.println("Nenhum organizador vinculado a este evento!");
-                                                                %>
-                                                            </div>                    
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div><!--fim div da detalhes organizador -->
                                     <div class="row"><!--inicio div da detalhes atividade -->
                                         <div class="col">
                                             <div class="form-group">
                                                 <div class="form-line row">
                                                     <div class="col-sm">
                                                         <hr>
-                                                        <h3><b><a data-toggle="collapse" href="#collapseAtividade" aria-expanded="false" aria-controls="collapseAtividade" style="color: black;">Atividades</a></b></h3>
-                                                        <div class="tab-content collapse multi-collapse" id="collapseAtividade">
+                                                        <h3><b>Atividades</b></h3>
+                                                        <div class="tab-content">
                                                             <div id="espacoaddatividadeevento">
                                                                 <!-- Loop para carregar as atividades-->
                                                                 <%! int qtdAtividade = 0;%>
@@ -196,54 +135,9 @@
                                         </div>
                                     </div><!--fim div da detalhes atividade -->
                                     <hr>
-                                    <div><!--botoes-->
-                                        <a href="${pageContext.request.contextPath}/EventoCarregar?idEvento=${evento.idEvento}" class="btn btn-app bg-secondary">
-                                            <i class="fas fa-edit"></i> Alterar
-                                        </a>
-                                        <a class="btn btn-app bg-success">
-                                            <i class="far fa-money-bill-alt"></i> Financeiro
-                                        </a>
-                                        <a class="btn btn-app bg-warning">
-                                            <i class="fas fa-user-check"></i> Inscritos
-                                        </a>
-                                        <a href="#modalstatus" data-toggle="modal" data-ad="" onclick="setDadosModal(${0})" class="btn btn-app bg-info">
-                                            <i class="fas fa-check-square"></i> Status
-                                        </a>
-                                        <a href="${pageContext.request.contextPath}/EventoListar" class="btn btn-app bg-danger">
-                                            <i class="fas fa-sign-out-alt"></i> Voltar
-                                        </a>
-                                    </div>
-
-                                    <!--modal-->
-                                    <div class="modal fade" id="modalstatus" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-x1">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title">Status</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body" align="center">
-                                                    <a class="btn btn-app bg-success" ref="#" onclick="status(${evento.idEvento}, 'A')">
-                                                        <i class="fas fa-check"></i> <b>Ativar</b>
-                                                    </a>
-
-                                                    <a class="btn btn-app bg-danger" ref="#" onclick="status(${evento.idEvento}, 'I')">
-                                                        <i class="fas fa-check"></i> <b>Inativar</b>
-                                                    </a>
-
-                                                    <a class="btn btn-app bg-info" ref="#" onclick="status(${evento.idEvento}, 'E')">
-                                                        <i class="fas fa-check"></i> <b>Encerrar</b>
-                                                    </a>
-
-                                                    <a class="btn btn-app bg-secondary" ref="#" onclick="status(${evento.idEvento}, 'F')">
-                                                        <i class="fas fa-check"></i> <b>Finalizar</b>
-                                                    </a>
-
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <div align="right">
+                                        <a class="btn btn-primary" href="${pageContext.request.contextPath}/EventoListarParticipante"><i class="fa fa-arrow-left"></i> Voltar </a>
+                                        <button class="btn btn-success" id="salvarecontinuar" onclick="">Inscreva-se <i class="fa fa-arrow-right"></i></button>
                                     </div>
 
                                 </div><!--final div da imagem, detalhes evento e detalhes atividade -->
@@ -348,11 +242,11 @@
                                                             function atualizarStatus(status) {
                                                                 if (status == 'A') {
                                                                     document.getElementById('status').innerHTML = "Ativo";
-                                                                }else if (status == 'I') {
+                                                                } else if (status == 'I') {
                                                                     document.getElementById('status').innerHTML = "Inativo";
-                                                                }else if (status == 'E') {
+                                                                } else if (status == 'E') {
                                                                     document.getElementById('status').innerHTML = "Encerrado";
-                                                                }else if (status == 'F') {
+                                                                } else if (status == 'F') {
                                                                     document.getElementById('status').innerHTML = "Finalizado";
                                                                 }
 

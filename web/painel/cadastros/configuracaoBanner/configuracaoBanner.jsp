@@ -18,7 +18,9 @@
                             <tr>
                                 <th align="center">ID</th>
                                 <th align="center">Título Banner</th>
-
+                                <th align="left">Data Início</th>
+                                <th align="left">Data Término</th>
+                                <th align="center">Tipo Banner</th>
                                 <th align="center"></th>
                                 <th align="center"></th>
                             </tr>
@@ -28,6 +30,21 @@
                                 <tr>
                                     <td align="left">${configuracaoBanner.idConfiguracaoBanner}</td>
                                     <td align="left">${configuracaoBanner.tituloBanner}</td>
+                                    <td align="left"><fmt:formatDate pattern="dd/MM/yyyy" value="${configuracaoBanner.dataInicial}"/></td>
+                                    <td align="left"><fmt:formatDate pattern="dd/MM/yyyy" value="${configuracaoBanner.dataFinal}"/></td>
+                                    <td align="left">
+                                        <c:if test="${configuracaoBanner.tipoBanner == 'C'}">
+                                            Central
+                                        </c:if>
+
+                                        <c:if test="${configuracaoBanner.tipoBanner == 'S'}">
+                                            Lateral Superior
+                                        </c:if>
+
+                                        <c:if test="${configuracaoBanner.tipoBanner == 'I'}">
+                                            Lateral Inferior
+                                        </c:if>
+                                    </td>
                                     <td align="center">
                                         <a href="#modaladicionar" class="btn btn-group-lg btn-primary" data-toggle="modal"
                                            data-id="" onclick="setDadosModal(${configuracaoBanner.idConfiguracaoBanner})">
@@ -49,7 +66,7 @@
             </div>
 
             <div class="modal fade" id="modaladicionar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-x1">
+                <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title">Adicionar</h5>
@@ -64,10 +81,11 @@
                                         <div class="form-group">
                                             <center>
                                                 <img alt="imagem" clas="img-thumbnail" src=""
-                                                     name="imagem" id="imagem" width="170" height="200">
+                                                     name="imagem" id="imagem" width="500" height="215">
                                                 <br></br>
                                                 <input type="file" id="gallery-photo-add"
                                                        class="inputfile" onchange="uploadFile()"/>
+                                                Tamanho recomendado para imagem: 1000 x 430 px<br>
                                                 <label for="gallery-photo-add" class="btn btn-success">
                                                     <i class="fas fa-file-upload"></i>
                                                     Selecionar Foto
@@ -93,14 +111,12 @@
                                 <input class="form-control" type="text" name="msgbanner" id="msgbanner" value=""/>
                             </div>
 
-                            <div class="col-sm">
+                            <div class="form-group">
                                 <label>Tipo Banner</label>
                                 <select class="form-control" name="tipobanner" id="tipobanner" required>
-                                    <option value="nulo">Selecione</option>
-                                    <option value="C" >Central</option>
+                                    <option value="C">Central</option>
                                     <option value="S">Lateral Superior</option>
                                     <option value="I">Lateral Inferior</option>
-
                                 </select>
                             </div>
 
@@ -121,7 +137,7 @@
                             </div>
 
 
-                            <div class="col-sm">
+                            <div class="form-group">
                                 <label>Evento</label>
                                 <select class="form-control" name="idevento" id="idevento" required>
                                     <option value="nulo">Selecione</option>
@@ -317,7 +333,7 @@
             Swal.fire({
                 position: 'center',
                 icon: 'error',
-                title: 'Verifique a descrição da Configuracao Banner',
+                title: 'Verifique a descrição!',
                 showConfirmButton: true,
                 timer: 2000
             });
@@ -327,7 +343,7 @@
             Swal.fire({
                 position: 'center',
                 icon: 'error',
-                title: 'Verifique a descrição da Configuracao Banner',
+                title: 'Verifique a mensagem do banner!',
                 showConfirmButton: true,
                 timer: 2000
             });
@@ -337,7 +353,7 @@
             Swal.fire({
                 position: 'center',
                 icon: 'error',
-                title: 'Verifique a descrição da Configuracao Banner',
+                title: 'Verifique o tipo do banner!',
                 showConfirmButton: true,
                 timer: 2000
             });
@@ -347,7 +363,7 @@
             Swal.fire({
                 position: 'center',
                 icon: 'error',
-                title: 'Verifique a descrição da Configuracao Banner',
+                title: 'Verifique a data início!',
                 showConfirmButton: true,
                 timer: 2000
             });
@@ -357,22 +373,30 @@
             Swal.fire({
                 position: 'center',
                 icon: 'error',
-                title: 'Verifique a descrição da Configuracao Banner',
+                title: 'Verifique a data final!',
                 showConfirmButton: true,
                 timer: 2000
             });
             $("#datafinal").focus();
 
+        } else if (document.getElementById("datainicial").value > document.getElementById("datafinal").value) {
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Data de termino anterior a data de início!',
+                showConfirmButton: true,
+                timer: 2000
+            });
+            $("#idcidade").focus();
         } else if (document.getElementById("idevento").value == '') {
             Swal.fire({
                 position: 'center',
                 icon: 'error',
-                title: 'Verifique a descrição da Configuracao Banner',
+                title: 'Verifique o evento!',
                 showConfirmButton: true,
                 timer: 2000
             });
-            $("#idevento").focus();
-
+            $("#idestado").focus();
         } else {
             gravarDados();
         }
@@ -410,7 +434,7 @@
                             }).then(function () {
                                 window.location.href = "${pageContext.request.contextPath}/ConfiguracaoBannerListar";
                             })
-                        } else if (data == 0){
+                        } else if (data == 0) {
                             Swal.fire({
                                 position: 'center',
                                 icon: 'error',
@@ -421,8 +445,8 @@
                             }).then(function () {
                                 window.location.href = "${pageContext.request.contextPath}/ConfiguracaoBannerListar";
                             })
-                        }else{
-                         Swal.fire({
+                        } else {
+                            Swal.fire({
                                 position: 'center',
                                 icon: 'error',
                                 title: 'Erro',
@@ -430,9 +454,9 @@
                                 showConfirmButton: true,
                                 timer: 10000
                             }).then(function () {
-                                
+
                             })
-                            
+
                         }
                     },
             error:

@@ -117,8 +117,7 @@
 
                             <li class="nav-header">MENU</li>
 
-                            <c:if test="${sessionScope.tipousuario == 'Administrador' or sessionScope.tipousuario == 'Organizador'
-                                          or sessionScope.tipousuario == 'Participante'}">
+                            <c:if test="${sessionScope.tipousuario == 'Administrador' or sessionScope.tipousuario == 'Organizador'}">
                                   <li class="nav-item" id="agrupamentolocalizacao">
                                       <a href="#" class="nav-link" id="menulocalizacao">
                                           <i class="nav-icon fas fa-map-marker-alt"></i>
@@ -282,6 +281,16 @@
                                         <i class="nav-icon far fa-calendar-alt"></i>
                                         <p>
                                             Evento
+                                        </p>
+                                    </a>
+                                </li>
+                            </c:if>
+                            <c:if test="${sessionScope.tipousuario == 'Participante'}">
+                                <li class="nav-item">
+                                    <a href="${pageContext.request.contextPath}/EventoListarParticipante" class="nav-link" id="menuevento">
+                                        <i class="nav-icon far fa-calendar-alt"></i>
+                                        <p>
+                                            Eventos
                                         </p>
                                     </a>
                                 </li>

@@ -165,6 +165,9 @@
                                                         </div>
                                                         <hr>
                                                         <div align="right">
+                                                            <c:if test="${evento.idEvento != 0}">
+                                                            <a class="btn btn-primary" href="${pageContext.request.contextPath}/EventoGerenciar?idEvento=${evento.idEvento}"><i class="fa fa-arrow-left"></i> Voltar </a>
+                                                            </c:if>
                                                             <button class="btn btn-success" id="salvarecontinuar" onclick="validarCamposEvento()">Salvar e continuar <i
                                                                     class="fa fa-arrow-right"></i></button>
                                                         </div>
@@ -322,7 +325,7 @@
                                                                                     <b>Atividade:</b> ${atividadeEvento.nomeAtividade} <br>
                                                                                     <b>Data:</b> ${atividadeEvento.dataAtividadeFormatada}<br>
                                                                                     <b>Hora:</b> ${atividadeEvento.horaAtividade}<br>
-                                                                                    <b>Carga horária:</b> ${atividadeEvento.cargaHoraria}<br>
+                                                                                    <b>Carga Horária:</b> ${atividadeEvento.cargaHoraria}<br>
                                                                                     <b>Tipo de Atividade:</b> ${atividadeEvento.tipoAtividade.descricao}<br>
                                                                                     <b>Resumo:</b> ${atividadeEvento.resumo}
                                                                                     <hr>
@@ -863,7 +866,7 @@
                             var id = jSon.idAtividadeEvento;
                             if (id > 0) {
                                 var nomeAtividade = "<b>Atividade:</b> " + jSon.nomeAtividade + "<br><b>Data:</b> " + jSon.dataAtividade.replace(/[^\d]/g, "").replace(/^(\d{4})(\d{2})(\d{2})/, "$3/$2/$1")
-                                        + "<br><b>Hora:</b> " + jSon.horaAtividade + "<br><b>Carga horária:</b> " + jSon.cargaHoraria + "<br><b>Tipo de Atividade:</b> " + jSon.tipoAtividade.descricao + "<br><b>Resumo:</b> " + jSon.resumo;
+                                        + "<br><b>Hora:</b> " + jSon.horaAtividade + "<br><b>Carga Horária:</b> " + jSon.cargaHoraria + "<br><b>Tipo de Atividade:</b> " + jSon.tipoAtividade.descricao + "<br><b>Resumo:</b> " + jSon.resumo;
                                 adcDivAtividadeEvento(id, nomeAtividade);
                                 limparDadosAtividade();
                             } else {
