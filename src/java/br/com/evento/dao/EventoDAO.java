@@ -260,7 +260,7 @@ public class EventoDAO {
         }
         return resultado;
     }
-    
+
     public List<Object> listarAtivo() {
         List<Object> resultado = new ArrayList<>();
         PreparedStatement stmt = null;
@@ -448,7 +448,7 @@ public class EventoDAO {
                 resultado.add(oEvento);
             }
         } catch (SQLException ex) {
-            System.out.println("Problemas ao listar Cidade na DAO! Erro: " + ex.getMessage());
+            System.out.println("Problemas ao listar listarEventoCategoria na DAO! Erro: " + ex.getMessage());
         }
         return resultado;
     }
@@ -501,11 +501,75 @@ public class EventoDAO {
                 resultado.add(oEvento);
             }
         } catch (SQLException ex) {
-            System.out.println("Problemas ao listarEventoOrganizador Cidade na DAO! Erro: " + ex.getMessage());
+            System.out.println("Problemas ao listarEventoOrganizador na DAO! Erro: " + ex.getMessage());
         }
         return resultado;
     }
-    
-    
+
+    public List<Object> listarEventoDescricao(String descricao) {
+        String descricaoEvento = '%'+descricao+'%';
+        List<Object> resultado = new ArrayList<>();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String sql;
+
+        sql = "select * from evento where nomeevento ilike ? and datainicioevento >= CURRENT_DATE and situacaoevento = 'A' order by datainicioevento";
+
+        try {
+            stmt = conexao.prepareStatement(sql);
+            stmt.setString(1, descricaoEvento);
+
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                Evento oEvento = new Evento();
+
+                oEvento.setIdEvento(rs.getInt("idEvento"));
+                oEvento.setNomeEvento(rs.getString("nomeEvento"));
+                oEvento.setValorEvento(rs.getDouble("valorEvento"));
+                oEvento.setValorEventoPrazo(rs.getDouble("valorEvento"));
+                oEvento.setDataInicioEvento(rs.getDate("dataInicioEvento"));
+                oEvento.setDataTerminoEvento(rs.getDate("dataTerminoEvento"));
+                oEvento.setInformacaoEvento(rs.getString("informacaoEvento"));
+                oEvento.setSituacaoEvento(rs.getString("situacaoEvento"));
+                oEvento.setSaldoCaixa(rs.getDouble("saldoCaixa"));
+                oEvento.setSituacaoCaixa(rs.getString("situacaoCaixa"));
+                oEvento.setImagem(rs.getString("imagem"));
+
+                CidadeDAO oCidadeDAO = null;
+                try {
+                    oCidadeDAO = new CidadeDAO();
+                } catch (Exception ex) {
+                    System.out.println("Erro buscar cidade " + ex.getMessage());
+                    ex.printStackTrace();
+                }
+                oEvento.setCidade((Cidade) oCidadeDAO.carregar(rs.getInt("idcidade")));
+
+                CursoDAO oCursoDAO = null;
+                try {
+                    oCursoDAO = new CursoDAO();
+                } catch (Exception ex) {
+                    System.out.println("Erro buscar curso " + ex.getMessage());
+                    ex.printStackTrace();
+                }
+
+                oEvento.setCurso((Curso) oCursoDAO.carregar(rs.getInt("idcurso")));
+
+                CategoriaEventoDAO oCategoriaEventoDAO = null;
+                try {
+                    oCategoriaEventoDAO = new CategoriaEventoDAO();
+                } catch (Exception ex) {
+                    System.out.println("Erro buscar curso " + ex.getMessage());
+                    ex.printStackTrace();
+                }
+
+                oEvento.setCategoriaEvento((CategoriaEvento) oCategoriaEventoDAO.carregar(rs.getInt("idcategoriaevento")));
+
+                resultado.add(oEvento);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Problemas ao listar listarEventoDescricao na DAO! Erro: " + ex.getMessage());
+        }
+        return resultado;
+    }
 
 }

@@ -3,10 +3,10 @@
         <div class="row px-xl-5 pt-5">
             <div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
                 <h5 class="text-secondary text-uppercase mb-4">Entre com contato conosco</h5>
-                <p class="mb-4">Está com alguma dúvida ? Entre em contato conosco por um dos meios abaixo. </p>
+                <p class="mb-4">Está com alguma dúvida? Entre em contato conosco por um dos meios abaixo. </p>
                 <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>Av. Theotonio Vilela, s/n - Campus Universitário, Fernandópolis - SP, 15608-380</p>
-                <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>eventos@eventod.com</p>
-                <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>+17 3465 0000</p>
+                <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>eventos@eventos.com</p>
+                <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>(17) 3465-0000</p>
             </div>
             <div class="col-lg-8 col-md-12">
                 <div class="row">
@@ -18,7 +18,7 @@
                         </div>
                     </div>
                     <div class="col-md-4 mb-5">
-                        <h5 class="text-secondary text-uppercase mb-4">Newsletter</h5>
+                        <h5 class="text-secondary text-uppercase mb-4">NEWSLETTER</h5>
                         <p>Assine e receba os eventos em primeira mão</p>
                         <form action="">
                             <div class="input-group">
