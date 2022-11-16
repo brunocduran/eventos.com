@@ -39,6 +39,7 @@ public class FilterAutenticacao implements Filter{
                     urlParaAutenticar.contains("/painel/plugins/") || 
                     urlParaAutenticar.contains("/painel/css/") ||
                     urlParaAutenticar.contains("/painel/img/") ||
+                    urlParaAutenticar.contains("/painel/calendarioeventos.jsp") ||
                     urlParaAutenticar.contains("/painel/webfonts/") ||
                     urlParaAutenticar.equalsIgnoreCase("/UsuarioLogar") ||                  
                     urlParaAutenticar.equalsIgnoreCase("/Home") ||
