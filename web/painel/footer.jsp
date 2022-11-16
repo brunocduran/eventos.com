@@ -14,6 +14,10 @@
         <script src="${pageContext.request.contextPath}/painel/js/bootstrap.bundle.min.js"></script>
         <!-- AdminLTE (recolhe o menu)--> 
         <script src="${pageContext.request.contextPath}/painel/js/adminlte.js"></script>
+        
+        <script src="${pageContext.request.contextPath}/painel/plugins/fullcalendar/main.js"></script>
+        
+        <script src="${pageContext.request.contextPath}/painel/plugins/moment/moment.min.js"></script>
 
     </body>
 
