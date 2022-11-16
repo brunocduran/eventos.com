@@ -7,11 +7,6 @@
 <div class="content-wrapper">
     <div class="content-header">
         <div class="container-fluid">
-            <!-- Page Heading -->
-            <p class="mb-4">Planilha de Registros</p>
-            <a href="${pageContext.request.contextPath}/EventoNovo" class="btn btn-success mb-4 adicionar">
-                <i class="fas fa-plus fa-fw"></i>Adicionar</a>
-
             <div class="card shadow">
                 <div class="card-body">
                     <table id="datatable" class="display">
@@ -21,7 +16,7 @@
                                 <th align="center">Nome Evento</th>
                                 <th align="left">Data Início</th>
                                 <th align="left">Data Término</th>
-                                <th align="left">Status</th>
+                                <th align="left"></th>
                                 <th align="center"></th>
                             </tr>
                         </thead>
@@ -32,26 +27,10 @@
                                     <td align="left">${evento.nomeEvento}</td>
                                     <td align="left"><fmt:formatDate pattern="dd/MM/yyyy" value="${evento.dataInicioEvento}"/></td>
                                     <td align="left"><fmt:formatDate pattern="dd/MM/yyyy" value="${evento.dataTerminoEvento}"/></td>
-                                    <td align="left">
-                                        <c:if test="${evento.situacaoEvento == 'A'}">
-                                            Ativo
-                                        </c:if>
-
-                                        <c:if test="${evento.situacaoEvento == 'I'}">
-                                            Inativo
-                                        </c:if>
-
-                                        <c:if test="${evento.situacaoEvento == 'E'}">
-                                            Encerrado
-                                        </c:if>
-
-                                        <c:if test="${evento.situacaoEvento == 'F'}">
-                                            Finalizado
-                                        </c:if> 
-                                    </td>
+                                    <td align="left">Não inscrito</td>
                                     <td align="center">
-                                        <a href="${pageContext.request.contextPath}/EventoGerenciar?idEvento=${evento.idEvento}" class="btn btn-group-lg btn-primary">
-                                            <i class="fas fa-cog"></i><Strong> Gerenciar </Strong> </a>
+                                        <a href="${pageContext.request.contextPath}/EventoGerenciarParticipante?idEvento=${evento.idEvento}" class="btn btn-group-lg btn-primary">
+                                            <i class="fas fa-info-circle"></i><Strong> Informações </Strong> </a>
                                     </td>
                                 </tr>
                             </c:forEach>

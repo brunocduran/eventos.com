@@ -57,14 +57,14 @@
                         <!--final - informação que não aparece na tela-->
 
                         <div class="col-sm">
-                            <h4>Inicio:
+                            <h4>Data início:
                                 <small class="text-muted">
                                     <fmt:formatDate pattern="dd/MM/yyyy" value="${evento.dataInicioEvento}"/>
                                 </small>                                
                             </h4>                            
                         </div>
                         <div class="col-sm">
-                            <h4>Final:
+                            <h4>Data término:
                                 <small class="text-muted">
                                     <fmt:formatDate pattern="dd/MM/yyyy" value="${evento.dataTerminoEvento}"/>
                                 </small>                                
@@ -96,7 +96,7 @@
                         <div class="col-sm">
                             <h4>Cidade:
                                 <small class="text-muted">                                    
-                                    ${evento.cidade.nomeCidade}
+                                    ${evento.cidade.nomeCidade} - ${evento.cidade.estado.siglaEstado}
                                 </small>                                
                             </h4>                            
                         </div>
@@ -123,17 +123,18 @@
                 <div class="form-group">
                     <div class="form-line row">
                         <div class="col-sm">
-                            <h4>Informações:</h4> 
-                            <textarea class="form-control" style="resize: none" id="informacaoevento" name="informacaoevento" rows="4"
-                                      placeholder="Digite detalhes do evento"
-                                      maxlength="500" readonly="readonly">${evento.informacaoEvento}</textarea>
+                            <h4>Informações:
+                            <small class="text-muted">
+                                ${evento.informacaoEvento}
+                            </small>
+                            </h4>
                         </div>                        
                     </div>
                 </div> 
 
                 <hr>
                 <div align="right">
-                    <button class="btn btn-success" id="salvarecontinuar" onclick="">Inscrever-se <i
+                    <button class="btn btn-success" id="salvarecontinuar" onclick="">Inscreva-se <i
                             class="fa fa-arrow-right"></i></button>
                 </div>
             </div>
@@ -167,7 +168,7 @@
                                                 <b>Atividade:</b> ${atividadeEvento.nomeAtividade} <br>
                                                 <b>Data:</b> ${atividadeEvento.dataAtividadeFormatada}<br>
                                                 <b>Hora:</b> ${atividadeEvento.horaAtividade}<br>
-                                                <b>Carga horária:</b> ${atividadeEvento.cargaHoraria}<br>
+                                                <b>Carga Horária:</b> ${atividadeEvento.cargaHoraria}<br>
                                                 <b>Tipo de Atividade:</b> ${atividadeEvento.tipoAtividade.descricao}<br>
                                                 <b>Resumo:</b> ${atividadeEvento.resumo}                                                
                                             </div>

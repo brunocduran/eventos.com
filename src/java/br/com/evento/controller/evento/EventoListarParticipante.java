@@ -6,7 +6,6 @@
 package br.com.evento.controller.evento;
 
 import br.com.evento.dao.EventoDAO;
-import br.com.evento.dao.GenericDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -14,13 +13,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author igorb
+ * @author bruno
  */
-@WebServlet(name = "EventoExcluir", urlPatterns = {"/EventoExcluir"})
-public class EventoExcluir extends HttpServlet {
+@WebServlet(name = "EventoListarParticipante", urlPatterns = {"/EventoListarParticipante"})
+public class EventoListarParticipante extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,22 +33,14 @@ public class EventoExcluir extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=iso-8859-1");
-        int idEvento = Integer.parseInt(request.getParameter("idEvento"));
-        String situacaoEvento = request.getParameter("situacaoEvento");
-        String mensagem = null;
-        try {
+         response.setContentType("text/html;charset=iso-8859-1");
+        try{
             EventoDAO dao = new EventoDAO();
-            if (dao.excluir(idEvento,situacaoEvento)) {
-                response.getWriter().write("1");
-            } else {
-                response.getWriter().write("0");
-            }
-            //request.setAttribute("mensagem", mensagem);
-            //response.sendRedirect("DespesaListar");
-        } catch (Exception e) {
-            System.out.println("Problemas na Servelet ao Excluir Evento! Erro: " + e.getLocalizedMessage());
-            e.printStackTrace();
+            request.setAttribute("eventos", dao.listarAtivo());
+            request.getRequestDispatcher("painel/cadastros/evento/eventoParticipante.jsp").forward(request, response);
+        } catch(Exception ex){
+            System.out.println("Problema no servlet ao listar eventos"+ex.getMessage());
+            ex.printStackTrace();
         }
     }
 
