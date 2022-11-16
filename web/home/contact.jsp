@@ -19,7 +19,7 @@
     <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Contate-nos</span></h2>
     <div class="row px-xl-5">
         <div class="col-lg-7 mb-5">
-            <div class="contact-form bg-light p-30">
+            <div class="bg-light p-30">
                 <div id="success"></div>
                 <form name="sentMessage" id="contactForm" novalidate="novalidate">
                     <div class="control-group">
@@ -38,7 +38,7 @@
                         <p class="help-block text-danger"></p>
                     </div>
                     <div class="control-group">
-                        <textarea class="form-control" rows="8" id="message" placeholder="Mensagem"
+                        <textarea class="form-control" rows="9" id="message" placeholder="Mensagem"
                                   required="required"
                                   data-validation-required-message="Escreva sua mensagem..."></textarea>
                         <p class="help-block text-danger"></p>
@@ -55,10 +55,10 @@
                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3742.932550924576!2d-50.230541585250265!3d-20.261631886418858!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9497f6227db8ac47%3A0xe0474566805fee39!2sFunda%C3%A7%C3%A3o%20Educacional%20de%20Fernand%C3%B3polis%20-%20FEF!5e0!3m2!1spt-BR!2sbr!4v1653966678554!5m2!1spt-BR!2sbr"
                         frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
             </div>
-            <div class="bg-light p-30 mb-3">
+            <div style="height: 162px" class="bg-light p-30">
                 <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>Av. Theotonio Vilela, s/n - Campus Universitário, Fernandópolis - SP, 15608-380</p>
-                <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>evento@evento.com</p>
-                <p class="mb-2"><i class="fa fa-phone-alt text-primary mr-3"></i>+17 3465-0000</p>
+                <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>eventos@eventos.com</p>
+                <p class="mb-2"><i class="fa fa-phone-alt text-primary mr-3"></i>(17) 3465-0000</p>
             </div>
         </div>
     </div>

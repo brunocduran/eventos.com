@@ -114,6 +114,7 @@ public class Usuario {
                     || urlParaAutenticar.equalsIgnoreCase("/ParticipanteCadastrar")
                     || urlParaAutenticar.equalsIgnoreCase("/EventoCarregarHome")
                     || urlParaAutenticar.equalsIgnoreCase("/HomeEventoCategoria")
+                    || urlParaAutenticar.equalsIgnoreCase("/HomeEventoDescricao")
                     || urlParaAutenticar.equalsIgnoreCase("/PessoaVerificarLogin")) {
                 status = true;
             }
