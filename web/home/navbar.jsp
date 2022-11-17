@@ -32,9 +32,9 @@
             <div class="input-group">
                 <input id="pesquisaEventoDescricao" type="text" class="form-control" placeholder="Pesquise por um evento" value="${descricao}">
                 <div class="input-group-append">
-                    <div class="input-group-text">
-                        <span class="fa fa-search"></span>
-                    </div>
+                    <span class="input-group-append">
+                        <button type="button" onclick="pesquisar()" class="btn btn-primary btn-flat"><i class="fa fa-search"></i></button>
+                    </span>
                 </div>
             </div>
         </div>   
@@ -42,12 +42,15 @@
         <script>
             $("#pesquisaEventoDescricao").keypress(function (event) {
                 if (event.keyCode === 13) {
-                    var descricao = document.getElementById('pesquisaEventoDescricao').value;
-                    console.log("descicao: " + descricao);
-                    window.location.href = "${pageContext.request.contextPath}/HomeEventoDescricao?nomeEvento=" + descricao;
-
+                    pesquisar();
                 }
             });
+
+            function pesquisar() {
+                var descricao = document.getElementById('pesquisaEventoDescricao').value;
+                console.log("descicao: " + descricao);
+                window.location.href = "${pageContext.request.contextPath}/HomeEventoDescricao?nomeEvento=" + descricao;
+            };
         </script> 
 
         <div class="col-lg-4 col-6 text-right">               
