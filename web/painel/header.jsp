@@ -117,35 +117,34 @@
 
                             <li class="nav-header">MENU</li>
 
-                            <c:if test="${sessionScope.tipousuario == 'Administrador' or sessionScope.tipousuario == 'Organizador'
-                                          or sessionScope.tipousuario == 'Participante'}">
-                                  <li class="nav-item" id="agrupamentolocalizacao">
-                                      <a href="#" class="nav-link" id="menulocalizacao">
-                                          <i class="nav-icon fas fa-map-marker-alt"></i>
-                                          <p>
-                                              Localização
-                                              <i class="fas fa-angle-left right"></i>
-                                          </p>
-                                      </a>
-                                      <ul class="nav nav-treeview">
-                                          <li class="nav-item">
-                                              <a href="${pageContext.request.contextPath}/EstadoListar" class="nav-link" id="menuestado">
-                                                  <i class="far fa-circle nav-icon"></i>
-                                                  <p>
-                                                      Estado
-                                                  </p>
-                                              </a>
-                                          </li>
-                                          <li class="nav-item">
-                                              <a href="${pageContext.request.contextPath}/CidadeListar" class="nav-link" id="menucidade">
-                                                  <i class="far fa-circle nav-icon"></i>
-                                                  <p>
-                                                      Cidade
-                                                  </p>
-                                              </a>
-                                          </li>
-                                      </ul>
-                                  </li>                                      
+                            <c:if test="${sessionScope.tipousuario == 'Administrador' or sessionScope.tipousuario == 'Organizador'}">
+                                <li class="nav-item" id="agrupamentolocalizacao">
+                                    <a href="#" class="nav-link" id="menulocalizacao">
+                                        <i class="nav-icon fas fa-map-marker-alt"></i>
+                                        <p>
+                                            Localização
+                                            <i class="fas fa-angle-left right"></i>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        <li class="nav-item">
+                                            <a href="${pageContext.request.contextPath}/EstadoListar" class="nav-link" id="menuestado">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>
+                                                    Estado
+                                                </p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="${pageContext.request.contextPath}/CidadeListar" class="nav-link" id="menucidade">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>
+                                                    Cidade
+                                                </p>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>                                      
                             </c:if>                           
 
                             <c:if test="${sessionScope.tipousuario == 'Administrador' or sessionScope.tipousuario == 'Organizador'}">
@@ -286,6 +285,16 @@
                                     </a>
                                 </li>
                             </c:if>
+                            <c:if test="${sessionScope.tipousuario == 'Participante'}">
+                                <li class="nav-item">
+                                    <a href="${pageContext.request.contextPath}/EventoListarParticipante" class="nav-link" id="menuevento">
+                                        <i class="nav-icon far fa-calendar-alt"></i>
+                                        <p>
+                                            Eventos
+                                        </p>
+                                    </a>
+                                </li>
+                            </c:if>
 
                             <c:if test="${sessionScope.tipousuario == 'Administrador'}">
                                 <li class="nav-item">
@@ -313,6 +322,15 @@
                                     </a>
                                 </li>
                             </c:if>
+                            <li class="nav-item">
+                                <a href="${pageContext.request.contextPath}/CalendarioEvento" class="nav-link" id="menuconfiguracaobanner">
+                                    <i class="nav-icon fas fa-money-check-alt"></i>
+                                    <p>
+                                        Calendário - EM TESTE
+                                    </p>
+                                </a>
+                            </li>
+
 
                         </ul>
                     </nav>

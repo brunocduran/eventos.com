@@ -33,20 +33,21 @@ public class EventoExcluir extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         response.setContentType("text/html;charset=iso-8859-1");
-        int idEvento = Integer.parseInt(request.getParameter("idevento"));
+        response.setContentType("text/html;charset=iso-8859-1");
+        int idEvento = Integer.parseInt(request.getParameter("idEvento"));
+        String situacaoEvento = request.getParameter("situacaoEvento");
         String mensagem = null;
-        try{
+        try {
             EventoDAO dao = new EventoDAO();
-            if(dao.excluir(idEvento)){
+            if (dao.excluir(idEvento,situacaoEvento)) {
                 response.getWriter().write("1");
-            }else{
+            } else {
                 response.getWriter().write("0");
             }
             //request.setAttribute("mensagem", mensagem);
             //response.sendRedirect("DespesaListar");
-        }catch (Exception e){
-            System.out.println("Problemas na Servelet ao Excluir Evento! Erro: "+e.getLocalizedMessage());
+        } catch (Exception e) {
+            System.out.println("Problemas na Servelet ao Excluir Evento! Erro: " + e.getLocalizedMessage());
             e.printStackTrace();
         }
     }

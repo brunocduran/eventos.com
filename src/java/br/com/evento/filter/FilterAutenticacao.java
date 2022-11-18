@@ -39,20 +39,20 @@ public class FilterAutenticacao implements Filter{
                     urlParaAutenticar.contains("/painel/plugins/") || 
                     urlParaAutenticar.contains("/painel/css/") ||
                     urlParaAutenticar.contains("/painel/img/") ||
+                    urlParaAutenticar.contains("/painel/calendarioeventos.jsp") ||
                     urlParaAutenticar.contains("/painel/webfonts/") ||
                     urlParaAutenticar.equalsIgnoreCase("/UsuarioLogar") ||                  
                     urlParaAutenticar.equalsIgnoreCase("/Home") ||
                     urlParaAutenticar.equalsIgnoreCase("/Painel/login.jsp") ||
                     urlParaAutenticar.equalsIgnoreCase("/ParticipanteCadastrar") ||
-                    
                     urlParaAutenticar.equalsIgnoreCase("/PessoaBuscarCpfCnpj") ||
-                    
                     urlParaAutenticar.contains("/PessoaVerificarLogin") ||
                     urlParaAutenticar.equalsIgnoreCase("/CidadeBuscarPorEstado") ||
                     urlParaAutenticar.equalsIgnoreCase("/Cadastrar") ||
                     urlParaAutenticar.equalsIgnoreCase("/EventoCarregarHome") ||
                     urlParaAutenticar.equalsIgnoreCase("/Home") ||
                     urlParaAutenticar.equalsIgnoreCase("/HomeEventoCategoria") ||
+                    urlParaAutenticar.equalsIgnoreCase("/HomeEventoDescricao") ||
                     urlParaAutenticar.equalsIgnoreCase("/index.jsp"))){             
               
                      // valida controle de usuario

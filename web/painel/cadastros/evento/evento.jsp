@@ -11,7 +11,7 @@
             <p class="mb-4">Planilha de Registros</p>
             <a href="${pageContext.request.contextPath}/EventoNovo" class="btn btn-success mb-4 adicionar">
                 <i class="fas fa-plus fa-fw"></i>Adicionar</a>
-                
+
             <div class="card shadow">
                 <div class="card-body">
                     <table id="datatable" class="display">
@@ -19,7 +19,9 @@
                             <tr>
                                 <th align="center">ID</th>
                                 <th align="center">Nome Evento</th>
-                                <th align="center"></th>
+                                <th align="left">Data Início</th>
+                                <th align="left">Data Término</th>
+                                <th align="left">Status</th>
                                 <th align="center"></th>
                             </tr>
                         </thead>
@@ -28,20 +30,28 @@
                                 <tr>
                                     <td align="right">${evento.idEvento}</td>
                                     <td align="left">${evento.nomeEvento}</td>
-                                    <td align="center">
-                                        <a href="${pageContext.request.contextPath}/EventoCarregar?idEvento=${evento.idEvento}" class="btn btn-group-lg btn-primary">
-                                            <i class="fas fa-edit"></i><Strong> Alterar </Strong> </a>
+                                    <td align="left"><fmt:formatDate pattern="dd/MM/yyyy" value="${evento.dataInicioEvento}"/></td>
+                                    <td align="left"><fmt:formatDate pattern="dd/MM/yyyy" value="${evento.dataTerminoEvento}"/></td>
+                                    <td align="left">
+                                        <c:if test="${evento.situacaoEvento == 'A'}">
+                                            Ativo
+                                        </c:if>
+
+                                        <c:if test="${evento.situacaoEvento == 'I'}">
+                                            Inativo
+                                        </c:if>
+
+                                        <c:if test="${evento.situacaoEvento == 'E'}">
+                                            Encerrado
+                                        </c:if>
+
+                                        <c:if test="${evento.situacaoEvento == 'F'}">
+                                            Finalizado
+                                        </c:if> 
                                     </td>
                                     <td align="center">
-                                        <a href="${pageContext.request.contextPath}/EventoGerenciar?idEvento=${evento.idEvento}" onclick="deletar(${evento.idEvento}, '${evento.situacaoEvento}')">
-                                            <button class="btn
-                                                    <c:out value="${evento.situacaoEvento == 'A' ? 'btn-danger':'btn-success'}"/>">
-                                                <i class="fas fa-fw
-                                                   <c:out value="${evento.situacaoEvento == 'A' ? 'fa-times' : 'fas fa-check'}"/>"></i>
-                                                <Strong>
-                                                    <c:out value="${evento.situacaoEvento == 'A' ? 'Inativar' : 'Ativar'}"/>
-                                                </Strong>
-                                            </button></a>
+                                        <a href="${pageContext.request.contextPath}/EventoGerenciar?idEvento=${evento.idEvento}" class="btn btn-group-lg btn-primary">
+                                            <i class="fas fa-cog"></i><Strong> Gerenciar </Strong> </a>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -106,78 +116,6 @@
             }
         });
     });
-
-   /* function deletar(codigo, situacaoEvento) {
-        var id = codigo;
-        console.log(codigo);
-
-        var titulo = "";
-        var tituloConfirmacao = "";
-        var confirmButtonText = "";
-
-        if (situacaoEvento == 'I') {
-            titulo = "Você deseja realmente ativar o evento?";
-            confirmButtonText = "Sim, ative o Evento!";
-            tituloConfirmacao = "Evento ativado com sucesso!";
-
-        } else {
-            titulo = "Você deseja realmente inativar o evento?";
-            confirmButtonText = "Sim, inative o evento!";
-            tituloConfirmacao = "evento inativado com sucesso!";
-        }
-
-        Swal.fire({
-            title: 'Você tem certeza?',
-            text: titulo,
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: confirmButtonText,
-            cancelButtonText: 'Cancelar'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $.ajax({
-                    type: 'post',
-                    url: '${pageContext.request.contextPath}/EventoExcluir',
-                    data: {
-                        idEvento: id
-                    },
-                    success:
-                            function (data) {
-                                if (data == 1) {
-                                    Swal.fire({
-                                        position: 'center',
-                                        icon: 'success',
-                                        title: 'Sucesso',
-                                        text: tituloConfirmacao,
-                                        showConfirmButton: true,
-                                        timer: 10000
-                                    }).then(function () {
-                                        window.location.href = "${pageContext.request.contextPath}/EventoListar";
-                                    })
-                                } else {
-                                    Swal.fire({
-                                        position: 'center',
-                                        icon: 'error',
-                                        title: 'Erro',
-                                        text: 'Não foi possível ativar/inativar o evento!',
-                                        showConfirmButton: true,
-                                        timer: 10000
-                                    }).then(function () {
-                                        window.location.href = "${pageContext.request.contextPath}/EventoListar";
-                                    })
-                                }
-                            },
-                    error:
-                            function (data) {
-                                window.location.href = "${pageContext.request.contextPath}/EventoListar";
-                            }
-                });
-            }
-            ;
-        });
-    }*/
 
     function menuAtivo() {
         document.getElementById('titulopainel').innerHTML = "<strong>Evento</strong>";
