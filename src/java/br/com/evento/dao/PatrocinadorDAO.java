@@ -241,4 +241,6 @@ public class PatrocinadorDAO implements GenericDAO {
         return resultado;
     }
 
+   
+
 }
