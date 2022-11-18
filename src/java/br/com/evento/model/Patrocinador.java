@@ -27,6 +27,21 @@ public class Patrocinador extends Pessoa {
         return oPatrocinador;
     }
 
+    public Patrocinador() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+  
+
+    
+
+    
+
+    
+    
+   
+    
+
     public int getIdPatrocinador() {
         return idPatrocinador;
     }
