@@ -19,7 +19,7 @@ public class CategoriaEvento {
         this.nome = "";
         this.situacao = "A";
     }
-
+    
     public CategoriaEvento(int idCategoriaEvento, String nome, String situacao) {
         this.idCategoriaEvento = idCategoriaEvento;
         this.nome = nome;

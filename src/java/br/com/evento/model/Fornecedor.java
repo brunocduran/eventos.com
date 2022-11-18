@@ -26,7 +26,7 @@ public class Fornecedor extends Pessoa {
         this.permiteLogin = permiteLogin;
         this.tipoTrabalho = tipoTrabalho;
     }
-    
+
     public static Fornecedor fornecedorVazio() throws ParseException{
         Cidade oCidade = new Cidade();
         TipoTrabalho oTipoTrabalho = new TipoTrabalho();
