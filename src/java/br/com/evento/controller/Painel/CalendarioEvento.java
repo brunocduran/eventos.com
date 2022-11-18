@@ -5,6 +5,7 @@
  */
 package br.com.evento.controller.Painel;
 
+import br.com.evento.dao.EventoDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -12,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -31,7 +33,28 @@ public class CalendarioEvento extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("/painel/calendarioevento.jsp").forward(request, response);
+         response.setContentType("text/html;charset=iso-8859-1");
+        try{
+            EventoDAO dao = new EventoDAO();
+            int parametroListar = 0;
+            
+            HttpSession sessao = request.getSession();
+            int idUsuario = Integer.parseInt(sessao.getAttribute("idusuario").toString());
+            String tipoUsuario = sessao.getAttribute("tipousuario").toString();
+            
+            if (tipoUsuario.equalsIgnoreCase("Organizador")){
+                parametroListar = idUsuario;
+            }else{
+                parametroListar = 0;
+            }            
+            
+            request.setAttribute("eventos", dao.listar(parametroListar));
+            request.getRequestDispatcher("/painel/calendarioevento.jsp").forward(request, response);
+        } catch(Exception ex){
+            System.out.println("Problema no servlet ao listar eventos"+ex.getMessage());
+            ex.printStackTrace();
+        }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

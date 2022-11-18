@@ -1,6 +1,7 @@
 package br.com.evento.model;
 import br.com.evento.utils.Conversao;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 /**
@@ -201,6 +202,16 @@ public class Evento {
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
         return formato.format(dataTerminoEvento);
     }
+    
+    public Date getDataTerminoEventoCalendario() {
+        // 3 de abril de 2019
+        Date data = this.getDataTerminoEvento();
+        data.setDate(data.getDate() + 1);
+        // somar 1 dia = 4 de abril de 2019
+        //data = data.plusDays(1);
+        return data;
+    }
+    
 
 
 }
