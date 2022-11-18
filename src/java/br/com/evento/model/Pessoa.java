@@ -45,6 +45,10 @@ public class Pessoa {
         this.cidade = cidade;
     }
 
+    public Pessoa() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public int getIdPessoa() {
         return idPessoa;
     }

@@ -216,3 +216,30 @@ CREATE TABLE configuracaobanner(
 	datafinal date,
 	constraint fk_evento FOREIGN key (idevento) references evento(idevento)
 );
+
+create TABLE despesa(
+	iddespesa serial primary key,
+	valordespesa NUMERIC(15,2),
+	vencimentodespesa date,
+	pagamentodespesa date,
+	descricao VARCHAR(200),
+	situacao VARCHAR(1),
+	idfornecedor int,
+	constraint fk_fornecedor foreign key (idfornecedor) references fornecedor(idfornecedor)
+)
+
+insert into despesa(valordespesa,vencimentodespesa,pagamentodespesa,descricao,situacao,idfornecedor)
+values(1000,'15-11-2022','15-11-2022','conta de luz','P',1);
+=======
+create table doacao(
+	idDoacao serial primary key,
+	idPatrocinador int ,
+	valorDoacao numeric(15,2),
+	dataDoacao date,
+	descricao varchar (100),
+	situacao varchar(1),
+	constraint fk_patrocinador_pessoa FOREIGN key (idpatrocinador) references patrocinador(idpatrocinador)
+);
+
+insert into doacao (idPatrocinador,valorDoacao,descricao,situacao) 
+values (1,343,'Top','A');
