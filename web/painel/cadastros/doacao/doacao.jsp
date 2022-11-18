@@ -403,7 +403,7 @@
 
     function menuAtivo() {
         document.getElementById('titulopainel').innerHTML = "<strong>Doação</strong>";
-        document.getElementById('menudoação').classList.add("active");
+        document.getElementById('menudoacao').classList.add("active");
     }
 
     $(document).ready(function () {
