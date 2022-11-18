@@ -314,7 +314,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="${pageContext.request.contextPath}/DespesaListar" class="nav-link" id="menuconfiguracaobanner">
+                                    <a href="${pageContext.request.contextPath}/DespesaListar" class="nav-link" id="menudespesa">
                                         <i class="nav-icon fas fa-money-check-alt"></i>
                                         <p>
                                             Despesa
