@@ -306,7 +306,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="${pageContext.request.contextPath}/DoacaoListar" class="nav-link" id="menuconfiguracaobanner">
+                                    <a href="${pageContext.request.contextPath}/DoacaoListar" class="nav-link" id="menudoacao">
                                         <i class="nav-icon fas fa-hand-holding-usd"></i>
                                         <p>
                                             Doação
