@@ -230,7 +230,8 @@ create TABLE despesa(
 
 insert into despesa(valordespesa,vencimentodespesa,pagamentodespesa,descricao,situacao,idfornecedor)
 values(1000,'15-11-2022','15-11-2022','conta de luz','P',1);
-=======
+
+
 create table doacao(
 	idDoacao serial primary key,
 	idPatrocinador int ,

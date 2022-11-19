@@ -11,8 +11,10 @@
         <script src='${pageContext.request.contextPath}/painel/fullcalendar/js/jquery.min.js'></script>
         <script src='${pageContext.request.contextPath}/painel/fullcalendar/js/fullcalendar.min.js'></script>
         <script src='${pageContext.request.contextPath}/painel/fullcalendar/locale/pt-br.js'></script>
+         <link rel="stylesheet" href="${pageContext.request.contextPath}/painel/css/all.min.css">
+        <!-- Theme style -->
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/painel/css/adminlte.min.css">
         <script>
-
             function generateColor() {
                 const letters = '0123456789ABCDEF';
                 let color = '#';
@@ -49,8 +51,13 @@
         </script>
     </head>
     <body>
-
+        <button class="btn btn-primary" onclick="voltarHome()"><i class="fa fa-arrow-left"></i> Voltar</button>
         <div id='calendar'></div>
-
     </body>
 </html>
+<script>
+    function voltarHome(){
+         window.location.href = "${pageContext.request.contextPath}/Painel";
+    }
+    
+</script>

@@ -37,14 +37,6 @@
 
         <!-- Mensagem alerta -->
         <script src="${pageContext.request.contextPath}/painel/js/sweetalert2.all.min.js" type="text/javascript"></script>
-       
-        <link href='${pageContext.request.contextPath}/painel/fullcalendar/css/fullcalendar.min.css' rel='stylesheet' />
-        <link href='${pageContext.request.contextPath}/painel/fullcalendar/css/fullcalendar.print.min.css' rel='stylesheet' media='print' />
-        
-        <script src='${pageContext.request.contextPath}/painel/fullcalendar/js/moment.min.js'></script>
-        <script src='${pageContext.request.contextPath}/painel/fullcalendar/js/fullcalendar.min.js'></script>
-        <script src='${pageContext.request.contextPath}/painel/fullcalendar/locale/pt-br.js'></script>
-
     </head>
 
     <body class="hold-transition sidebar-mini">
@@ -328,15 +320,16 @@
                                         </p>
                                     </a>
                                 </li>
+
+                                <li class="nav-item">
+                                    <a href="${pageContext.request.contextPath}/CalendarioEvento" class="nav-link" id="menuconfiguracaobanner">
+                                        <i class="nav-icon fas fa-calendar-alt"></i>
+                                        <p>
+                                            Calendário de Eventos
+                                        </p>
+                                    </a>
+                                </li>
                             </c:if>
-                            <li class="nav-item">
-                                <a href="${pageContext.request.contextPath}/CalendarioEvento" class="nav-link" id="menuconfiguracaobanner">
-                                    <i class="nav-icon fas fa-money-check-alt"></i>
-                                    <p>
-                                        Calendário - EM TESTE
-                                    </p>
-                                </a>
-                            </li>
 
 
                         </ul>
