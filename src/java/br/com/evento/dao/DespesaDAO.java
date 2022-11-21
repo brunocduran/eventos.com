@@ -6,6 +6,7 @@
 package br.com.evento.dao;
 
 import br.com.evento.model.Despesa;
+import br.com.evento.model.Evento;
 import br.com.evento.model.Fornecedor;
 import br.com.evento.utils.SingleConnection;
 import java.sql.Connection;
@@ -43,17 +44,17 @@ public class DespesaDAO implements GenericDAO{
     public Boolean inserir(Object objeto) {
         Despesa oDespesa = (Despesa) objeto;
         PreparedStatement stmt = null;
-        String sql = "insert into despesa (valordespesa, vencimentodespesa, pagamentodespesa, descricao, situacao, idfornecedor)"
-                + " values (?,?,?,?,?,?)";
+        String sql = "insert into despesa (valordespesa, vencimentodespesa, pagamentodespesa, descricao, situacao, idfornecedor, idevento)"
+                + " values (?,?,?,?,?,?,?)";
         try{
             stmt = conexao.prepareStatement(sql);
             stmt.setDouble(1, oDespesa.getValorDespesa());
             stmt.setDate(2, new java.sql.Date(oDespesa.getVencimentoDespesa().getTime()));
             stmt.setDate(3, new java.sql.Date(oDespesa.getPagamentoDespesa().getTime()));
             stmt.setString(4, oDespesa.getDescricao());
-            stmt.setString(5, oDespesa.getSituacao());
+            stmt.setString(5, "A");
             stmt.setInt(6, oDespesa.getFornecedor().getIdFornecedor());
-
+            stmt.setInt(7, oDespesa.getEvento().getIdEvento());
             stmt.execute();
             conexao.commit();
             return true;
@@ -75,7 +76,7 @@ public class DespesaDAO implements GenericDAO{
         Despesa oDespesa = (Despesa) objeto;
         PreparedStatement stmt = null;
         String sql = "update despesa set valordespesa=? ,vencimentodespesa=?, pagamentodespesa=?, descricao=?,"
-                + "situacao=?, idfornecedor=? where iddespesa=?";
+                + "situacao=?, idfornecedor=?, idevento=? where iddespesa=?";
         try{
             stmt = conexao.prepareStatement(sql);
             stmt.setDouble(1, oDespesa.getValorDespesa());
@@ -84,7 +85,8 @@ public class DespesaDAO implements GenericDAO{
             stmt.setString(4, oDespesa.getDescricao());
             stmt.setString(5, oDespesa.getSituacao());
             stmt.setInt(6, oDespesa.getFornecedor().getIdFornecedor());
-            stmt.setInt(7, oDespesa.getIdDespesa());
+            stmt.setInt(7, oDespesa.getEvento().getIdEvento());
+            stmt.setInt(8, oDespesa.getIdDespesa());
             stmt.execute();
             conexao.commit();
             return true;
@@ -150,6 +152,9 @@ public class DespesaDAO implements GenericDAO{
                 FornecedorDAO oFornecedorDAO = new FornecedorDAO();
                 oDespesa.setFornecedor((Fornecedor) oFornecedorDAO.carregar(rs.getInt("idfornecedor")));
                 
+                EventoDAO oEventoDAO = new EventoDAO();
+                oDespesa.setEvento((Evento) oEventoDAO.carregar(rs.getInt("idevento")));
+                
             }
             return oDespesa;
         } catch (Exception ex) {
@@ -177,7 +182,7 @@ public class DespesaDAO implements GenericDAO{
                 oDespesa.setDescricao(rs.getString("descricao"));
                 oDespesa.setSituacao(rs.getString("situacao"));
 
-
+                //busca Fornecedor
                 FornecedorDAO oFornecedorDAO = null;
                 try {
                     oFornecedorDAO = new FornecedorDAO();
@@ -186,6 +191,16 @@ public class DespesaDAO implements GenericDAO{
                     ex.printStackTrace();
                 }
                 oDespesa.setFornecedor((Fornecedor) oFornecedorDAO.carregar(rs.getInt("idfornecedor")));
+                
+                //busca Evento
+                EventoDAO oEventoDAO = null;
+                try {
+                    oEventoDAO = new EventoDAO();
+                } catch (Exception ex) {
+                    System.out.println("Erro buscar Evento " + ex.getMessage());
+                    ex.printStackTrace();
+                }
+                oDespesa.setEvento((Evento) oEventoDAO.carregar(rs.getInt("idevento")));
 
                 resultado.add(oDespesa);
             }

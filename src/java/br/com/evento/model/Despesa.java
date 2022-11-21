@@ -20,6 +20,7 @@ public class Despesa {
     private Date pagamentoDespesa;
     private String descricao; 
     private String situacao;
+    private Evento evento;
     
     Cidade oCidade = new Cidade();
     TipoTrabalho oTipoTrabalho = new TipoTrabalho();
@@ -33,9 +34,10 @@ public class Despesa {
         this.pagamentoDespesa = Conversao.dataAtual();
         this.descricao = "";
         this.situacao = "A";
+        this.evento = new Evento();
     }
 
-    public Despesa(int idDespesa, Fornecedor fornecedor, double valorDespesa, Date vencimentoDespesa, Date pagamentoDespesa, String descricao, String situacao) {
+    public Despesa(int idDespesa, Fornecedor fornecedor, double valorDespesa, Date vencimentoDespesa, Date pagamentoDespesa, String descricao, String situacao, Evento evento) {
         this.idDespesa = idDespesa;
         this.fornecedor = fornecedor;
         this.valorDespesa = valorDespesa;
@@ -43,6 +45,7 @@ public class Despesa {
         this.pagamentoDespesa = pagamentoDespesa;
         this.descricao = descricao;
         this.situacao = situacao;
+        this.evento = evento;
     }
 
     public int getIdDespesa() {
@@ -99,6 +102,14 @@ public class Despesa {
 
     public void setSituacao(String situacao) {
         this.situacao = situacao;
+    }
+
+    public Evento getEvento() {
+        return evento;
+    }
+
+    public void setEvento(Evento evento) {
+        this.evento = evento;
     }
     
     

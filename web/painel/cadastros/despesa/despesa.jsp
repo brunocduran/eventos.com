@@ -22,6 +22,7 @@
                                 <th align="center">Pagamento da Despesa</th>
                                 <th align="center">Descrição</th>
                                 <th align="center">Fornecedor</th>
+                                <th align="center">Evento</th>
                                 <th align="center"></th>
                                 <th align="center"></th>
                                 <th align="center"></th>
@@ -36,6 +37,7 @@
                                     <td align="left"><fmt:formatDate pattern="dd/MM/yyyy" value="${despesa.pagamentoDespesa}"/></td>
                                     <td align="left">${despesa.descricao}</td>
                                     <td align="left">${despesa.fornecedor.nomeRazaoPessoa}</td>
+                                    <td align="left">${despesa.evento.nomeEvento}</td>
                                     <td align="center">
                                         <a href="#modaladicionar" class="btn btn-group-lg btn-primary" data-toggle="modal"
                                            data-id="" onclick="setDadosModal(${despesa.idDespesa})">
@@ -116,6 +118,19 @@
                                     </c:forEach>
                                 </select>
                             </div>
+                            
+                            <div class="form-group">
+                                <label>Evento</label>
+                                <select class="form-control" name="idEvento" id="idEvento" required>
+                                    <option value="nulo">Selecione</option>
+                                    <c:forEach var="evento" items="${eventos}">
+                                        <option value="${evento.idEvento}" 
+                                                ${despesa.evento.idEvento == evento.idEvento ? "selected" : ""}>
+                                            ${evento.nomeEvento}
+                                        </option>
+                                    </c:forEach>
+                                </select>
+                            </div>
 
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -189,12 +204,12 @@
     function limparDadosModal() {
         $('#idDespesa').val("0");
         $('#situacao').val("");
-        $('#valorDespesa').val(0);
+        $('#valorDespesa').val("");
         $('#vencimentoDespesa').val("");
         $('#pagamentoDespesa').val("");
         $('#descricao').val("");
         $('#idFornecedor').val("");
-        
+        $('#idEvento').val("");
     }
 
     function setDadosModal(valor) {
@@ -212,6 +227,8 @@
                     $('#pagamentoDespesa').val(respostaServlet.pagamentoDespesa);
                     $('#descricao').val(respostaServlet.descricao);
                     $('#idFornecedor').val(respostaServlet.fornecedor.idFornecedor);
+                    $('#idEvento').val(respostaServlet.evento.idEvento);
+                    
                 }
             });
         }
@@ -221,7 +238,8 @@
 
     function validarCampos() {
         console.log("entrei na validação de campos");
-        if (document.getElementById("valorDespesa").value == '') {
+        var valorDespesa = document.getElementById("valorDespesa").value;
+        if (valorDespesa  == '' , valorDespesa <= 0) {
             Swal.fire({
                 position: 'center',
                 icon: 'error',
@@ -257,9 +275,49 @@
                 timer: 2000
             });
             $("#descricao").focus();
+        }else if (document.getElementById("idEvento").value == '') {
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Verifique id do Evento',
+                showConfirmButton: true,
+                timer: 2000
+            });
+            $("#idEvento").focus();
+        }else if (document.getElementById("idFornecedor").value == '') {
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Verifique id do Fornecedor',
+                showConfirmButton: true,
+                timer: 2000
+            });
+            $("#idFornecedor").focus();
+        
         }else {
-            gravarDados();
+            validarData();
+            
         }
+    }
+    
+    function validarData(){
+           var dataVencimento = document.getElementById("vencimentoDespesa").value;
+           var dataPagamento =  document.getElementById("pagamentoDespesa").value;
+           
+           if (dataPagamento <= dataVencimento){
+               gravarDados();
+           }else{
+              Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Data da Despesa Vencida',
+                showConfirmButton: true,
+                timer: 2000
+            });
+            $("#pagamentoDespesa").focus(); 
+           }
+           
+            
     }
 
     function gravarDados() {
@@ -276,6 +334,8 @@
                 pagamentoDespesa: $("#pagamentoDespesa").val(),
                 descricao: $("#descricao").val(),
                 idFornecedor: $("#idFornecedor").val(),
+                idEvento: $("#idEvento").val()
+                
             },
             success:
                     function (data) {

@@ -9,6 +9,7 @@ import br.com.evento.dao.DespesaDAO;
 import br.com.evento.dao.FornecedorDAO;
 import br.com.evento.model.Cidade;
 import br.com.evento.model.Despesa;
+import br.com.evento.model.Evento;
 import br.com.evento.model.Fornecedor;
 import br.com.evento.model.TipoTrabalho;
 import br.com.evento.utils.Conversao;
@@ -51,13 +52,17 @@ public class DespesaCadastrar extends HttpServlet {
             String descricao = request.getParameter("descricao");
             String situacao = request.getParameter("situacao");
             int idFornecedor = Integer.parseInt(request.getParameter("idFornecedor"));
+            int idEvento = Integer.parseInt(request.getParameter("idEvento"));
 
 
             Fornecedor oFornecedor =  Fornecedor.fornecedorVazio();
             oFornecedor.setIdFornecedor(idFornecedor);
             
+            Evento oEvento = new Evento();
+            oEvento.setIdEvento(idEvento);
+            
             Despesa oDespesa = new Despesa(idDespesa, oFornecedor, valorDespesa, vencimentoDespesa, pagamentoDespesa,
-                    descricao, situacao);
+                    descricao, situacao, oEvento);
             
             DespesaDAO dao = new DespesaDAO();
             if (dao.cadastrar(oDespesa)){
