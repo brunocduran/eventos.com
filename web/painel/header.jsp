@@ -1,4 +1,4 @@
-<%@page contentType="text/html" pageEncoding="iso-8859-1"%>
+<%@page contentType="text/html" pageEncoding="utf-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!doctype html>
@@ -32,12 +32,11 @@
         <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/painel/css/jquery.dataTables.min.css"/>
         <script src="${pageContext.request.contextPath}/painel/js/jquery.dataTables.min.js" type="text/javascript"></script>
 
-        <!-- ImportaÁ„o da minha biblioteca de javascrip-->
+        <!-- Importa√ß√£o da minha biblioteca de javascrip-->
         <script charset="utf-8" src="${pageContext.request.contextPath}/painel/js/validacoes.js" type="text/javascript"></script>
 
         <!-- Mensagem alerta -->
         <script src="${pageContext.request.contextPath}/painel/js/sweetalert2.all.min.js" type="text/javascript"></script>
-
     </head>
 
     <body class="hold-transition sidebar-mini">
@@ -122,7 +121,7 @@
                                     <a href="#" class="nav-link" id="menulocalizacao">
                                         <i class="nav-icon fas fa-map-marker-alt"></i>
                                         <p>
-                                            LocalizaÁ„o
+                                            Localiza√ß√£o
                                             <i class="fas fa-angle-left right"></i>
                                         </p>
                                     </a>
@@ -152,7 +151,7 @@
                                     <a href="${pageContext.request.contextPath}/InstituicaoListar" class="nav-link" id="menuinstituicao">
                                         <i class="nav-icon fas fa-university"></i>
                                         <p>
-                                            InstituiÁ„o
+                                            Institui√ß√£o
                                         </p>
                                     </a>
                                 </li>
@@ -259,7 +258,7 @@
                                     <a href="${pageContext.request.contextPath}/FuncaoListar" class="nav-link" id="menufuncao">
                                         <i class="nav-icon fas fa-cube"></i>
                                         <p>
-                                            FunÁ„o
+                                            Fun√ß√£o
                                         </p>
                                     </a>
                                 </li>
@@ -301,7 +300,7 @@
                                     <a href="${pageContext.request.contextPath}/ConfiguracaoBannerListar" class="nav-link" id="menuconfiguracaobanner">
                                         <i class="nav-icon fas fa-image"></i>
                                         <p>
-                                            ConfiguraÁ„o Banner
+                                            Configura√ß√£o Banner
                                         </p>
                                     </a>
                                 </li>
@@ -309,7 +308,7 @@
                                     <a href="${pageContext.request.contextPath}/DoacaoListar" class="nav-link" id="menudoacao">
                                         <i class="nav-icon fas fa-hand-holding-usd"></i>
                                         <p>
-                                            DoaÁ„o
+                                            Doa√ß√£o
                                         </p>
                                     </a>
                                 </li>
@@ -321,15 +320,16 @@
                                         </p>
                                     </a>
                                 </li>
+
+                                <li class="nav-item">
+                                    <a href="${pageContext.request.contextPath}/CalendarioEvento" class="nav-link" id="menuconfiguracaobanner">
+                                        <i class="nav-icon fas fa-calendar-alt"></i>
+                                        <p>
+                                            Calend√°rio de Eventos
+                                        </p>
+                                    </a>
+                                </li>
                             </c:if>
-                            <li class="nav-item">
-                                <a href="${pageContext.request.contextPath}/CalendarioEvento" class="nav-link" id="menuconfiguracaobanner">
-                                    <i class="nav-icon fas fa-money-check-alt"></i>
-                                    <p>
-                                        Calend·rio - EM TESTE
-                                    </p>
-                                </a>
-                            </li>
 
 
                         </ul>

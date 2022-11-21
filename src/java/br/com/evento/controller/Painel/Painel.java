@@ -6,6 +6,7 @@
 package br.com.evento.controller.Painel;
 
 import br.com.evento.dao.CursoDAO;
+import br.com.evento.dao.EventoDAO;
 import br.com.evento.dao.FornecedorDAO;
 import br.com.evento.dao.InstituicaoDAO;
 import br.com.evento.dao.ParticipanteDAO;
@@ -20,6 +21,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -65,8 +67,24 @@ public class Painel extends HttpServlet {
              /*buscar qtde de fornecedores*/
              FornecedorDAO oFornecedorDAO = new FornecedorDAO();
              List<Object> lstFornecedores = oFornecedorDAO.listarAtivos();
-             qtdFornecedores = lstFornecedores.size();         
-
+             qtdFornecedores = lstFornecedores.size();    
+             
+             
+     
+            EventoDAO dao = new EventoDAO();
+            int parametroListar = 0;
+            
+            HttpSession sessao = request.getSession();
+            int idUsuario = Integer.parseInt(sessao.getAttribute("idusuario").toString());
+            String tipoUsuario = sessao.getAttribute("tipousuario").toString();
+            
+            if (tipoUsuario.equalsIgnoreCase("Organizador")){
+                parametroListar = idUsuario;
+            }else{
+                parametroListar = 0;
+            }            
+            
+            request.setAttribute("eventos", dao.listar(parametroListar));
              request.getSession().setAttribute("qtdCursos", qtdCursos);
              request.getSession().setAttribute("qtdParticipantes", qtdParticipantes);
              request.getSession().setAttribute("qtdFornecedores", qtdFornecedores);            
