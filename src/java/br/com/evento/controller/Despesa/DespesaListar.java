@@ -6,6 +6,7 @@
 package br.com.evento.controller.Despesa;
 
 import br.com.evento.dao.DespesaDAO;
+import br.com.evento.dao.EventoDAO;
 import br.com.evento.dao.FornecedorDAO;
 import br.com.evento.dao.GenericDAO;
 import java.io.IOException;
@@ -40,9 +41,11 @@ public class DespesaListar extends HttpServlet {
             request.setAttribute("despesas", dao.listar());
             GenericDAO oFornecedorDAO = new FornecedorDAO();
             request.setAttribute("fornecedores", oFornecedorDAO.listar());
+            EventoDAO oEventoDAO = new EventoDAO();
+            request.setAttribute("eventos", oEventoDAO.listar(0));
             request.getRequestDispatcher("painel/cadastros/despesa/despesa.jsp").forward(request, response);
         } catch(Exception ex){
-            System.out.println("Problemas no Servlet ao listar Administrador! Erro: "+ ex.getMessage());
+            System.out.println("Problemas no Servlet ao listar Despesa! Erro: "+ ex.getMessage());
         }
     }
 

@@ -225,7 +225,9 @@ create TABLE despesa(
 	descricao VARCHAR(200),
 	situacao VARCHAR(1),
 	idfornecedor int,
-	constraint fk_fornecedor foreign key (idfornecedor) references fornecedor(idfornecedor)
+        idevento int,
+	constraint fk_fornecedor foreign key (idfornecedor) references fornecedor(idfornecedor),
+        constraint fk_evento foreign key (idevento) references evento(idevento)
 )
 
 insert into despesa(valordespesa,vencimentodespesa,pagamentodespesa,descricao,situacao,idfornecedor)
