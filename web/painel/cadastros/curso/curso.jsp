@@ -318,6 +318,8 @@
 
     function menuAtivo() {
         document.getElementById('titulopainel').innerHTML = "<strong>Curso</strong>";
+        document.getElementById('agrupamentocadastrosgerais').classList.add("menu-open");
+        document.getElementById('menucadastrosgerais').classList.add("active");
         document.getElementById('menucurso').classList.add("active");
     }
 

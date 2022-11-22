@@ -299,8 +299,8 @@
 
     function menuAtivo() {
         document.getElementById('titulopainel').innerHTML = "<strong>Tipo de Trabalho</strong>";
-        document.getElementById('agrupamentofornecedor').classList.add("menu-open");
-        document.getElementById('menufornecedoragrupamento').classList.add("active");
+        document.getElementById('agrupamentocadastrosgerais').classList.add("menu-open");
+        document.getElementById('menucadastrosgerais').classList.add("active");
         document.getElementById('menutipotrabalho').classList.add("active");
     }
 

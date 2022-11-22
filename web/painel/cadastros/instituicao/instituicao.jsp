@@ -378,6 +378,8 @@
 
     function menuAtivo() {
         document.getElementById('titulopainel').innerHTML = "<strong>Instituição</strong>";
+        document.getElementById('agrupamentocadastrosgerais').classList.add("menu-open");
+        document.getElementById('menucadastrosgerais').classList.add("active");
         document.getElementById('menuinstituicao').classList.add("active");
     }
 

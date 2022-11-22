@@ -41,7 +41,7 @@
                                             <button class="btn
                                                     <c:out value="${fornecedor.situacaoFornecedor == 'A' ? 'btn-danger':'btn-success'}"/>">
                                                 <i class="fas fa-fw
-                                                   <c:out value="${fornecedor.situacaoFornecedor == 'A' ? 'fa-times' : 'fa-plus'}"/>"></i>
+                                                   <c:out value="${fornecedor.situacaoFornecedor == 'A' ? 'fa-times' : 'fas fa-check'}"/>"></i>
                                                 <Strong>
                                                     <c:out value="${fornecedor.situacaoFornecedor == 'A' ? 'Inativar' : 'Ativar'}"/>
                                                 </Strong>
@@ -627,8 +627,8 @@
 
     function menuAtivo() {
         document.getElementById('titulopainel').innerHTML = "<strong>Fornecedor</strong>";
-        document.getElementById('agrupamentofornecedor').classList.add("menu-open");
-        document.getElementById('menufornecedoragrupamento').classList.add("active");
+        document.getElementById('agrupamentocadastrosgerais').classList.add("menu-open");
+        document.getElementById('menucadastrosgerais').classList.add("active");
         document.getElementById('menufornecedor').classList.add("active");
     }
 

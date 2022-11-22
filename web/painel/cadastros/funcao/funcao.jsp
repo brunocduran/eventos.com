@@ -298,7 +298,9 @@
     }
 
     function menuAtivo() {
-        document.getElementById('titulopainel').innerHTML = "<strong>Função</strong>";
+        document.getElementById('titulopainel').innerHTML = "<strong>Função do Organizador</strong>";
+        document.getElementById('agrupamentoevento').classList.add("menu-open");
+        document.getElementById('menueventoagrupamento').classList.add("active");
         document.getElementById('menufuncao').classList.add("active");
     }
 

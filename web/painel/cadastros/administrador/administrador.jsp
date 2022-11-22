@@ -41,7 +41,7 @@
                                             <button class="btn
                                                     <c:out value="${administrador.situacao == 'A' ? 'btn-danger':'btn-success'}"/>">
                                                 <i class="fas fa-fw
-                                                   <c:out value="${administrador.situacao == 'A' ? 'fa-times' : 'fa-plus'}"/>"></i>
+                                                   <c:out value="${administrador.situacao == 'A' ? 'fa-times' : 'fas fa-check'}"/>"></i>
                                                 <Strong>
                                                     <c:out value="${administrador.situacao == 'A' ? 'Inativar' : 'Ativar'}"/>
                                                 </Strong>
@@ -660,6 +660,8 @@
 
     function menuAtivo() {
         document.getElementById('titulopainel').innerHTML = "<strong>Administrador</strong>";
+        document.getElementById('agrupamentocadastrosgerais').classList.add("menu-open");
+        document.getElementById('menucadastrosgerais').classList.add("active");
         document.getElementById('menuadministrador').classList.add("active");
     }
 

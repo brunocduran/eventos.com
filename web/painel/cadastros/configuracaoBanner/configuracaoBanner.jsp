@@ -492,6 +492,8 @@
 
     function menuAtivo() {
         document.getElementById('titulopainel').innerHTML = "<strong>Configuração Banner</strong>";
+        document.getElementById('agrupamentoevento').classList.add("menu-open");
+        document.getElementById('menueventoagrupamento').classList.add("active");
         document.getElementById('menuconfiguracaobanner').classList.add("active");
     }
 
