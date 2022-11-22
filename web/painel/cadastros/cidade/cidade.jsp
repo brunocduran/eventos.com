@@ -327,8 +327,8 @@
 
     function menuAtivo() {
         document.getElementById('titulopainel').innerHTML = "<strong>Cidade</strong>";
-        document.getElementById('agrupamentolocalizacao').classList.add("menu-open");
-        document.getElementById('menulocalizacao').classList.add("active");
+        document.getElementById('agrupamentocadastrosgerais').classList.add("menu-open");
+        document.getElementById('menucadastrosgerais').classList.add("active");
         document.getElementById('menucidade').classList.add("active");
     }
 

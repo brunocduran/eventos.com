@@ -320,8 +320,8 @@
 
     function menuAtivo() {
         document.getElementById('titulopainel').innerHTML = "<strong>Estado</strong>";
-        document.getElementById('agrupamentolocalizacao').classList.add("menu-open");
-        document.getElementById('menulocalizacao').classList.add("active");
+        document.getElementById('agrupamentocadastrosgerais').classList.add("menu-open");
+        document.getElementById('menucadastrosgerais').classList.add("active");
         document.getElementById('menuestado').classList.add("active");
     }
 

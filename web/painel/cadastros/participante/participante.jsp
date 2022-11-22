@@ -41,7 +41,7 @@
                                             <button class="btn
                                                     <c:out value="${participante.situacao == 'A' ? 'btn-danger':'btn-success'}"/>">
                                                 <i class="fas fa-fw
-                                                   <c:out value="${participante.situacao == 'A' ? 'fa-times' : 'fa-plus'}"/>"></i>
+                                                   <c:out value="${participante.situacao == 'A' ? 'fa-times' : 'fas fa-check'}"/>"></i>
                                                 <Strong>
                                                     <c:out value="${participante.situacao == 'A' ? 'Inativar' : 'Ativar'}"/>
                                                 </Strong>
@@ -662,6 +662,8 @@
 
     function menuAtivo() {
         document.getElementById('titulopainel').innerHTML = "<strong>Participante</strong>";
+        document.getElementById('agrupamentocadastrosgerais').classList.add("menu-open");
+        document.getElementById('menucadastrosgerais').classList.add("active");
         document.getElementById('menuparticipante').classList.add("active");
     }
 

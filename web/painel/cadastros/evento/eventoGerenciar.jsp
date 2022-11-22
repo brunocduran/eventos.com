@@ -122,7 +122,11 @@
                                                 <div class="form-line row">
                                                     <div class="col-sm">
                                                         <hr>
-                                                        <h3><b><a data-toggle="collapse" href="#collapseOrganizador" aria-expanded="false" aria-controls="collapseOrganizador" style="color: black;">Organizadores</a></b></h3>
+                                                        <h3><b><a data-toggle="collapse" href="#collapseOrganizador" aria-expanded="false" aria-controls="collapseOrganizador" style="color: black;">
+                                                                    Organizadores <i class="fas fa-caret-down"></i>
+                                                                </a>
+                                                            </b>
+                                                        </h3>
                                                         <div class="tab-content collapse multi-collapse" id="collapseOrganizador">
                                                             <div id="espacoaddatividadeevento">
                                                                 <!-- Loop para carregar as atividades-->
@@ -158,7 +162,11 @@
                                                 <div class="form-line row">
                                                     <div class="col-sm">
                                                         <hr>
-                                                        <h3><b><a data-toggle="collapse" href="#collapseAtividade" aria-expanded="false" aria-controls="collapseAtividade" style="color: black;">Atividades</a></b></h3>
+                                                        <h3><b><a data-toggle="collapse" href="#collapseAtividade" aria-expanded="false" aria-controls="collapseAtividade" style="color: black;">
+                                                                    Atividades <i class="fas fa-caret-down"></i>
+                                                                </a>
+                                                            </b>
+                                                        </h3>
                                                         <div class="tab-content collapse multi-collapse" id="collapseAtividade">
                                                             <div id="espacoaddatividadeevento">
                                                                 <!-- Loop para carregar as atividades-->
