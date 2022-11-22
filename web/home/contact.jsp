@@ -1,19 +1,22 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@page contentType="text/html" pageEncoding="iso-8859-1" %>
 <jsp:include page="/home/header.jsp"/>
 <jsp:include page="/home/navbar.jsp"/>
 
 <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-                        <div class="navbar-nav mr-auto py-0">
-                            <a href="${pageContext.request.contextPath}/index.jsp" class="nav-item nav-link">Home</a>
-                           
-                            <a href="${pageContext.request.contextPath}/home/contact.jsp" class="nav-item nav-link active">Contato</a>
-                        </div>
-                       
-                    </div>
-            </div>
-            </nav>
-            </div>
-        </div>
+    <div class="navbar-nav mr-auto py-0">
+        <a href="${pageContext.request.contextPath}/index.jsp" class="nav-item nav-link">Home</a>
+
+        <a href="${pageContext.request.contextPath}/home/contact.jsp" class="nav-item nav-link active">Contato</a>
     </div>
+
+</div>
+</div>
+</nav>
+</div>
+</div>
+</div>
 <!-- Navbar End -->
 <div class="container-fluid">
     <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Contate-nos</span></h2>
@@ -21,32 +24,32 @@
         <div class="col-lg-7 mb-5">
             <div class="bg-light p-30">
                 <div id="success"></div>
-                <form name="sentMessage" id="contactForm" novalidate="novalidate">
-                    <div class="control-group">
-                        <input type="text" class="form-control" id="name" placeholder="Seu Nome"
-                               required="required" data-validation-required-message="Por favor, insira seu nome" />
-                        <p class="help-block text-danger"></p>
-                    </div>
-                    <div class="control-group">
-                        <input type="email" class="form-control" id="email" placeholder="Seu E-mail"
-                               required="required" data-validation-required-message="Por favor, informe seu e-mail" />
-                        <p class="help-block text-danger"></p>
-                    </div>
-                    <div class="control-group">
-                        <input type="text" class="form-control" id="subject" placeholder="Assunto"
-                               required="required" data-validation-required-message="Assunto" />
-                        <p class="help-block text-danger"></p>
-                    </div>
-                    <div class="control-group">
-                        <textarea class="form-control" rows="9" id="message" placeholder="Mensagem"
-                                  required="required"
-                                  data-validation-required-message="Escreva sua mensagem..."></textarea>
-                        <p class="help-block text-danger"></p>
-                    </div>
-                    <div>
-                        <button class="btn btn-primary py-2 px-4" type="submit" id="sendMessageButton">Enviar Mensagem</button>
-                    </div>
-                </form>
+
+                <div class="control-group">
+                    <input type="text" class="form-control" name="nome" id="nome" placeholder="Seu Nome"
+                           required="required" data-validation-required-message="Por favor, insira seu nome" />
+                    <p class="help-block text-danger"></p>
+                </div>
+                <div class="control-group">
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Seu E-mail"
+                           required="required" data-validation-required-message="Por favor, informe seu e-mail" />
+                    <p class="help-block text-danger"></p>
+                </div>
+                <div class="control-group">
+                    <input type="text" class="form-control" id="assunto" name="assunto" placeholder="Assunto"
+                           required="required" data-validation-required-message="Assunto" />
+                    <p class="help-block text-danger"></p>
+                </div>
+                <div class="control-group">
+                    <textarea class="form-control" rows="9" id="mensagem" name="mensagem" placeholder="Mensagem"
+                              required="required"
+                              data-validation-required-message="Escreva sua mensagem..."></textarea>
+                    <p class="help-block text-danger"></p>
+                </div>
+                <div>
+                    <button class="btn btn-primary py-2 px-4" type="submit" id="sendMessageButton" onclick="validarCampos()">Enviar Mensagem</button>
+                </div>
+
             </div>
         </div>
         <div class="col-lg-5 mb-5">
@@ -65,4 +68,98 @@
 </div>
 <!-- Contact End -->
 
+<script>
+    function validarCampos() {
+        console.log("entrei na validação de campos");
+
+        if (document.getElementById("nome").value == '') {
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Verifique o nome!',
+                showConfirmButton: true,
+                timer: 2000
+            });
+            $("#nome").focus();
+        } else if (document.getElementById("email").value == '') {
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Verifique o email!',
+                showConfirmButton: true,
+                timer: 2000
+            });
+            $("#email").focus();
+        } else if (document.getElementById("assunto").value == '') {
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Verifique a assunto!',
+                showConfirmButton: true,
+                timer: 2000
+            });
+            $("#assunto").focus();
+        } else if (document.getElementById("mensagem").value == '') {
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Verifique o mensagem!',
+                showConfirmButton: true,
+                timer: 2000
+            });
+            $("#mensagem").focus();
+        } else {
+            enviarMensagem();
+        }
+    }
+
+    function enviarMensagem() {
+        console.log("Enviando mensagem ....");
+        
+        $.ajax({
+            type: 'post',
+            url: 'EnviarContato',
+            data: {
+                nome: $('#nome').val(),
+                email: $('#email').val(),
+                assunto: $('#assunto').val(),
+                mensagem: $('#mensagem').val()
+            },
+            success:
+                    function (data) {
+                        console.log("reposta servlet->");
+                        console.log(data);
+                        if (data == 1) {
+                            Swal.fire({
+                                position: 'center',
+                                icon: 'success',
+                                title: 'Sucesso',
+                                text: 'Estado gravado com sucesso!',
+                                showConfirmButton: true,
+                                timer: 10000
+                            }).then(function () {
+                                //window.location.href = "${pageContext.request.contextPath}/EstadoListar";
+                            })
+                        } else {
+                            Swal.fire({
+                                position: 'center',
+                                icon: 'error',
+                                title: 'Erro',
+                                text: 'Não foi possível gravar o estado!',
+                                showConfirmButton: true,
+                                timer: 10000
+                            }).then(function () {
+                                //window.location.href = "${pageContext.request.contextPath}/EstadoListar";
+                            })
+                        }
+                    },
+            error:
+                    function (data) {
+                        console.log("erro no envio");
+                        //window.location.href = "${pageContext.request.contextPath}/EstadoListar";
+                    }
+        });
+    }
+    
+</script>
 <jsp:include page="/home/footer.jsp"/>
