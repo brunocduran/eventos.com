@@ -8,8 +8,17 @@
     <div class="content-header">
         <div class="container-fluid">
             <!-- Page Heading -->
-            <p class="mb-4">Planilha de Registros</p>
-            <a href="#modaladicionar" class="btn btn-success mb-4 adicionar" data-toggle="modal" data-ad="" onclick="setDadosModal(${0})">
+            <c:if test="${eventoCarregado.idEvento == null}">
+                <p class="mb-4">Planilha de Registros</p>
+            </c:if>
+                <c:if test="${eventoCarregado.idEvento != null}">
+                    <p class="mb-4">Planilha de Registros - <b>Despesas do Evento ${eventoCarregado.nomeEvento} </b></p>
+                    <a href="${pageContext.request.contextPath}/EventoGerenciar?idEvento=${eventoCarregado.idEvento}" class="btn btn-primary mb-4 ">
+                <i class="fa fa-arrow-left"></i>Voltar p/ Evento</a>
+                </c:if>
+            
+            
+                <a href="#modaladicionar" class="btn btn-success mb-4 adicionar" data-toggle="modal" data-ad="" onclick="setDadosModal(${0})">
                 <i class="fas fa-plus fa-fw"></i>Adicionar</a>
             <div class="card shadow">
                 <div class="card-body">
@@ -28,7 +37,7 @@
                                 <th align="center"></th>
                             </tr>
                         </thead><fmt
-                        <tbody>
+                            <tbody>
                             <c:forEach var="despesa" items="${despesas}">
                                 <tr>
                                     <td align="right">${despesa.idDespesa}</td>
@@ -65,7 +74,7 @@
                                     </td>
                                 </tr>
                             </c:forEach>
-                        </tbody>
+                            </tbody>
                     </table>
                 </div>
             </div>
@@ -90,22 +99,22 @@
                                 <label>Valor da Despesa</label>
                                 <input class="form-control" type="text" name="valorDespesa" id="valorDespesa" value=""/>
                             </div>
-                            
+
                             <div class="form-group">
                                 <label>Vencimento da Despesa</label>
                                 <input class="form-control" type="date" name="vencimentoDespesa" id="vencimentoDespesa" value=""/>
                             </div>
-                            
+
                             <div class="form-group">
                                 <label>Pagamento da Despesa</label>
                                 <input class="form-control" type="date" name="pagamentoDespesa" id="pagamentoDespesa" value=""/>
                             </div>
-                            
+
                             <div class="form-group">
                                 <label>Descrição</label>
                                 <input class="form-control" type="text" name="descricao" id="descricao" value=""/>
                             </div>
-                            
+
                             <div class="form-group">
                                 <label>Fornecedor</label>
                                 <select class="form-control" name="idFornecedor" id="idFornecedor" required>
@@ -118,19 +127,25 @@
                                     </c:forEach>
                                 </select>
                             </div>
-                            
-                            <div class="form-group">
-                                <label>Evento</label>
-                                <select class="form-control" name="idEvento" id="idEvento" required>
-                                    <option value="nulo">Selecione</option>
-                                    <c:forEach var="evento" items="${eventos}">
-                                        <option value="${evento.idEvento}" 
-                                                ${despesa.evento.idEvento == evento.idEvento ? "selected" : ""}>
-                                            ${evento.nomeEvento}
-                                        </option>
-                                    </c:forEach>
-                                </select>
-                            </div>
+                            <c:if test="${eventoCarregado.idEvento == null}">
+                                <div class="form-group">
+                                    <label>Evento</label>
+                                    <select class="form-control" name="idEvento" id="idEvento" required>
+                                        <option value="nulo">Selecione</option>
+                                        <c:forEach var="evento" items="${eventos}">
+                                            <option value="${evento.idEvento}" 
+                                                    ${despesa.evento.idEvento == evento.idEvento ? "selected" : ""}>
+                                                ${evento.nomeEvento}
+                                            </option>
+                                        </c:forEach>
+                                    </select>
+                                </div>                                
+                            </c:if>
+
+                            <c:if test="${eventoCarregado.idEvento != null}">
+                                <input class="form-control" type="hidden" name="idEvento" id="idEvento" value="${eventoCarregado.idEvento}" readonly="readonly"/>    
+                            </c:if>
+
 
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -209,7 +224,10 @@
         $('#pagamentoDespesa').val("");
         $('#descricao').val("");
         $('#idFornecedor').val("");
-        $('#idEvento').val("");
+
+        if (${eventoCarregado.idEvento == null}) {
+            $('#idEvento').val("");
+        }
     }
 
     function setDadosModal(valor) {
@@ -228,18 +246,18 @@
                     $('#descricao').val(respostaServlet.descricao);
                     $('#idFornecedor').val(respostaServlet.fornecedor.idFornecedor);
                     $('#idEvento').val(respostaServlet.evento.idEvento);
-                    
+
                 }
             });
         }
     }
 
-    
+
 
     function validarCampos() {
         console.log("entrei na validação de campos");
         var valorDespesa = document.getElementById("valorDespesa").value;
-        if (valorDespesa  == '' , valorDespesa <= 0) {
+        if (valorDespesa == '', valorDespesa <= 0) {
             Swal.fire({
                 position: 'center',
                 icon: 'error',
@@ -248,7 +266,7 @@
                 timer: 2000
             });
             $("#valorDespesa").focus();
-        }else if (document.getElementById("vencimentoDespesa").value == '') {
+        } else if (document.getElementById("vencimentoDespesa").value == '') {
             Swal.fire({
                 position: 'center',
                 icon: 'error',
@@ -257,7 +275,7 @@
                 timer: 2000
             });
             $("#vencimentoDespesa").focus();
-        }else if (document.getElementById("pagamentoDespesa").value == '') {
+        } else if (document.getElementById("pagamentoDespesa").value == '') {
             Swal.fire({
                 position: 'center',
                 icon: 'error',
@@ -266,7 +284,7 @@
                 timer: 2000
             });
             $("#pagamentoDespesa").focus();
-        }else if (document.getElementById("descricao").value == '') {
+        } else if (document.getElementById("descricao").value == '') {
             Swal.fire({
                 position: 'center',
                 icon: 'error',
@@ -275,7 +293,7 @@
                 timer: 2000
             });
             $("#descricao").focus();
-        }else if (document.getElementById("idEvento").value == '') {
+        } else if (document.getElementById("idEvento").value == '') {
             Swal.fire({
                 position: 'center',
                 icon: 'error',
@@ -284,7 +302,7 @@
                 timer: 2000
             });
             $("#idEvento").focus();
-        }else if (document.getElementById("idFornecedor").value == '') {
+        } else if (document.getElementById("idFornecedor").value == '') {
             Swal.fire({
                 position: 'center',
                 icon: 'error',
@@ -293,31 +311,31 @@
                 timer: 2000
             });
             $("#idFornecedor").focus();
-        
-        }else {
+
+        } else {
             validarData();
-            
+
         }
     }
-    
-    function validarData(){
-           var dataVencimento = document.getElementById("vencimentoDespesa").value;
-           var dataPagamento =  document.getElementById("pagamentoDespesa").value;
-           
-           if (dataPagamento <= dataVencimento){
-               gravarDados();
-           }else{
-              Swal.fire({
+
+    function validarData() {
+        var dataVencimento = document.getElementById("vencimentoDespesa").value;
+        var dataPagamento = document.getElementById("pagamentoDespesa").value;
+
+        if (dataPagamento <= dataVencimento) {
+            gravarDados();
+        } else {
+            Swal.fire({
                 position: 'center',
                 icon: 'error',
                 title: 'Data da Despesa Vencida',
                 showConfirmButton: true,
                 timer: 2000
             });
-            $("#pagamentoDespesa").focus(); 
-           }
-           
-            
+            $("#pagamentoDespesa").focus();
+        }
+
+
     }
 
     function gravarDados() {
@@ -335,7 +353,7 @@
                 descricao: $("#descricao").val(),
                 idFornecedor: $("#idFornecedor").val(),
                 idEvento: $("#idEvento").val()
-                
+
             },
             success:
                     function (data) {
@@ -350,7 +368,11 @@
                                 showConfirmButton: true,
                                 timer: 10000
                             }).then(function () {
-                                window.location.href = "${pageContext.request.contextPath}/DespesaListar";
+                                if (${eventoCarregado.idEvento != null}) {
+                                    window.location.href = "${pageContext.request.contextPath}/DespesaListar?idEvento=${eventoCarregado.idEvento}";
+                                }else{
+                                    window.location.href = "${pageContext.request.contextPath}/DespesaListar?idEvento=0";
+                                } 
                             })
                         } else {
                             Swal.fire({
@@ -361,13 +383,21 @@
                                 showConfirmButton: true,
                                 timer: 10000
                             }).then(function () {
-                                window.location.href = "${pageContext.request.contextPath}/DespesaListar";
+                                 if (${eventoCarregado.idEvento != null}) {
+                                    window.location.href = "${pageContext.request.contextPath}/DespesaListar?idEvento=${eventoCarregado.idEvento}";
+                                }else{
+                                    window.location.href = "${pageContext.request.contextPath}/DespesaListar?idEvento=0";
+                                } 
                             })
                         }
                     },
             error:
                     function (data) {
-                        window.location.href = "${pageContext.request.contextPath}/DespesaListar";
+                         if (${eventoCarregado.idEvento != null}) {
+                                    window.location.href = "${pageContext.request.contextPath}/DespesaListar?idEvento=${eventoCarregado.idEvento}";
+                                }else{
+                                    window.location.href = "${pageContext.request.contextPath}/DespesaListar?idEvento=0";
+                                } 
                     }
         });
     }
@@ -380,12 +410,12 @@
     $(document).ready(function () {
         menuAtivo();
     });
-    
+
     function deletar(codigo) {
         var id = codigo;
         console.log(codigo);
 
-        
+
 
         Swal.fire({
             title: 'Você tem certeza?',
@@ -417,7 +447,11 @@
                                         showConfirmButton: true,
                                         timer: 10000
                                     }).then(function () {
-                                        window.location.href = "${pageContext.request.contextPath}/DespesaListar";
+                                         if (${eventoCarregado.idEvento != null}) {
+                                    window.location.href = "${pageContext.request.contextPath}/DespesaListar?idEvento=${eventoCarregado.idEvento}";
+                                }else{
+                                    window.location.href = "${pageContext.request.contextPath}/DespesaListar?idEvento=0";
+                                } 
                                     })
                                 } else {
                                     Swal.fire({
@@ -428,36 +462,44 @@
                                         showConfirmButton: true,
                                         timer: 10000
                                     }).then(function () {
-                                        window.location.href = "${pageContext.request.contextPath}/DespesaListar";
+                                         if (${eventoCarregado.idEvento != null}) {
+                                    window.location.href = "${pageContext.request.contextPath}/DespesaListar?idEvento=${eventoCarregado.idEvento}";
+                                }else{
+                                    window.location.href = "${pageContext.request.contextPath}/DespesaListar?idEvento=0";
+                                } 
                                     })
                                 }
                             },
                     error:
                             function (data) {
-                                window.location.href = "${pageContext.request.contextPath}/DespesaListar";
+                                if (${eventoCarregado.idEvento != null}) {
+                                    window.location.href = "${pageContext.request.contextPath}/DespesaListar?idEvento=${eventoCarregado.idEvento}";
+                                }else{
+                                    window.location.href = "${pageContext.request.contextPath}/DespesaListar?idEvento=0";
+                                } 
                             }
                 });
             }
             ;
         });
     }
-    
-    
-    function pagar(codigo, situacao){
-       var id = codigo;
-       console.log(codigo);
-        
-       
-       if (situacao == 'A'){
-           titulo = 'Você deseja reamente baixar a despesa?';
-           tituloConfirmacao = 'Despesa baixada com sucesso!';
-        }else{
-           titulo = 'Você deseja reamente estorna a despesa?';
-           tituloConfirmacao = 'Despesa estornada com sucesso!'; 
+
+
+    function pagar(codigo, situacao) {
+        var id = codigo;
+        console.log(codigo);
+
+
+        if (situacao == 'A') {
+            titulo = 'Você deseja reamente baixar a despesa?';
+            tituloConfirmacao = 'Despesa baixada com sucesso!';
+        } else {
+            titulo = 'Você deseja reamente estorna a despesa?';
+            tituloConfirmacao = 'Despesa estornada com sucesso!';
         }
-    
-    
-       Swal.fire({
+
+
+        Swal.fire({
             title: 'Você tem certeza?',
             text: titulo,
             icon: 'warning',
@@ -511,7 +553,7 @@
             ;
         });
     }
-    
+
 
 </script>
 <%@include file="/painel/footer.jsp"%>

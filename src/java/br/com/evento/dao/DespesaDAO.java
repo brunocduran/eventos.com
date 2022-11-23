@@ -21,20 +21,21 @@ import java.util.List;
  *
  * @author johat
  */
-public class DespesaDAO implements GenericDAO{
-    
+public class DespesaDAO implements GenericDAO {
+
     private Connection conexao;
+
     public DespesaDAO() throws Exception {
         conexao = SingleConnection.getConnection();
     }
-    
+
     @Override
     public Boolean cadastrar(Object objeto) {
-       Despesa oDespesa = (Despesa) objeto;
+        Despesa oDespesa = (Despesa) objeto;
         boolean retorno = false;
-        if (oDespesa.getIdDespesa()== 0){
+        if (oDespesa.getIdDespesa() == 0) {
             retorno = inserir(oDespesa);
-        }else{
+        } else {
             retorno = alterar(oDespesa);
         }
         return retorno;
@@ -46,7 +47,7 @@ public class DespesaDAO implements GenericDAO{
         PreparedStatement stmt = null;
         String sql = "insert into despesa (valordespesa, vencimentodespesa, pagamentodespesa, descricao, situacao, idfornecedor, idevento)"
                 + " values (?,?,?,?,?,?,?)";
-        try{
+        try {
             stmt = conexao.prepareStatement(sql);
             stmt.setDouble(1, oDespesa.getValorDespesa());
             stmt.setDate(2, new java.sql.Date(oDespesa.getVencimentoDespesa().getTime()));
@@ -58,13 +59,13 @@ public class DespesaDAO implements GenericDAO{
             stmt.execute();
             conexao.commit();
             return true;
-        }catch(Exception e){
-            try{
-                System.out.println("Problema ao cadastrar Despesa na dao! Erro: "+e.getMessage());
+        } catch (Exception e) {
+            try {
+                System.out.println("Problema ao cadastrar Despesa na dao! Erro: " + e.getMessage());
                 e.printStackTrace();
                 conexao.rollback();
-            }catch(SQLException ex){
-                System.out.println("Problema no rollback da Despesa ao cadastrar na dao! "+ex.getMessage());
+            } catch (SQLException ex) {
+                System.out.println("Problema no rollback da Despesa ao cadastrar na dao! " + ex.getMessage());
                 ex.printStackTrace();
             }
             return false;
@@ -77,7 +78,7 @@ public class DespesaDAO implements GenericDAO{
         PreparedStatement stmt = null;
         String sql = "update despesa set valordespesa=? ,vencimentodespesa=?, pagamentodespesa=?, descricao=?,"
                 + "situacao=?, idfornecedor=?, idevento=? where iddespesa=?";
-        try{
+        try {
             stmt = conexao.prepareStatement(sql);
             stmt.setDouble(1, oDespesa.getValorDespesa());
             stmt.setDate(2, (Date) oDespesa.getVencimentoDespesa());
@@ -90,18 +91,18 @@ public class DespesaDAO implements GenericDAO{
             stmt.execute();
             conexao.commit();
             return true;
-        }catch(Exception e){
-            try{
-                System.out.println("Problema ao alterar Despesa na dao! Erro: "+e.getMessage());
+        } catch (Exception e) {
+            try {
+                System.out.println("Problema ao alterar Despesa na dao! Erro: " + e.getMessage());
                 e.printStackTrace();
                 conexao.rollback();
-            }catch(SQLException ex){
-                System.out.println("Problema no rollback da Despesa ao alterar na dao! "+ex.getMessage());
+            } catch (SQLException ex) {
+                System.out.println("Problema no rollback da Despesa ao alterar na dao! " + ex.getMessage());
                 ex.printStackTrace();
             }
             return false;
         }
-       
+
     }
 
     @Override
@@ -151,10 +152,10 @@ public class DespesaDAO implements GenericDAO{
 
                 FornecedorDAO oFornecedorDAO = new FornecedorDAO();
                 oDespesa.setFornecedor((Fornecedor) oFornecedorDAO.carregar(rs.getInt("idfornecedor")));
-                
+
                 EventoDAO oEventoDAO = new EventoDAO();
                 oDespesa.setEvento((Evento) oEventoDAO.carregar(rs.getInt("idevento")));
-                
+
             }
             return oDespesa;
         } catch (Exception ex) {
@@ -191,7 +192,7 @@ public class DespesaDAO implements GenericDAO{
                     ex.printStackTrace();
                 }
                 oDespesa.setFornecedor((Fornecedor) oFornecedorDAO.carregar(rs.getInt("idfornecedor")));
-                
+
                 //busca Evento
                 EventoDAO oEventoDAO = null;
                 try {
@@ -209,8 +210,7 @@ public class DespesaDAO implements GenericDAO{
         }
         return resultado;
     }
-    
-    
+
     public Boolean pagamento(int numero) {
         int idDespesa = numero;
         PreparedStatement stmt = null;
@@ -237,5 +237,73 @@ public class DespesaDAO implements GenericDAO{
             }
             return false;
         }
+    }
+
+    public List<Object> listarPorEvento(int idEvento, int idUsuario) {
+        List<Object> resultado = new ArrayList<>();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String sql = "select * from despesa where 1=1 ";
+
+        if (idEvento > 0) {
+            sql += " and despesa.idevento = ? ";
+        }
+        
+        if (idUsuario > 0){
+             sql += " and despesa.idevento in (select evento.idevento from evento where evento.idevento in (select organizadorevento.idevento"
+                     + " from organizadorevento where organizadorevento.idorganizador = ? )) ";
+        }
+
+        sql += " order by iddespesa";
+        try {
+            stmt = conexao.prepareStatement(sql);
+
+            if (idEvento > 0) {
+                stmt.setInt(1, idEvento);
+            }
+            
+            if ((idUsuario > 0) && (idEvento == 0)) {
+                stmt.setInt(1, idUsuario);
+            }else if ((idUsuario > 0) && (idEvento > 0)){
+                stmt.setInt(2, idUsuario);
+            }
+
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                Despesa oDespesa = new Despesa();
+
+                oDespesa.setIdDespesa(rs.getInt("iddespesa"));
+                oDespesa.setValorDespesa(rs.getDouble("valordespesa"));
+                oDespesa.setVencimentoDespesa(rs.getDate("vencimentodespesa"));
+                oDespesa.setPagamentoDespesa(rs.getDate("pagamentodespesa"));
+                oDespesa.setDescricao(rs.getString("descricao"));
+                oDespesa.setSituacao(rs.getString("situacao"));
+
+                //busca Fornecedor
+                FornecedorDAO oFornecedorDAO = null;
+                try {
+                    oFornecedorDAO = new FornecedorDAO();
+                } catch (Exception ex) {
+                    System.out.println("Erro buscar Fornecedor " + ex.getMessage());
+                    ex.printStackTrace();
+                }
+                oDespesa.setFornecedor((Fornecedor) oFornecedorDAO.carregar(rs.getInt("idfornecedor")));
+
+                //busca Evento
+                EventoDAO oEventoDAO = null;
+                try {
+                    oEventoDAO = new EventoDAO();
+                } catch (Exception ex) {
+                    System.out.println("Erro buscar Evento " + ex.getMessage());
+                    ex.printStackTrace();
+                }
+                oDespesa.setEvento((Evento) oEventoDAO.carregar(rs.getInt("idevento")));
+
+                resultado.add(oDespesa);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Problemas ao listar despesa na DAO! Erro: " + ex.getMessage());
+        }
+        return resultado;
     }
 }

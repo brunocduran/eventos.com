@@ -208,8 +208,11 @@
                                         <a href="${pageContext.request.contextPath}/EventoCarregar?idEvento=${evento.idEvento}" class="btn btn-app bg-secondary">
                                             <i class="fas fa-edit"></i> Alterar
                                         </a>
+                                        <a href="${pageContext.request.contextPath}/DespesaListar?idEvento=${evento.idEvento}" class="btn btn-app bg-success">
+                                            <i class="far fa-money-bill-alt"></i> Despesas
+                                        </a>
                                         <a class="btn btn-app bg-success">
-                                            <i class="far fa-money-bill-alt"></i> Financeiro
+                                            <i class="far fas fa-hand-holding-usd"></i> Doações
                                         </a>
                                         <a class="btn btn-app bg-warning">
                                             <i class="fas fa-user-check"></i> Inscritos
