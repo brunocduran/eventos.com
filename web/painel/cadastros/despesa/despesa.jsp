@@ -11,14 +11,14 @@
             <c:if test="${eventoCarregado.idEvento == null}">
                 <p class="mb-4">Planilha de Registros</p>
             </c:if>
-                <c:if test="${eventoCarregado.idEvento != null}">
-                    <p class="mb-4">Planilha de Registros - <b>Despesas do Evento ${eventoCarregado.nomeEvento} </b></p>
-                    <a href="${pageContext.request.contextPath}/EventoGerenciar?idEvento=${eventoCarregado.idEvento}" class="btn btn-primary mb-4 ">
-                <i class="fa fa-arrow-left"></i>Voltar p/ Evento</a>
-                </c:if>
-            
-            
-                <a href="#modaladicionar" class="btn btn-success mb-4 adicionar" data-toggle="modal" data-ad="" onclick="setDadosModal(${0})">
+            <c:if test="${eventoCarregado.idEvento != null}">
+                <p class="mb-4">Planilha de Registros - <b>Despesas do Evento: ${eventoCarregado.nomeEvento} </b></p>
+                <a href="${pageContext.request.contextPath}/EventoGerenciar?idEvento=${eventoCarregado.idEvento}" class="btn btn-primary mb-4 ">
+                    <i class="fa fa-arrow-left"></i> Voltar p/ Evento</a>
+            </c:if>
+
+
+            <a href="#modaladicionar" class="btn btn-success mb-4 adicionar" data-toggle="modal" data-ad="" onclick="setDadosModal(${0})">
                 <i class="fas fa-plus fa-fw"></i>Adicionar</a>
             <div class="card shadow">
                 <div class="card-body">
@@ -26,12 +26,12 @@
                         <thead>
                             <tr>
                                 <th align="center">ID</th>
-                                <th align="center">Valor da Despesa</th>
-                                <th align="center">Vencimento da Despesa</th>
-                                <th align="center">Pagamento da Despesa</th>
-                                <th align="center">Descrição</th>
-                                <th align="center">Fornecedor</th>
-                                <th align="center">Evento</th>
+                                <th align="left">Valor da Despesa</th>
+                                <th align="left">Vencimento da Despesa</th>
+                                <th align="left">Pagamento da Despesa</th>
+                                <th align="left">Descrição</th>
+                                <th align="left">Fornecedor</th>
+                                <th align="left">Evento</th>
                                 <th align="center"></th>
                                 <th align="center"></th>
                                 <th align="center"></th>
@@ -48,8 +48,8 @@
                                     <td align="left">${despesa.fornecedor.nomeRazaoPessoa}</td>
                                     <td align="left">${despesa.evento.nomeEvento}</td>
                                     <td align="center">
-                                        <a href="#modaladicionar" class="btn btn-group-lg btn-primary" data-toggle="modal"
-                                           data-id="" onclick="setDadosModal(${despesa.idDespesa})">
+                                        <a class="btn btn-group-lg btn-primary" data-toggle="modal"
+                                           data-id="" onclick="alterar(${despesa.idDespesa}, '${despesa.situacao}')">
                                             <i class="fas fa-edit"></i><Strong> Alterar </Strong> </a>
                                     </td>
                                     <td align="center">
@@ -65,7 +65,7 @@
                                         </a>
                                     </td>
                                     <td align="center">
-                                        <a href="#" onclick="deletar(${despesa.idDespesa})" class="btn btn-danger">
+                                        <a href="#" onclick="deletar(${despesa.idDespesa},'${despesa.situacao}')" class="btn btn-danger">
                                             <i class="fas fa-fw fa-times"></i>
                                             <Strong>
                                                 Excluir
@@ -89,7 +89,6 @@
                             </button>
                         </div>
                         <div class="modal-body">
-
                             <div class="form-group">
                                 <input class="form-control" type="hidden" name="idDespesa" id="idDespesa" value="" readonly="readonly"/>
                                 <input class="form-control" type="hidden" name="situacao" id="situacao" value="" readonly="readonly"/>
@@ -97,17 +96,12 @@
 
                             <div class="form-group">
                                 <label>Valor da Despesa</label>
-                                <input class="form-control" type="text" name="valorDespesa" id="valorDespesa" value=""/>
+                                <input class="form-control" type="number" name="valorDespesa" id="valorDespesa" value=""/>
                             </div>
 
                             <div class="form-group">
                                 <label>Vencimento da Despesa</label>
                                 <input class="form-control" type="date" name="vencimentoDespesa" id="vencimentoDespesa" value=""/>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Pagamento da Despesa</label>
-                                <input class="form-control" type="date" name="pagamentoDespesa" id="pagamentoDespesa" value=""/>
                             </div>
 
                             <div class="form-group">
@@ -157,6 +151,42 @@
                     </div>
                 </div>
             </div>
+                
+            <div class="modal fade" id="modalbaixar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-x1">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Baixar</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <input class="form-control" type="hidden" name="idDespesaBaixa" id="idDespesaBaixa" value="" readonly="readonly"/>
+                                <input class="form-control" type="hidden" name="situacaoBaixa" id="situacaoBaixa" value="" readonly="readonly"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Pagamento da Despesa</label>
+                                <input class="form-control" type="date" name="pagamentoDespesa" id="pagamentoDespesa" value=""/>
+                            </div>
+
+                            <c:if test="${eventoCarregado.idEvento != null}">
+                                <input class="form-control" type="hidden" name="idEventoBaixa" id="idEventoBaixa" value="${eventoCarregado.idEvento}" readonly="readonly"/>    
+                            </c:if>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                <a href="#" onclick="baixar(0,'A')">
+                                    <button type="button" class="btn btn-success">Baixar</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                
         </div>
     </div>
 </div>
@@ -229,10 +259,36 @@
             $('#idEvento').val("");
         }
     }
+    
+    function limparDadosModalBaixa() {
+        $('#idDespesaBaixa').val("0");
+        $('#situacaoBaixa').val("");
+        $('#pagamentoDespesa').val("");
+
+        if (${eventoCarregado.idEvento == null}) {
+            $('#idEvento').val("");
+        }
+    }
+    
+    function alterar(valor, situacao) {
+        var status = situacao;
+        
+         if (status == 'P') {
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Só é possível alterar despesas que não foram baixadas!',
+                showConfirmButton: true
+            });
+        } else {
+            $('#modaladicionar').modal('show');
+            setDadosModal(valor);
+        }
+    }
 
     function setDadosModal(valor) {
         limparDadosModal();
-
+        
         if (valor != "0") {
             $.getJSON('DespesaCarregar', {idDespesa: valor}, function (respostaServlet) {
                 console.log(respostaServlet);
@@ -242,7 +298,7 @@
                     $('#situacao').val(respostaServlet.situacao);
                     $('#valorDespesa').val(respostaServlet.valorDespesa);
                     $('#vencimentoDespesa').val(respostaServlet.vencimentoDespesa);
-                    $('#pagamentoDespesa').val(respostaServlet.pagamentoDespesa);
+                    //$('#pagamentoDespesa').val(respostaServlet.pagamentoDespesa);
                     $('#descricao').val(respostaServlet.descricao);
                     $('#idFornecedor').val(respostaServlet.fornecedor.idFornecedor);
                     $('#idEvento').val(respostaServlet.evento.idEvento);
@@ -275,15 +331,6 @@
                 timer: 2000
             });
             $("#vencimentoDespesa").focus();
-        } else if (document.getElementById("pagamentoDespesa").value == '') {
-            Swal.fire({
-                position: 'center',
-                icon: 'error',
-                title: 'Verifique Data do Pagamento da Despesa',
-                showConfirmButton: true,
-                timer: 2000
-            });
-            $("#pagamentoDespesa").focus();
         } else if (document.getElementById("descricao").value == '') {
             Swal.fire({
                 position: 'center',
@@ -313,29 +360,9 @@
             $("#idFornecedor").focus();
 
         } else {
-            validarData();
-
-        }
-    }
-
-    function validarData() {
-        var dataVencimento = document.getElementById("vencimentoDespesa").value;
-        var dataPagamento = document.getElementById("pagamentoDespesa").value;
-
-        if (dataPagamento <= dataVencimento) {
             gravarDados();
-        } else {
-            Swal.fire({
-                position: 'center',
-                icon: 'error',
-                title: 'Data da Despesa Vencida',
-                showConfirmButton: true,
-                timer: 2000
-            });
-            $("#pagamentoDespesa").focus();
+
         }
-
-
     }
 
     function gravarDados() {
@@ -349,7 +376,7 @@
                 situacao: $('#situacao').val(),
                 valorDespesa: $("#valorDespesa").val(),
                 vencimentoDespesa: $("#vencimentoDespesa").val(),
-                pagamentoDespesa: $("#pagamentoDespesa").val(),
+                //pagamentoDespesa: $("#pagamentoDespesa").val(),
                 descricao: $("#descricao").val(),
                 idFornecedor: $("#idFornecedor").val(),
                 idEvento: $("#idEvento").val()
@@ -404,6 +431,8 @@
 
     function menuAtivo() {
         document.getElementById('titulopainel').innerHTML = "<strong>Despesa</strong>";
+        document.getElementById('agrupamentoevento').classList.add("menu-open");
+        document.getElementById('menueventoagrupamento').classList.add("active");
         document.getElementById('menudespesa').classList.add("active");
     }
 
@@ -411,12 +440,21 @@
         menuAtivo();
     });
 
-    function deletar(codigo) {
+    function deletar(codigo,situacao) {
         var id = codigo;
+        var status = situacao;
         console.log(codigo);
-
-
-
+        console.log(status);
+        
+        if (status == 'P') {
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Só é possível excluir despesas que não foram baixadas!',
+                showConfirmButton: true
+            });
+        } else {
+            
         Swal.fire({
             title: 'Você tem certeza?',
             text: 'Você deseja realmente excluir despesa?',
@@ -482,12 +520,43 @@
             }
             ;
         });
+        }
+    }
+    
+    function setDadosModalPagar(valor) {
+        limparDadosModalBaixa();
+        if (valor != "0") {
+            $.getJSON('DespesaCarregar', {idDespesa: valor}, function (respostaServlet) {
+                console.log(respostaServlet);
+                var id = respostaServlet.idDespesa;
+                if (id != "0") {
+                    $('#idDespesaBaixa').val(respostaServlet.idDespesa);
+                    $('#situacaoBaixa').val(respostaServlet.situacao);
+                    $('#pagamentoDespesa').val(respostaServlet.pagamentoDespesa);
+                    $('#idEventoBaixa').val(respostaServlet.evento.idEvento);
+                }
+            });
+        }
+    }
+    
+    function pagar(codigo, situacao) {
+        if (situacao == 'A') {
+            $('#modalbaixar').modal('show');
+            setDadosModalPagar(codigo);
+        } else {
+            baixar(codigo, situacao);
+        }
     }
 
-
-    function pagar(codigo, situacao) {
-        var id = codigo;
-        console.log(codigo);
+    function baixar(codigo, situacao) {
+        if (codigo == 0){
+            var id = document.getElementById(`idDespesaBaixa`).value;
+            var data = document.getElementById("pagamentoDespesa").value;
+        }else{
+            var id = codigo;
+            var data = null;
+        }
+        console.log('ID da despesa:'+id);
 
 
         if (situacao == 'A') {
@@ -497,7 +566,17 @@
             titulo = 'Você deseja reamente estorna a despesa?';
             tituloConfirmacao = 'Despesa estornada com sucesso!';
         }
-
+        
+        if (document.getElementById("pagamentoDespesa").value == '' && situacao == 'A') {
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Verifique a Data de Pagamento!',
+                showConfirmButton: true,
+                timer: 2000
+            });
+            $("#vencimentoDespesa").focus();
+        } else{
 
         Swal.fire({
             title: 'Você tem certeza?',
@@ -514,7 +593,9 @@
                     type: 'post',
                     url: '${pageContext.request.contextPath}/DespesaPagamento',
                     data: {
-                        idDespesa: id
+                        idDespesa: id,
+                        pagamentoDespesa: data,
+                        situacao: situacao
                     },
                     success:
                             function (data) {
@@ -529,7 +610,11 @@
                                         showConfirmButton: true,
                                         timer: 10000
                                     }).then(function () {
-                                        window.location.href = "${pageContext.request.contextPath}/DespesaListar";
+                                        if (${eventoCarregado.idEvento != null}) {
+                                            window.location.href = "${pageContext.request.contextPath}/DespesaListar?idEvento=${eventoCarregado.idEvento}";
+                                        }else{
+                                            window.location.href = "${pageContext.request.contextPath}/DespesaListar?idEvento=0";
+                                        } 
                                     })
                                 } else {
                                     Swal.fire({
@@ -540,7 +625,11 @@
                                         showConfirmButton: true,
                                         timer: 10000
                                     }).then(function () {
-                                        window.location.href = "${pageContext.request.contextPath}/DespesaListar";
+                                        if (${eventoCarregado.idEvento != null}) {
+                                            window.location.href = "${pageContext.request.contextPath}/DespesaListar?idEvento=${eventoCarregado.idEvento}";
+                                        }else{
+                                            window.location.href = "${pageContext.request.contextPath}/DespesaListar?idEvento=0";
+                                        } 
                                     })
                                 }
                             },
@@ -553,7 +642,7 @@
             ;
         });
     }
-
+    }
 
 </script>
 <%@include file="/painel/footer.jsp"%>

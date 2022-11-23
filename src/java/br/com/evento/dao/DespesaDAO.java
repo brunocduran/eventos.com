@@ -45,17 +45,16 @@ public class DespesaDAO implements GenericDAO {
     public Boolean inserir(Object objeto) {
         Despesa oDespesa = (Despesa) objeto;
         PreparedStatement stmt = null;
-        String sql = "insert into despesa (valordespesa, vencimentodespesa, pagamentodespesa, descricao, situacao, idfornecedor, idevento)"
-                + " values (?,?,?,?,?,?,?)";
+        String sql = "insert into despesa (valordespesa, vencimentodespesa, descricao, situacao, idfornecedor, idevento)"
+                + " values (?,?,?,?,?,?)";
         try {
             stmt = conexao.prepareStatement(sql);
             stmt.setDouble(1, oDespesa.getValorDespesa());
             stmt.setDate(2, new java.sql.Date(oDespesa.getVencimentoDespesa().getTime()));
-            stmt.setDate(3, new java.sql.Date(oDespesa.getPagamentoDespesa().getTime()));
-            stmt.setString(4, oDespesa.getDescricao());
-            stmt.setString(5, "A");
-            stmt.setInt(6, oDespesa.getFornecedor().getIdFornecedor());
-            stmt.setInt(7, oDespesa.getEvento().getIdEvento());
+            stmt.setString(3, oDespesa.getDescricao());
+            stmt.setString(4, "A");
+            stmt.setInt(5, oDespesa.getFornecedor().getIdFornecedor());
+            stmt.setInt(6, oDespesa.getEvento().getIdEvento());
             stmt.execute();
             conexao.commit();
             return true;
@@ -76,18 +75,17 @@ public class DespesaDAO implements GenericDAO {
     public Boolean alterar(Object objeto) {
         Despesa oDespesa = (Despesa) objeto;
         PreparedStatement stmt = null;
-        String sql = "update despesa set valordespesa=? ,vencimentodespesa=?, pagamentodespesa=?, descricao=?,"
+        String sql = "update despesa set valordespesa=? ,vencimentodespesa=?, descricao=?,"
                 + "situacao=?, idfornecedor=?, idevento=? where iddespesa=?";
         try {
             stmt = conexao.prepareStatement(sql);
             stmt.setDouble(1, oDespesa.getValorDespesa());
             stmt.setDate(2, (Date) oDespesa.getVencimentoDespesa());
-            stmt.setDate(3, (Date) oDespesa.getPagamentoDespesa());
-            stmt.setString(4, oDespesa.getDescricao());
-            stmt.setString(5, oDespesa.getSituacao());
-            stmt.setInt(6, oDespesa.getFornecedor().getIdFornecedor());
-            stmt.setInt(7, oDespesa.getEvento().getIdEvento());
-            stmt.setInt(8, oDespesa.getIdDespesa());
+            stmt.setString(3, oDespesa.getDescricao());
+            stmt.setString(4, oDespesa.getSituacao());
+            stmt.setInt(5, oDespesa.getFornecedor().getIdFornecedor());
+            stmt.setInt(6, oDespesa.getEvento().getIdEvento());
+            stmt.setInt(7, oDespesa.getIdDespesa());
             stmt.execute();
             conexao.commit();
             return true;
@@ -211,19 +209,22 @@ public class DespesaDAO implements GenericDAO {
         return resultado;
     }
 
-    public Boolean pagamento(int numero) {
+    public Boolean pagamento(int numero, Date data) {
         int idDespesa = numero;
+        Date dataPagamento = data;
         PreparedStatement stmt = null;
-        String sql = "update despesa set situacao =? where iddespesa=?";
+        String sql = "update despesa set situacao =?, pagamentodespesa=? where iddespesa=?";
         try {
             Despesa oDespesa = (Despesa) this.carregar(idDespesa);
             stmt = conexao.prepareStatement(sql);
             if (oDespesa.getSituacao().equals("A")) {
                 stmt.setString(1, "P");//se situacao do pagamento atual for Aberto --> Paga
+                stmt.setDate(2, (Date) dataPagamento);
             } else {
                 stmt.setString(1, "A");//se situacao do pagamento atual for Paga --> Aberto
+                stmt.setDate(2, null);
             }
-            stmt.setInt(2, idDespesa);
+            stmt.setInt(3, idDespesa);
             stmt.execute();
             conexao.commit();
             return true;
