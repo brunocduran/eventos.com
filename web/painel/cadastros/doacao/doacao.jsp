@@ -29,7 +29,7 @@
                                 <tr>
                                     <td align="left">${doacao.idDoacao}</td>
                                     <td align="left"><fmt:formatNumber value = "${doacao.valorDoacao}" type = "currency"/></td>
-                                    <td align="left"><fmt:formatDate pattern = "dd/MM/yyyy" value = "${doacao.dataDoacao}" /></td>
+                                    <td align="left"><fmt:formatDate pattern = "dd/MM/yyyy" value = "${doacao.dataDoacao}"  /></td>
                                     <td align="left">${doacao.descricao}</td>
                                     <td align="center">
                                         <a href="#modaladicionar" class="btn btn-group-lg btn-primary" data-toggle="modal"
@@ -51,13 +51,13 @@
 
 
                                     <td align="center">
-                                         <a href="${pageContext.request.contextPath}/DoacaoExcluir?idDoacao=${doacao.idDoacao}" class="btn btn-danger" >
+                                        <a href="${pageContext.request.contextPath}/DoacaoExcluir?idDoacao=${doacao.idDoacao}" class="btn btn-danger" >
                                             <i class="fas fa-faw fa-times"></i>
                                             <Strong>
                                                 Excluir 
                                             </Strong>
-                                         </a>
-                                       
+                                        </a>
+
                                     </td>
 
 
@@ -87,7 +87,7 @@
 
                             <div class="form-group">
                                 <label>Valor Doação</label>
-                                <input class="form-control" type="text" name="valorDoacao" id="valorDoacao" value=""/>
+                                <input class="form-control" type="number" name="valorDoacao" id="valorDoacao" value=""/>
                             </div>
 
 
@@ -117,6 +117,18 @@
                                     <c:forEach var="patrocinador" items="${patrocinadores}">
                                         <option value="${patrocinador.idPatrocinador}" ${Doacao.patrocinador.idPatrocinador == patrocinador.idPatrocinador ? "selected" : ""}>
                                             ${patrocinador.nomeRazaoPessoa} 
+                                        </option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+
+                            <div class="col-sm">
+                                <label>Evento</label>
+                                <select class="form-control" name="idEvento" id="idEvento" required>
+                                    <option value="nulo">Selecione</option>
+                                    <c:forEach var="evento" items="${eventos}">
+                                        <option value="${evento.idEvento}" ${Doacao.evento.idEvento == evento.idEvento ? "selected" : ""}>
+                                            ${evento.nomeEvento} 
                                         </option>
                                     </c:forEach>
                                 </select>
@@ -198,6 +210,7 @@
         $('#descricao').val("");
         $('#situacao').val("");
         $('#idPatrocinador').val("0");
+        $('#idEvento').val("0");
 
     }
 
@@ -216,15 +229,16 @@
                     $('#descricao').val(respostaServlet.descricao);
                     $('#situacao').val(respostaServlet.situacao);
                     $('#idPatrocinador').val(respostaServlet.patrocinador.idPatrocinador);
+                    $('#idEvento').val(respostaServlet.evento.idEvento);
                 }
             });
         }
     }
 
-    function alterarStatus(codigo, situacao){
+    function alterarStatus(codigo, situacao) {
         var id = codigo;
         console.log(codigo);
-        
+
         var titulo = "";
         var tituloConfirmacao = "";
 
@@ -236,7 +250,7 @@
             titulo = "Você deseja realmente estornar a doação?";
             tituloConfirmacao = "Doação estornada com sucesso!";
         }
-        
+
         Swal.fire({
             title: 'Você tem certeza ?',
             text: titulo,
@@ -251,41 +265,42 @@
                 $.ajax({
                     type: 'post',
                     url: '${pageContext.request.contextPath}/DoacaoAlterarStatus',
-                    data:{
+                    data: {
                         idDoacao: id
                     },
                     success:
-                        function(data){
-                            if(data == 1){
-                                Swal.fire({
-                                    position: 'center',
-                                    icon: 'success',
-                                    title: 'Sucesso',
-                                    text: tituloConfirmacao,
-                                    showConfirmButton: true,
-                                    timer: 10000
-                                }).then(function(){
-                                    window.location.href = "${pageContext.request.contextPath}/DoacaoListar";
-                                })
-                            } else {
-                                Swal.fire({
-                                    position: 'center',
-                                    icon: 'error',
-                                    title: 'Erro',
-                                    text: 'Não foi possível excluir doacao!',
-                                    showConfirmButton: true,
-                                    timer: 10000
-                                }).then(function(){
-                                    window.location.href = "${pageContext.request.contextPath}/DoacaoListar";
-                                })
-                            }
-                        },
+                            function (data) {
+                                if (data == 1) {
+                                    Swal.fire({
+                                        position: 'center',
+                                        icon: 'success',
+                                        title: 'Sucesso',
+                                        text: tituloConfirmacao,
+                                        showConfirmButton: true,
+                                        timer: 10000
+                                    }).then(function () {
+                                        window.location.href = "${pageContext.request.contextPath}/DoacaoListar";
+                                    })
+                                } else {
+                                    Swal.fire({
+                                        position: 'center',
+                                        icon: 'error',
+                                        title: 'Erro',
+                                        text: 'Não foi possível excluir doacao!',
+                                        showConfirmButton: true,
+                                        timer: 10000
+                                    }).then(function () {
+                                        window.location.href = "${pageContext.request.contextPath}/DoacaoListar";
+                                    })
+                                }
+                            },
                     error:
-                        function(data){
-                            window.location.href = "${pageContext.request.contextPath}/DoacaoListar";
-                        }
+                            function (data) {
+                                window.location.href = "${pageContext.request.contextPath}/DoacaoListar";
+                            }
                 });
-            };
+            }
+            ;
         });
     }
     function validarCampos() {
@@ -300,7 +315,7 @@
             });
             $("#valorDoacao").focus();
 
-        }  else if (document.getElementById("dataDoacao").value == '') {
+        } else if (document.getElementById("dataDoacao").value == '') {
             Swal.fire({
                 position: 'center',
                 icon: 'error',
@@ -331,6 +346,16 @@
             });
             $("#idPatrocinador").focus();
 
+        } else if (document.getElementById("idEvento").value == '') {
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Verifique o id do Evento',
+                showConfirmButton: true,
+                timer: 2000
+            });
+            $("#idEvento").focus();
+
         } else {
             gravarDados();
         }
@@ -348,6 +373,7 @@
                 dataDoacao: $('#dataDoacao').val(),
                 descricao: $('#descricao').val(),
                 idPatrocinador: $("#idPatrocinador").val(),
+                idEvento: $("#idEvento").val(),
                 situacao: $("#situacao").val(),
 
             },

@@ -6,6 +6,7 @@
 package br.com.evento.controller.doacao;
 
 import br.com.evento.dao.DoacaoDAO;
+import br.com.evento.dao.EventoDAO;
 import br.com.evento.dao.GenericDAO;
 import br.com.evento.dao.PatrocinadorDAO;
 import java.io.IOException;
@@ -40,6 +41,8 @@ public class DoacaoListar extends HttpServlet {
             request.setAttribute("doacoes", dao.listar());
             PatrocinadorDAO oPatrocinadorDAO = new PatrocinadorDAO();
             request.setAttribute("patrocinadores", oPatrocinadorDAO.listar());
+            EventoDAO oEventoDAO = new EventoDAO();
+            request.setAttribute("eventos", oEventoDAO.listar(0));
             request.getRequestDispatcher("painel/cadastros/doacao/doacao.jsp").forward(request, response);
         } catch(Exception ex){
             System.out.println("Problemas no Servlet ao listar Doação! Erro: "+ ex.getMessage());

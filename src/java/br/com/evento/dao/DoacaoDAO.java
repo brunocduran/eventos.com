@@ -2,6 +2,7 @@ package br.com.evento.dao;
 
 import br.com.evento.model.Cidade;
 import br.com.evento.model.Doacao;
+import br.com.evento.model.Evento;
 import br.com.evento.model.Patrocinador;
 import br.com.evento.model.Pessoa;
 import br.com.evento.utils.SingleConnection;
@@ -37,17 +38,17 @@ public class DoacaoDAO implements GenericDAO {
     public Boolean inserir(Object objeto) {
         Doacao oDoacao = (Doacao) objeto;
         PreparedStatement stmt = null;
-        String sql = "INSERT INTO doacao (valordoacao, datadoacao,descricao,idpatrocinador,situacao) "
-                + "values (?,?,?,?,?)";
+        String sql = "INSERT INTO doacao (valordoacao, datadoacao,descricao,idpatrocinador,idevento,situacao) "
+                + "values (?,?,?,?,?,?)";
 
         try {
             stmt = conexao.prepareStatement(sql);
             stmt.setDouble(1, oDoacao.getValorDoacao());
             stmt.setDate(2, new java.sql.Date(oDoacao.getDataDoacao().getTime()));
             stmt.setString(3, oDoacao.getDescricao());
-            
             stmt.setInt(4, oDoacao.getPatrocinador().getIdPatrocinador());
-            stmt.setString(5, oDoacao.getSituacao());
+            stmt.setInt(5, oDoacao.getEvento().getIdEvento());
+            stmt.setString(6, oDoacao.getSituacao());
             stmt.execute();
             conexao.commit();
             return true;
@@ -69,7 +70,7 @@ public class DoacaoDAO implements GenericDAO {
         Doacao oDoacao = (Doacao) objeto;
         PreparedStatement stmt = null;
         String sql = "update doacao set valordoacao=?, datadoacao=?, descricao=? ,"
-                + " idpatrocinador=? , situacao=?  where iddoacao = ? ";
+                + " idpatrocinador=?, idevento=?   , situacao=?  where iddoacao = ? ";
 
         try {
             stmt = conexao.prepareStatement(sql);
@@ -77,8 +78,9 @@ public class DoacaoDAO implements GenericDAO {
             stmt.setDate(2, new java.sql.Date(oDoacao.getDataDoacao().getTime()));
             stmt.setString(3, oDoacao.getDescricao());
             stmt.setInt(4, oDoacao.getPatrocinador().getIdPatrocinador());
-            stmt.setString(5, oDoacao.getSituacao());
-            stmt.setInt(6, oDoacao.getIdDoacao());
+            stmt.setInt(5, oDoacao.getEvento().getIdEvento());
+            stmt.setString(6, oDoacao.getSituacao());
+            stmt.setInt(7, oDoacao.getIdDoacao());
             stmt.execute();
             conexao.commit();
             return true;
@@ -96,7 +98,7 @@ public class DoacaoDAO implements GenericDAO {
     }
 
     public Boolean excluirAlterarStatus(int numero) {
-         int idDoacao = numero;
+        int idDoacao = numero;
         PreparedStatement stmt = null;
         String sql = "update doacao set situacao =? where iddoacao=?";
         try {
@@ -122,7 +124,6 @@ public class DoacaoDAO implements GenericDAO {
             return false;
         }
     }
-   
 
     @Override
     public Object carregar(int numero) {
@@ -142,11 +143,12 @@ public class DoacaoDAO implements GenericDAO {
                 oDoacao.setDataDoacao(rs.getDate("datadoacao"));
                 oDoacao.setDescricao(rs.getString("descricao"));
                 oDoacao.setSituacao(rs.getString("situacao"));
-                
 
-             
                 PatrocinadorDAO oPatrocinadorDAO = new PatrocinadorDAO();
                 oDoacao.setPatrocinador((Patrocinador) oPatrocinadorDAO.carregar(rs.getInt("idpatrocinador")));
+
+                EventoDAO oEventoDAO = new EventoDAO();
+                oDoacao.setEvento((Evento) oEventoDAO.carregar(rs.getInt("idevento")));
 
             }
             return oDoacao;
@@ -173,16 +175,19 @@ public class DoacaoDAO implements GenericDAO {
                 oDoacao.setDescricao(rs.getString("descricao"));
                 oDoacao.setSituacao(rs.getString("situacao"));
 
-                
                 PatrocinadorDAO oPatrocinadorDAO = null;
+                EventoDAO oEventoDAO = null;
+
                 try {
-                   
+
                     oPatrocinadorDAO = new PatrocinadorDAO();
+                    oEventoDAO = new EventoDAO();
                 } catch (Exception ex) {
                     System.out.println("Erro buscar Patrocinador " + ex.getMessage());
                     ex.printStackTrace();
                 }
                 oDoacao.setPatrocinador((Patrocinador) oPatrocinadorDAO.carregar(rs.getInt("idpatrocinador")));
+                oDoacao.setEvento((Evento) oEventoDAO.carregar(rs.getInt("idevento")));
 
                 resultado.add(oDoacao);
             }
@@ -191,7 +196,8 @@ public class DoacaoDAO implements GenericDAO {
         }
         return resultado;
     }
-@Override
+
+    @Override
     public Boolean excluir(int numero) {
         int idDoacao = numero;
         PreparedStatement stmt = null;
@@ -215,5 +221,4 @@ public class DoacaoDAO implements GenericDAO {
             return false;
         }
     }
-    }
-
+}
