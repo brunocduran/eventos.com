@@ -21,9 +21,9 @@ import javax.mail.internet.MimeMessage;
 public class JavaMailApp {
     
     
-    public static void enviar(String[] args) {
+    public static void enviar(String assunto, String mensagem) {
         
-      //  public static void main(String[] args) {
+        //public static void main(String[] args) {
     Properties props = new Properties();
     /** Parâmetros de conexão com servidor Gmail */
     props.put("mail.smtp.host", "smtp.gmail.com");
@@ -36,7 +36,7 @@ public class JavaMailApp {
            protected PasswordAuthentication getPasswordAuthentication()
            {
                  return new PasswordAuthentication("projetoextensaoevento@gmail.com",
-                 "jqwzdsjfpgpjpeli");
+                 "vvdnxwoqezhrtmxa");
            }
       });
 
@@ -49,12 +49,12 @@ public class JavaMailApp {
       message.setFrom(new InternetAddress("projetoextensaoevento@gmail.com"));
       //Remetente
 
-      Address[] toUser = InternetAddress.parse("jgcochutm@gmail.com,igorbiancobuosi@hotmail.com"); //Destinatário(s)
+      Address[] toUser = InternetAddress.parse("projetoextensaoevento@gmail.com"); //Destinatário(s)
                  
 
       message.setRecipients(Message.RecipientType.TO, toUser);
-      message.setSubject("Enviando email com JavaMail");//Assunto
-      message.setText("Enviei este email utilizando JavaMail com minha conta GMail!");
+      message.setSubject(assunto);//Assunto
+      message.setText(mensagem);
       /**Método para enviar a mensagem criada*/
       Transport.send(message);
 

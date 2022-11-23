@@ -6,7 +6,7 @@
 <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
     <div class="navbar-nav mr-auto py-0">
         <a href="${pageContext.request.contextPath}/index.jsp" class="nav-item nav-link active">Home</a>                           
-        <a href="${pageContext.request.contextPath}/home/contact.jsp" class="nav-item nav-link">Contato</a>                          
+        <a href="${pageContext.request.contextPath}/ContatoNovo" class="nav-item nav-link">Contato</a>                          
     </div>
 </div>
 </div>

@@ -71,7 +71,7 @@
         <div class="container-fluid">
             <div class="card shadow">
                 <div class="card-body">
-                     <div id='calendar'></div>
+                   
                     
                   
 
@@ -81,42 +81,7 @@
 </div>
 
 
-<script>
 
-    function generateColor() {
-        const letters = '0123456789ABCDEF';
-        let color = '#';
-
-        for (let i = 0; i < 6; i++) {
-            color += letters[Math.floor(Math.random() * 16)];
-        }
-        return color;
-    }
-
-    $(document).ready(function () {
-        $('#calendar').fullCalendar({
-            header: {
-                left: 'prev,next today',
-                center: 'title',
-                right: 'month,agendaWeek,agendaDay'
-            },
-            defaultDate: Date(),
-            navLinks: true, // can click day/week names to navigate views
-            editable: true,
-            eventLimit: true, // allow "more" link when too many events
-            events: [
-    <c:forEach var="evento" items="${eventos}">
-                {id: '${evento.idEvento}',
-                    title: '${evento.nomeEvento}',
-                    start: '${evento.dataInicioEvento}',
-                    end: '${evento.dataTerminoEventoCalendario}',
-                    color: generateColor()
-                },
-    </c:forEach>
-            ]
-        });
-    });
-</script>
 
 <style type="text/css">
     #calendar{

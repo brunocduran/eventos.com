@@ -1,11 +1,9 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package br.com.evento.controller.Despesa;
+package br.com.evento.controller.Contato;
 
-import br.com.evento.dao.DespesaDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -13,14 +11,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.sql.Date;
 
 /**
  *
- * @author johat
+ * @author FEF
  */
-@WebServlet(name = "DespesaPagamento", urlPatterns = {"/DespesaPagamento"})
-public class DespesaPagamento extends HttpServlet {
+@WebServlet(name = "ContatoNovo", urlPatterns = {"/ContatoNovo"})
+public class ContatoNovo extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,27 +29,12 @@ public class DespesaPagamento extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException {        
         response.setContentType("text/html;charset=iso-8859-1");
-        int idDespesa = Integer.parseInt(request.getParameter("idDespesa"));
-        String situacao = request.getParameter("situacao");
-        Date pagamentoDespesa = null;
-         
-        if (situacao.equals("A")){
-            pagamentoDespesa = Date.valueOf(request.getParameter("pagamentoDespesa"));
-        }
-        
-        String mensagem = null;
         try{
-            DespesaDAO dao = new DespesaDAO();
-            if(dao.pagamento(idDespesa, pagamentoDespesa)){
-                response.getWriter().write("1");
-            }else{
-                response.getWriter().write("0");
-            }
-        }catch(Exception e){
-            System.out.println("Problemas no Servlet do  pagamento! Erro: "+e.getMessage());
-            e.printStackTrace();
+            request.getRequestDispatcher("home/contact.jsp").forward(request, response);
+        } catch(Exception ex){
+            System.out.println("Problemas no Servlet ContatoNovo! Erro: "+ ex.getMessage());
         }
     }
 

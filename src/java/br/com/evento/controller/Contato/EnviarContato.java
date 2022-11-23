@@ -1,22 +1,13 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package br.com.evento.controller.Despesa;
+package br.com.evento.controller.Contato;
 
-import br.com.evento.dao.DespesaDAO;
-import br.com.evento.dao.FornecedorDAO;
-import br.com.evento.model.Cidade;
-import br.com.evento.model.Despesa;
-import br.com.evento.model.Evento;
-import br.com.evento.model.Fornecedor;
-import br.com.evento.model.TipoTrabalho;
-import br.com.evento.utils.Conversao;
+import br.com.evento.dao.ContatoDAO;
+import br.com.evento.model.Contato;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Date;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,10 +16,10 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author johat
+ * @author FEF
  */
-@WebServlet(name = "DespesaCadastrar", urlPatterns = {"/DespesaCadastrar"})
-public class DespesaCadastrar extends HttpServlet {
+@WebServlet(name = "EnviarContato", urlPatterns = {"/EnviarContato"})
+public class EnviarContato extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,38 +33,26 @@ public class DespesaCadastrar extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=iso-8859-1");
-        String mensagem = null;
-        try{
-            
-            int idDespesa = Integer.parseInt(request.getParameter("idDespesa"));
-            Double valorDespesa = Double.parseDouble(request.getParameter("valorDespesa"));
-            Date vencimentoDespesa = Date.valueOf(request.getParameter("vencimentoDespesa"));
-            //Date pagamentoDespesa = Date.valueOf(request.getParameter("pagamentoDespesa"));
-            String descricao = request.getParameter("descricao");
-            String situacao = request.getParameter("situacao");
-            int idFornecedor = Integer.parseInt(request.getParameter("idFornecedor"));
-            int idEvento = Integer.parseInt(request.getParameter("idEvento"));
+        try {
 
+            String nome = request.getParameter("nome");
+            String email = request.getParameter("email");
+            String assunto = request.getParameter("assunto");
+            String mensagem = request.getParameter("mensagem");
 
-            Fornecedor oFornecedor =  Fornecedor.fornecedorVazio();
-            oFornecedor.setIdFornecedor(idFornecedor);
-            
-            Evento oEvento = new Evento();
-            oEvento.setIdEvento(idEvento);
-            
-            Despesa oDespesa = new Despesa(idDespesa, oFornecedor, valorDespesa, vencimentoDespesa, null,
-                    descricao, situacao, oEvento);
-            
-            DespesaDAO dao = new DespesaDAO();
-            if (dao.cadastrar(oDespesa)){
+            Contato oContato = new Contato(nome, email, assunto, mensagem);
+
+            ContatoDAO dao = new ContatoDAO();
+            if (dao.contato(oContato)) {
                 response.getWriter().write("1");
             } else {
                 response.getWriter().write("0");
             }
         } catch (Exception e) {
-            System.out.println("Problemas no Servlet ao Cadastrar a Despesa! Erro: "+e.getMessage());
+            System.out.println("Problemas no Servlet ao Cadastrar Tipo Atividade! Erro: " + e.getMessage());
             e.printStackTrace();
         }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -41,7 +41,7 @@
                                             <button class="btn
                                                     <c:out value="${patrocinador.situacao == 'A' ? 'btn-danger':'btn-success'}"/>">
                                                 <i class="fas fa-fw
-                                                   <c:out value="${patrocinador.situacao == 'A' ? 'fa-times' : 'fa-plus'}"/>"></i>
+                                                   <c:out value="${patrocinador.situacao == 'A' ? 'fa-times' : 'fas fa-check'}"/>"></i>
                                                 <Strong>
                                                     <c:out value="${patrocinador.situacao == 'A' ? 'Inativar' : 'Ativar'}"/>
                                                 </Strong>
@@ -597,6 +597,8 @@
 
     function menuAtivo() {
         document.getElementById('titulopainel').innerHTML = "<strong>Patrocinador</strong>";
+        document.getElementById('agrupamentocadastrosgerais').classList.add("menu-open");
+        document.getElementById('menucadastrosgerais').classList.add("active");
         document.getElementById('menupatrocinador').classList.add("active");
     }
 

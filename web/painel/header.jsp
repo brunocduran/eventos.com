@@ -37,14 +37,6 @@
 
         <!-- Mensagem alerta -->
         <script src="${pageContext.request.contextPath}/painel/js/sweetalert2.all.min.js" type="text/javascript"></script>
-       
-        <link href='${pageContext.request.contextPath}/painel/fullcalendar/css/fullcalendar.min.css' rel='stylesheet' />
-        <link href='${pageContext.request.contextPath}/painel/fullcalendar/css/fullcalendar.print.min.css' rel='stylesheet' media='print' />
-        
-        <script src='${pageContext.request.contextPath}/painel/fullcalendar/js/moment.min.js'></script>
-        <script src='${pageContext.request.contextPath}/painel/fullcalendar/js/fullcalendar.min.js'></script>
-        <script src='${pageContext.request.contextPath}/painel/fullcalendar/locale/pt-br.js'></script>
-
     </head>
 
     <body class="hold-transition sidebar-mini">
@@ -121,177 +113,203 @@
                     <!-- Menu com os paineis -->
                     <nav class="mt-2">
                         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-
                             <li class="nav-header">MENU</li>
-
-                            <c:if test="${sessionScope.tipousuario == 'Administrador' or sessionScope.tipousuario == 'Organizador'}">
-                                <li class="nav-item" id="agrupamentolocalizacao">
-                                    <a href="#" class="nav-link" id="menulocalizacao">
-                                        <i class="nav-icon fas fa-map-marker-alt"></i>
+                                <c:if test="${sessionScope.tipousuario == 'Administrador' or sessionScope.tipousuario == 'Organizador'}">
+                                <li class="nav-item" id="agrupamentocadastrosgerais">
+                                    <a href="#" class="nav-link" id="menucadastrosgerais">
+                                        <i class="nav-icon far fa-circle"></i>
                                         <p>
-                                            Localização
+                                            Cadastros Gerais
                                             <i class="fas fa-angle-left right"></i>
                                         </p>
                                     </a>
                                     <ul class="nav nav-treeview">
+
                                         <li class="nav-item">
                                             <a href="${pageContext.request.contextPath}/EstadoListar" class="nav-link" id="menuestado">
-                                                <i class="far fa-circle nav-icon"></i>
+                                                <i class="nav-icon fas fa-map-marked-alt"></i>
                                                 <p>
                                                     Estado
                                                 </p>
                                             </a>
                                         </li>
+
                                         <li class="nav-item">
                                             <a href="${pageContext.request.contextPath}/CidadeListar" class="nav-link" id="menucidade">
-                                                <i class="far fa-circle nav-icon"></i>
+                                                <i class="nav-icon fas fa-map-marker-alt"></i>
                                                 <p>
                                                     Cidade
                                                 </p>
                                             </a>
-                                        </li>
-                                    </ul>
-                                </li>                                      
-                            </c:if>                           
+                                        </li>                                    
 
-                            <c:if test="${sessionScope.tipousuario == 'Administrador' or sessionScope.tipousuario == 'Organizador'}">
-                                <li class="nav-item">
-                                    <a href="${pageContext.request.contextPath}/InstituicaoListar" class="nav-link" id="menuinstituicao">
-                                        <i class="nav-icon fas fa-university"></i>
-                                        <p>
-                                            Instituição
-                                        </p>
-                                    </a>
-                                </li>
-                            </c:if>
-
-                            <c:if test="${sessionScope.tipousuario == 'Administrador' or sessionScope.tipousuario == 'Organizador'}">
-                                <li class="nav-item">
-                                    <a href="${pageContext.request.contextPath}/CursoListar" class="nav-link" id="menucurso">
-                                        <i class="nav-icon fas fa-graduation-cap"></i>
-                                        <p>
-                                            Curso
-                                        </p>
-                                    </a>
-                                </li>
-                            </c:if>
-
-                            <c:if test="${sessionScope.tipousuario == 'Administrador'}">
-                                <li class="nav-item" >
-                                    <a href="${pageContext.request.contextPath}/AdministradorListar" class="nav-link" id="menuadministrador">
-                                        <i class="nav-icon fas fa-user-tie"></i>
-                                        <p>
-                                            Administrador
-                                        </p>
-                                    </a>
-                                </li>
-                            </c:if>
-
-                            <c:if test="${sessionScope.tipousuario == 'Administrador' or sessionScope.tipousuario == 'Organizador'}">
-                                <li class="nav-item" >
-                                    <a href="${pageContext.request.contextPath}/OrganizadorListar" class="nav-link" id="menuorganizador">
-                                        <i class="nav-icon fas fa-user-tie"></i>
-                                        <p>
-                                            Organizador
-                                        </p>
-                                    </a>
-                                </li>
-                            </c:if>
-
-                            <c:if test="${sessionScope.tipousuario == 'Administrador' or sessionScope.tipousuario == 'Organizador'}">
-                                <li class="nav-item" >
-                                    <a href="${pageContext.request.contextPath}/ParticipanteListar" class="nav-link" id="menuparticipante">
-                                        <i class="nav-icon fas fa-user"></i>
-                                        <p>
-                                            Participante
-                                        </p>
-                                    </a>
-                                </li>
-                            </c:if>
-
-                            <c:if test="${sessionScope.tipousuario == 'Administrador' or sessionScope.tipousuario == 'Organizador'}">
-                                <li class="nav-item" >
-                                    <a href="${pageContext.request.contextPath}/PatrocinadorListar" class="nav-link" id="menupatrocinador">
-                                        <i class="nav-icon fas fa-user-tie"></i>
-                                        <p>
-                                            Patrocinador
-                                        </p>
-                                    </a>
-                                </li>
-                            </c:if>
-
-                            <c:if test="${sessionScope.tipousuario == 'Administrador' or sessionScope.tipousuario == 'Organizador'}">
-                                <li class="nav-item" id="agrupamentofornecedor">
-                                    <a href="#" class="nav-link" id="menufornecedoragrupamento">
-                                        <i class="nav-icon fas fa-user-tie"></i>
-                                        <p>
-                                            Fornecedor
-                                            <i class="fas fa-angle-left right"></i>
-                                        </p>
-                                    </a>
-                                    <ul class="nav nav-treeview">
                                         <li class="nav-item">
-                                            <a href="${pageContext.request.contextPath}/TipoTrabalhoListar" class="nav-link" id="menutipotrabalho">
-                                                <i class="far fa-circle nav-icon"></i>
+                                            <a href="${pageContext.request.contextPath}/InstituicaoListar" class="nav-link" id="menuinstituicao">
+                                                <i class="nav-icon fas fa-university"></i>
                                                 <p>
-                                                    Tipo de Trabalho
+                                                    Instituição
                                                 </p>
                                             </a>
                                         </li>
+
+                                        <li class="nav-item">
+                                            <a href="${pageContext.request.contextPath}/CursoListar" class="nav-link" id="menucurso">
+                                                <i class="nav-icon fas fa-graduation-cap"></i>
+                                                <p>
+                                                    Curso
+                                                </p>
+                                            </a>
+                                        </li>
+
+                                        <c:if test="${sessionScope.tipousuario == 'Administrador'}">
+                                            <li class="nav-item" >
+                                                <a href="${pageContext.request.contextPath}/AdministradorListar" class="nav-link" id="menuadministrador">
+                                                    <i class="nav-icon fas fa-user-tie"></i>
+                                                    <p>
+                                                        Administrador
+                                                    </p>
+                                                </a>
+                                            </li>
+                                        </c:if>
+
+                                        <li class="nav-item" >
+                                            <a href="${pageContext.request.contextPath}/OrganizadorListar" class="nav-link" id="menuorganizador">
+                                                <i class="nav-icon fas fa-user"></i>
+                                                <p>
+                                                    Organizador
+                                                </p>
+                                            </a>
+                                        </li>
+
+                                        <li class="nav-item" >
+                                            <a href="${pageContext.request.contextPath}/ParticipanteListar" class="nav-link" id="menuparticipante">
+                                                <i class="nav-icon fas fa-user"></i>
+                                                <p>
+                                                    Participante
+                                                </p>
+                                            </a>
+                                        </li>
+
+                                        <li class="nav-item" >
+                                            <a href="${pageContext.request.contextPath}/PatrocinadorListar" class="nav-link" id="menupatrocinador">
+                                                <i class="nav-icon fas fa-user"></i>
+                                                <p>
+                                                    Patrocinador
+                                                </p>
+                                            </a>
+                                        </li>
+
                                         <li class="nav-item" >
                                             <a href="${pageContext.request.contextPath}/FornecedorListar" class="nav-link" id="menufornecedor">
-                                                <i class="far fa-circle nav-icon"></i>
+                                                <i class="nav-icon fas fa-user"></i>
                                                 <p>
                                                     Fornecedor
                                                 </p>
                                             </a>
                                         </li>
+
+                                        <li class="nav-item">
+                                            <a href="${pageContext.request.contextPath}/TipoTrabalhoListar" class="nav-link" id="menutipotrabalho">
+                                                <i class="nav-icon fas fa-cube"></i>
+                                                <p>
+                                                    Tipo de Trabalho
+                                                </p>
+                                            </a>
+                                        </li>
+
+                                    </ul>
+                                </li>
+                            </c:if> 
+
+                            <c:if test="${sessionScope.tipousuario == 'Administrador' or sessionScope.tipousuario == 'Organizador'}">
+                                <li class="nav-item" id="agrupamentoevento">
+                                    <a href="#" class="nav-link" id="menueventoagrupamento">
+                                        <i class="nav-icon far fa-circle"></i>
+                                        <p>
+                                            Evento
+                                            <i class="fas fa-angle-left right"></i>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+
+                                        <li class="nav-item">
+                                            <a href="${pageContext.request.contextPath}/TipoAtividadeListar" class="nav-link" id="menutipoatividade">
+                                                <i class="nav-icon fas fa-toolbox"></i>
+                                                <p>
+                                                    Tipo de Atividade
+                                                </p>
+                                            </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="${pageContext.request.contextPath}/FuncaoListar" class="nav-link" id="menufuncao">
+                                                <i class="nav-icon fas fa-cube"></i>
+                                                <p>
+                                                    Função do Organizador
+                                                </p>
+                                            </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="${pageContext.request.contextPath}/CategoriaEventoListar" class="nav-link" id="menucategoriaevento">
+                                                <i class="nav-icon fas fa-cube"></i>
+                                                <p>
+                                                    Categoria do Evento
+                                                </p>
+                                            </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="${pageContext.request.contextPath}/EventoListar" class="nav-link" id="menuevento">
+                                                <i class="nav-icon far fa-calendar-alt"></i>
+                                                <p>
+                                                    Evento
+                                                </p>
+                                            </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="${pageContext.request.contextPath}/DespesaListar?idEvento=0" class="nav-link" id="menudespesa">
+                                                <i class="nav-icon far fa-money-bill-alt"></i></i>
+                                                <p>
+                                                    Despesa
+                                                </p>
+                                            </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="${pageContext.request.contextPath}/DoacaoListar" class="nav-link" id="menudoacao">
+                                                <i class="nav-icon fas fa-hand-holding-usd"></i>
+                                                <p>
+                                                    Doação
+                                                </p>
+                                            </a>
+                                        </li>
+
+                                        <c:if test="${sessionScope.tipousuario == 'Administrador'}">
+                                            <li class="nav-item">
+                                                <a href="${pageContext.request.contextPath}/ConfiguracaoBannerListar" class="nav-link" id="menuconfiguracaobanner">
+                                                    <i class="nav-icon fas fa-image"></i>
+                                                    <p>
+                                                        Configuração Banner
+                                                    </p>
+                                                </a>
+                                            </li>
+
+                                            <li class="nav-item">
+                                                <a href="${pageContext.request.contextPath}/CalendarioEvento" class="nav-link" id="menuconfiguracaobanner">
+                                                    <i class="nav-icon fas fa-calendar-alt"></i>
+                                                    <p>
+                                                        Calendário de Eventos
+                                                    </p>
+                                                </a>
+                                            </li>
+                                        </c:if>
+
                                     </ul>
                                 </li>
                             </c:if>
 
-                            <c:if test="${sessionScope.tipousuario == 'Administrador' or sessionScope.tipousuario == 'Organizador'}">
-                                <li class="nav-item">
-                                    <a href="${pageContext.request.contextPath}/TipoAtividadeListar" class="nav-link" id="menutipoatividade">
-                                        <i class="nav-icon fas fa-toolbox"></i>
-                                        <p>
-                                            Tipo de Atividade
-                                        </p>
-                                    </a>
-                                </li>
-                            </c:if>
-
-                            <c:if test="${sessionScope.tipousuario == 'Administrador' or sessionScope.tipousuario == 'Organizador'}">
-                                <li class="nav-item">
-                                    <a href="${pageContext.request.contextPath}/FuncaoListar" class="nav-link" id="menufuncao">
-                                        <i class="nav-icon fas fa-cube"></i>
-                                        <p>
-                                            Função
-                                        </p>
-                                    </a>
-                                </li>
-                            </c:if>
-
-                            <c:if test="${sessionScope.tipousuario == 'Administrador' or sessionScope.tipousuario == 'Organizador'}">
-                                <li class="nav-item">
-                                    <a href="${pageContext.request.contextPath}/CategoriaEventoListar" class="nav-link" id="menucategoriaevento">
-                                        <i class="nav-icon fas fa-cube"></i>
-                                        <p>
-                                            Categoria do Evento
-                                        </p>
-                                    </a>
-                                </li>
-                            </c:if>
-                            <c:if test="${sessionScope.tipousuario == 'Administrador' or sessionScope.tipousuario == 'Organizador'}">
-                                <li class="nav-item">
-                                    <a href="${pageContext.request.contextPath}/EventoListar" class="nav-link" id="menuevento">
-                                        <i class="nav-icon far fa-calendar-alt"></i>
-                                        <p>
-                                            Evento
-                                        </p>
-                                    </a>
-                                </li>
-                            </c:if>
                             <c:if test="${sessionScope.tipousuario == 'Participante'}">
                                 <li class="nav-item">
                                     <a href="${pageContext.request.contextPath}/EventoListarParticipante" class="nav-link" id="menuevento">
@@ -302,43 +320,6 @@
                                     </a>
                                 </li>
                             </c:if>
-
-                            <c:if test="${sessionScope.tipousuario == 'Administrador'}">
-                                <li class="nav-item">
-                                    <a href="${pageContext.request.contextPath}/ConfiguracaoBannerListar" class="nav-link" id="menuconfiguracaobanner">
-                                        <i class="nav-icon fas fa-image"></i>
-                                        <p>
-                                            Configuração Banner
-                                        </p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="${pageContext.request.contextPath}/DoacaoListar" class="nav-link" id="menudoacao">
-                                        <i class="nav-icon fas fa-hand-holding-usd"></i>
-                                        <p>
-                                            Doação
-                                        </p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="${pageContext.request.contextPath}/DespesaListar" class="nav-link" id="menudespesa">
-                                        <i class="nav-icon fas fa-money-check-alt"></i>
-                                        <p>
-                                            Despesa
-                                        </p>
-                                    </a>
-                                </li>
-                            </c:if>
-                            <li class="nav-item">
-                                <a href="${pageContext.request.contextPath}/CalendarioEvento" class="nav-link" id="menuconfiguracaobanner">
-                                    <i class="nav-icon fas fa-money-check-alt"></i>
-                                    <p>
-                                        Calendário - EM TESTE
-                                    </p>
-                                </a>
-                            </li>
-
-
                         </ul>
                     </nav>
                 </div>
