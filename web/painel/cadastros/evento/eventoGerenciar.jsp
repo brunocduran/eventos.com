@@ -298,6 +298,8 @@
 
     function menuAtivo() {
         document.getElementById('titulopainel').innerHTML = "<strong>Evento</strong>";
+        document.getElementById('agrupamentoevento').classList.add("menu-open");
+        document.getElementById('menueventoagrupamento').classList.add("active");
         document.getElementById('menuevento').classList.add("active");
     }
     ;

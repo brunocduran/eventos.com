@@ -56,20 +56,27 @@ public class DespesaListar extends HttpServlet {
             GenericDAO oFornecedorDAO = new FornecedorDAO();
             request.setAttribute("fornecedores", oFornecedorDAO.listar());
             EventoDAO oEventoDAO = new EventoDAO();
-            request.setAttribute("eventos", oEventoDAO.listar(0));
+
+            if (tipoUsuario.equalsIgnoreCase("Organizador")) {
+                request.setAttribute("eventos", oEventoDAO.listar(idUsuario));
+            } else {
+                request.setAttribute("eventos", oEventoDAO.listar(0));
+            }
 
             //Carregar OrganizadorEvento
             OrganizadorEventoDAO oOrganizadorEventoDAO = new OrganizadorEventoDAO();
 
             if (tipoUsuario.equalsIgnoreCase("Organizador") && (idEvento > 0)) {
                 verificaEvento = oOrganizadorEventoDAO.verificaOrgEvento(idUsuario, idEvento);
+            } else if (tipoUsuario.equalsIgnoreCase("Organizador")) {
+                verificaEvento = 1;
             } else {
                 verificaEvento = 1;
                 idUsuario = 0;
             }
-            
+
             DespesaDAO oDespesaDAO = new DespesaDAO();
-            request.setAttribute("despesas", oDespesaDAO.listarPorEvento(idEvento,idUsuario));
+            request.setAttribute("despesas", oDespesaDAO.listarPorEvento(idEvento, idUsuario));
 
             if (verificaEvento >= 1) {
                 request.getRequestDispatcher("painel/cadastros/despesa/despesa.jsp").forward(request, response);

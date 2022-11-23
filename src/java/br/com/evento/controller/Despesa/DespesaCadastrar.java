@@ -48,7 +48,7 @@ public class DespesaCadastrar extends HttpServlet {
             int idDespesa = Integer.parseInt(request.getParameter("idDespesa"));
             Double valorDespesa = Double.parseDouble(request.getParameter("valorDespesa"));
             Date vencimentoDespesa = Date.valueOf(request.getParameter("vencimentoDespesa"));
-            Date pagamentoDespesa = Date.valueOf(request.getParameter("pagamentoDespesa"));
+            //Date pagamentoDespesa = Date.valueOf(request.getParameter("pagamentoDespesa"));
             String descricao = request.getParameter("descricao");
             String situacao = request.getParameter("situacao");
             int idFornecedor = Integer.parseInt(request.getParameter("idFornecedor"));
@@ -61,7 +61,7 @@ public class DespesaCadastrar extends HttpServlet {
             Evento oEvento = new Evento();
             oEvento.setIdEvento(idEvento);
             
-            Despesa oDespesa = new Despesa(idDespesa, oFornecedor, valorDespesa, vencimentoDespesa, pagamentoDespesa,
+            Despesa oDespesa = new Despesa(idDespesa, oFornecedor, valorDespesa, vencimentoDespesa, null,
                     descricao, situacao, oEvento);
             
             DespesaDAO dao = new DespesaDAO();
@@ -71,7 +71,7 @@ public class DespesaCadastrar extends HttpServlet {
                 response.getWriter().write("0");
             }
         } catch (Exception e) {
-            System.out.println("Problemas no Servlet ao Cadastrar a Categoria do Evento! Erro: "+e.getMessage());
+            System.out.println("Problemas no Servlet ao Cadastrar a Despesa! Erro: "+e.getMessage());
             e.printStackTrace();
         }
     }

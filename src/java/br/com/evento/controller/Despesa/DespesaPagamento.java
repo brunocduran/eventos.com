@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.Date;
 
 /**
  *
@@ -34,10 +35,17 @@ public class DespesaPagamento extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=iso-8859-1");
         int idDespesa = Integer.parseInt(request.getParameter("idDespesa"));
+        String situacao = request.getParameter("situacao");
+        Date pagamentoDespesa = null;
+         
+        if (situacao.equals("A")){
+            pagamentoDespesa = Date.valueOf(request.getParameter("pagamentoDespesa"));
+        }
+        
         String mensagem = null;
         try{
             DespesaDAO dao = new DespesaDAO();
-            if(dao.pagamento(idDespesa)){
+            if(dao.pagamento(idDespesa, pagamentoDespesa)){
                 response.getWriter().write("1");
             }else{
                 response.getWriter().write("0");

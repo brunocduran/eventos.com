@@ -268,30 +268,30 @@
                                             </a>
                                         </li>
 
+                                        <li class="nav-item">
+                                            <a href="${pageContext.request.contextPath}/DespesaListar?idEvento=0" class="nav-link" id="menudespesa">
+                                                <i class="nav-icon far fa-money-bill-alt"></i></i>
+                                                <p>
+                                                    Despesa
+                                                </p>
+                                            </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="${pageContext.request.contextPath}/DoacaoListar" class="nav-link" id="menudoacao">
+                                                <i class="nav-icon fas fa-hand-holding-usd"></i>
+                                                <p>
+                                                    Doação
+                                                </p>
+                                            </a>
+                                        </li>
+
                                         <c:if test="${sessionScope.tipousuario == 'Administrador'}">
                                             <li class="nav-item">
                                                 <a href="${pageContext.request.contextPath}/ConfiguracaoBannerListar" class="nav-link" id="menuconfiguracaobanner">
                                                     <i class="nav-icon fas fa-image"></i>
                                                     <p>
                                                         Configuração Banner
-                                                    </p>
-                                                </a>
-                                            </li>
-                                            
-                                            <li class="nav-item">
-                                                <a href="${pageContext.request.contextPath}/DoacaoListar" class="nav-link" id="menudoacao">
-                                                    <i class="nav-icon fas fa-hand-holding-usd"></i>
-                                                    <p>
-                                                        Doação
-                                                    </p>
-                                                </a>
-                                            </li>
-                                            
-                                            <li class="nav-item">
-                                                <a href="${pageContext.request.contextPath}/DespesaListar?idEvento=0" class="nav-link" id="menudespesa">
-                                                    <i class="nav-icon fas fa-money-check-alt"></i>
-                                                    <p>
-                                                        Despesa
                                                     </p>
                                                 </a>
                                             </li>
