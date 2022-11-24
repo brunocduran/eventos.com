@@ -34,19 +34,19 @@ public class DoacaoExcluir extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=iso-8859-1");
-         int idDoacao = Integer.parseInt(request.getParameter("idDoacao"));
+        int idDoacao = Integer.parseInt(request.getParameter("idDoacao"));
         String mensagem = null;
         try {
             DoacaoDAO dao = new DoacaoDAO();
-            if (dao.excluir(idDoacao) ) {
-                mensagem = "Doacao excluido com sucesso!";
+            if (dao.excluir(idDoacao)) {
+                response.getWriter().write("1");
+
             } else {
-                mensagem = "Problemas ao excluir Doacao";
+                response.getWriter().write("0");
+
             }
-            request.setAttribute("mensagem", mensagem);
-            response.sendRedirect("DoacaoListar");
         } catch (Exception ex) {
-            System.out.println("Problemas no Servlet ao excluir Doacao! Erro: "+ ex.getMessage());
+            System.out.println("Problemas no Servlet ao excluir Doacao! Erro: " + ex.getMessage());
             ex.printStackTrace();
         }
     }

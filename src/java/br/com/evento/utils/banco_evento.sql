@@ -233,16 +233,18 @@ create TABLE despesa(
 insert into despesa(valordespesa,vencimentodespesa,pagamentodespesa,descricao,situacao,idfornecedor)
 values(1000,'15-11-2022','15-11-2022','conta de luz','P',1);
 
-
 create table doacao(
 	idDoacao serial primary key,
 	idPatrocinador int ,
+        idEvento int,
 	valorDoacao numeric(15,2),
 	dataDoacao date,
 	descricao varchar (100),
 	situacao varchar(1),
-	constraint fk_patrocinador_pessoa FOREIGN key (idpatrocinador) references patrocinador(idpatrocinador)
+	constraint fk_patrocinador_pessoa FOREIGN key (idpatrocinador) references patrocinador(idpatrocinador),
+    constraint fk_evento FOREIGN key (idevento) references evento(idevento)
+
 );
 
-insert into doacao (idPatrocinador,valorDoacao,descricao,situacao) 
-values (1,343,'Top','A');
+insert into doacao (idPatrocinador,idEvento,valorDoacao,descricao,situacao) 
+values (1,1,343,'Top','A');

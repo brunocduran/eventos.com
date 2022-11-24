@@ -211,7 +211,7 @@
                                         <a href="${pageContext.request.contextPath}/DespesaListar?idEvento=${evento.idEvento}" class="btn btn-app bg-success">
                                             <i class="far fa-money-bill-alt"></i> Despesas
                                         </a>
-                                        <a class="btn btn-app bg-success">
+                                        <a  href="${pageContext.request.contextPath}/DoacaoListar?idEvento=${evento.idEvento}" class="btn btn-app bg-success">
                                             <i class="far fas fa-hand-holding-usd"></i> Doações
                                         </a>
                                         <a class="btn btn-app bg-warning">

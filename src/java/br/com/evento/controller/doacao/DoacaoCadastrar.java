@@ -10,6 +10,7 @@ import br.com.evento.dao.PatrocinadorDAO;
 import br.com.evento.model.Cidade;
 import br.com.evento.model.Patrocinador;
 import br.com.evento.model.Doacao;
+import br.com.evento.model.Evento;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
@@ -43,20 +44,22 @@ public class DoacaoCadastrar extends HttpServlet {
         try {
             
             int idDoacao = Integer.parseInt(request.getParameter("idDoacao"));
-            Double valorDoacao= Double.parseDouble(request.getParameter("valorDoacao"));
+            Double valorDoacao = Double.parseDouble(request.getParameter("valorDoacao"));
             Date dataDoacao = Date.valueOf(request.getParameter("dataDoacao"));
             String descricao = request.getParameter("descricao");
             String situacao = request.getParameter("situacao");
             int idPatrocinador = Integer.parseInt(request.getParameter("idPatrocinador"));
-
+            int idEvento = Integer.parseInt(request.getParameter("idEvento"));
             
             Patrocinador oPatrocinador = Patrocinador.patrocinadorVazio();
             oPatrocinador.setIdPatrocinador(idPatrocinador);
             
-            Doacao oDoacao = new  Doacao(idDoacao, oPatrocinador, valorDoacao, dataDoacao, descricao, situacao);
+            Evento oEvento = new Evento();
+            oEvento.setIdEvento(idEvento);
             
+            Doacao oDoacao = new Doacao(idDoacao, oPatrocinador, oEvento, valorDoacao, dataDoacao, descricao, situacao);            
             DoacaoDAO dao = new DoacaoDAO();
-
+            
             if (dao.cadastrar(oDoacao)) {
                 response.getWriter().write("1");
             } else {
