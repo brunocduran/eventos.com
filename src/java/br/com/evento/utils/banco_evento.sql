@@ -247,4 +247,4 @@ create table doacao(
 );
 
 insert into doacao (idPatrocinador,idEvento,valorDoacao,descricao,situacao) 
-values (1,1,343,'Top','A');
+values (1,1,1000,'Doacao','A');
