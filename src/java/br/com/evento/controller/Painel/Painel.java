@@ -102,7 +102,6 @@ public class Painel extends HttpServlet {
             request.getSession().setAttribute("qtdParticipantes", qtdParticipantes);
             request.getSession().setAttribute("qtdFornecedores", qtdFornecedores);
             request.getSession().setAttribute("qtdInstituicoes", qtdInstituicoes);
-            /*novos adicionados*/
             request.getSession().setAttribute("qtdEventos", qtdEventos);
             request.getSession().setAttribute("totalDoacao", totalDoacao);
             request.getSession().setAttribute("totalDespesa", totalDespesa);
