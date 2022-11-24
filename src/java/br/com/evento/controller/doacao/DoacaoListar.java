@@ -8,6 +8,7 @@ package br.com.evento.controller.doacao;
 import br.com.evento.dao.DoacaoDAO;
 import br.com.evento.dao.EventoDAO;
 import br.com.evento.dao.GenericDAO;
+import br.com.evento.dao.OrganizadorEventoDAO;
 import br.com.evento.dao.PatrocinadorDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -16,6 +17,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -36,16 +38,54 @@ public class DoacaoListar extends HttpServlet {
      protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=iso-8859-1");
-        try{
-            GenericDAO dao = new DoacaoDAO();
-            request.setAttribute("doacoes", dao.listar());
-            PatrocinadorDAO oPatrocinadorDAO = new PatrocinadorDAO();
+        int idEvento = 0;
+        try {
+
+            HttpSession sessao = request.getSession();
+            int idUsuario = Integer.parseInt(sessao.getAttribute("idusuario").toString());
+            String tipoUsuario = sessao.getAttribute("tipousuario").toString();
+            int verificaEvento = 0;
+
+            idEvento = Integer.parseInt(request.getParameter("idEvento"));
+
+            if (idEvento > 0) {
+                EventoDAO oEventoDAO = new EventoDAO();
+                request.setAttribute("eventoCarregadoDoacao", oEventoDAO.carregar(idEvento));
+            }
+
+            GenericDAO oPatrocinadorDAO = new PatrocinadorDAO();
             request.setAttribute("patrocinadores", oPatrocinadorDAO.listar());
             EventoDAO oEventoDAO = new EventoDAO();
-            request.setAttribute("eventos", oEventoDAO.listar(0));
-            request.getRequestDispatcher("painel/cadastros/doacao/doacao.jsp").forward(request, response);
-        } catch(Exception ex){
-            System.out.println("Problemas no Servlet ao listar Doação! Erro: "+ ex.getMessage());
+
+            if (tipoUsuario.equalsIgnoreCase("Organizador")) {
+                request.setAttribute("eventos", oEventoDAO.listar(idUsuario));
+            } else {
+                request.setAttribute("eventos", oEventoDAO.listar(0));
+            }
+
+            //Carregar OrganizadorEvento
+                OrganizadorEventoDAO oOrganizadorEventoDAO = new OrganizadorEventoDAO();
+
+            if (tipoUsuario.equalsIgnoreCase("Organizador") && (idEvento > 0)) {
+                verificaEvento = oOrganizadorEventoDAO.verificaOrgEvento(idUsuario, idEvento);
+            } else if (tipoUsuario.equalsIgnoreCase("Organizador")) {
+                verificaEvento = 1;
+            } else {
+                verificaEvento = 1;
+                idUsuario = 0;
+            }
+
+            DoacaoDAO oDoacaoDAO = new DoacaoDAO();
+            request.setAttribute("doacoes", oDoacaoDAO.listarPorEvento(idEvento, idUsuario));
+
+            if (verificaEvento >= 1) {
+                request.getRequestDispatcher("painel/cadastros/doacao/doacao.jsp").forward(request, response);
+            } else {
+                request.getRequestDispatcher("/Painel").forward(request, response);
+            }
+
+        } catch (Exception ex) {
+            System.out.println("Problemas no Servlet ao listar Doacao! Erro: " + ex.getMessage());
         }
     }
 

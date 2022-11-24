@@ -278,7 +278,7 @@
                                         </li>
 
                                         <li class="nav-item">
-                                            <a href="${pageContext.request.contextPath}/DoacaoListar" class="nav-link" id="menudoacao">
+                                            <a href="${pageContext.request.contextPath}/DoacaoListar?idEvento=0" class="nav-link" id="menudoacao">
                                                 <i class="nav-icon fas fa-hand-holding-usd"></i>
                                                 <p>
                                                     Doação

@@ -48,7 +48,7 @@ public class DoacaoDAO implements GenericDAO {
             stmt.setString(3, oDoacao.getDescricao());
             stmt.setInt(4, oDoacao.getPatrocinador().getIdPatrocinador());
             stmt.setInt(5, oDoacao.getEvento().getIdEvento());
-            stmt.setString(6, oDoacao.getSituacao());
+            stmt.setString(6, "A");
             stmt.execute();
             conexao.commit();
             return true;
@@ -221,4 +221,72 @@ public class DoacaoDAO implements GenericDAO {
             return false;
         }
     }
+    
+    public List<Object> listarPorEvento(int idEvento, int idUsuario) {
+        List<Object> resultado = new ArrayList<>();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String sql = "select * from doacao where 1=1 ";
+
+        if (idEvento > 0) {
+            sql += " and doacao.idevento = ? ";
+        }
+        
+        if (idUsuario > 0){
+             sql += " and doacao.idevento in (select evento.idevento from evento where evento.idevento in (select organizadorevento.idevento"
+                     + " from organizadorevento where organizadorevento.idorganizador = ? )) ";
+        }
+
+        sql += " order by iddoacao";
+        try {
+            stmt = conexao.prepareStatement(sql);
+
+            if (idEvento > 0) {
+                stmt.setInt(1, idEvento);
+            }
+            
+            if ((idUsuario > 0) && (idEvento == 0)) {
+                stmt.setInt(1, idUsuario);
+            }else if ((idUsuario > 0) && (idEvento > 0)){
+                stmt.setInt(2, idUsuario);
+            }
+
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                Doacao oDoacao = new Doacao();
+                
+                oDoacao.setIdDoacao(rs.getInt("iddoacao"));
+                oDoacao.setValorDoacao(rs.getDouble("valordoacao"));
+                oDoacao.setDataDoacao(rs.getDate("datadoacao"));
+                oDoacao.setDescricao(rs.getString("descricao"));
+                oDoacao.setSituacao(rs.getString("situacao"));
+
+                
+                PatrocinadorDAO oPatrocinadorDAO = null;
+                try {
+                    oPatrocinadorDAO = new PatrocinadorDAO();
+                } catch (Exception ex) {
+                    System.out.println("Erro buscar Patrocinador " + ex.getMessage());
+                    ex.printStackTrace();
+                }
+                oDoacao.setPatrocinador((Patrocinador) oPatrocinadorDAO.carregar(rs.getInt("idpatrocinador")));
+
+                //busca Evento
+                EventoDAO oEventoDAO = null;
+                try {
+                    oEventoDAO = new EventoDAO();
+                } catch (Exception ex) {
+                    System.out.println("Erro buscar Evento " + ex.getMessage());
+                    ex.printStackTrace();
+                }
+                oDoacao.setEvento((Evento) oEventoDAO.carregar(rs.getInt("idevento")));
+
+                resultado.add(oDoacao);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Problemas ao listar doação na DAO! Erro: " + ex.getMessage());
+        }
+        return resultado;
+    }
 }
+
