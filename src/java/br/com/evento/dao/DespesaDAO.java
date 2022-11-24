@@ -249,10 +249,10 @@ public class DespesaDAO implements GenericDAO {
         if (idEvento > 0) {
             sql += " and despesa.idevento = ? ";
         }
-        
-        if (idUsuario > 0){
-             sql += " and despesa.idevento in (select evento.idevento from evento where evento.idevento in (select organizadorevento.idevento"
-                     + " from organizadorevento where organizadorevento.idorganizador = ? )) ";
+
+        if (idUsuario > 0) {
+            sql += " and despesa.idevento in (select evento.idevento from evento where evento.idevento in (select organizadorevento.idevento"
+                    + " from organizadorevento where organizadorevento.idorganizador = ? )) ";
         }
 
         sql += " order by iddespesa";
@@ -262,10 +262,10 @@ public class DespesaDAO implements GenericDAO {
             if (idEvento > 0) {
                 stmt.setInt(1, idEvento);
             }
-            
+
             if ((idUsuario > 0) && (idEvento == 0)) {
                 stmt.setInt(1, idUsuario);
-            }else if ((idUsuario > 0) && (idEvento > 0)){
+            } else if ((idUsuario > 0) && (idEvento > 0)) {
                 stmt.setInt(2, idUsuario);
             }
 
@@ -306,5 +306,37 @@ public class DespesaDAO implements GenericDAO {
             System.out.println("Problemas ao listar despesa na DAO! Erro: " + ex.getMessage());
         }
         return resultado;
+    }
+
+    public String buscarTotalDespesa() {
+        //int idOrganizadorParametro = idorganizador;
+        //int idEventoParametro = idevento;
+        String retorno = "";
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String sql = "select coalesce(sum(valordespesa),0) as valordespesa from despesa where situacao = 'P'";
+
+        try {
+            stmt = conexao.prepareStatement(sql);
+
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                retorno = rs.getString("valordespesa");
+            }
+            retorno = retorno.replace(".", ",");
+
+            if (retorno.equals("0")) {
+                retorno = "-";
+            }else{
+                retorno = "R$ " + retorno;
+            }
+
+            return retorno;
+        } catch (SQLException ex) {
+            System.out.println("Problemas no método buscarTotalDespesa na DespesaDAO " + ex.getMessage());
+            return "";
+        }
+
     }
 }

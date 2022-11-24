@@ -221,7 +221,7 @@ public class DoacaoDAO implements GenericDAO {
             return false;
         }
     }
-    
+
     public List<Object> listarPorEvento(int idEvento, int idUsuario) {
         List<Object> resultado = new ArrayList<>();
         PreparedStatement stmt = null;
@@ -231,10 +231,10 @@ public class DoacaoDAO implements GenericDAO {
         if (idEvento > 0) {
             sql += " and doacao.idevento = ? ";
         }
-        
-        if (idUsuario > 0){
-             sql += " and doacao.idevento in (select evento.idevento from evento where evento.idevento in (select organizadorevento.idevento"
-                     + " from organizadorevento where organizadorevento.idorganizador = ? )) ";
+
+        if (idUsuario > 0) {
+            sql += " and doacao.idevento in (select evento.idevento from evento where evento.idevento in (select organizadorevento.idevento"
+                    + " from organizadorevento where organizadorevento.idorganizador = ? )) ";
         }
 
         sql += " order by iddoacao";
@@ -244,24 +244,23 @@ public class DoacaoDAO implements GenericDAO {
             if (idEvento > 0) {
                 stmt.setInt(1, idEvento);
             }
-            
+
             if ((idUsuario > 0) && (idEvento == 0)) {
                 stmt.setInt(1, idUsuario);
-            }else if ((idUsuario > 0) && (idEvento > 0)){
+            } else if ((idUsuario > 0) && (idEvento > 0)) {
                 stmt.setInt(2, idUsuario);
             }
 
             rs = stmt.executeQuery();
             while (rs.next()) {
                 Doacao oDoacao = new Doacao();
-                
+
                 oDoacao.setIdDoacao(rs.getInt("iddoacao"));
                 oDoacao.setValorDoacao(rs.getDouble("valordoacao"));
                 oDoacao.setDataDoacao(rs.getDate("datadoacao"));
                 oDoacao.setDescricao(rs.getString("descricao"));
                 oDoacao.setSituacao(rs.getString("situacao"));
 
-                
                 PatrocinadorDAO oPatrocinadorDAO = null;
                 try {
                     oPatrocinadorDAO = new PatrocinadorDAO();
@@ -288,5 +287,36 @@ public class DoacaoDAO implements GenericDAO {
         }
         return resultado;
     }
-}
 
+    public String buscarTotalDoacao() {
+        //int idOrganizadorParametro = idorganizador;
+        //int idEventoParametro = idevento;
+        String retorno = "";
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String sql = "select coalesce(sum(valordoacao),0) as valordoacao from doacao where situacao = 'P'";
+
+        try {
+            stmt = conexao.prepareStatement(sql);
+
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                retorno = rs.getString("valordoacao");
+            }
+            retorno = retorno.replace(".", ",");
+
+            if (retorno.equals("0")) {
+                retorno = "-";
+            }else{
+                retorno = "R$ " + retorno;
+            }
+
+            return retorno;
+        } catch (SQLException ex) {
+            System.out.println("Problemas no método buscarTotalDoacao na DoacaoDAO " + ex.getMessage());
+            return "";
+        }
+
+    }
+}
