@@ -22,6 +22,7 @@
                 <i class="fas fa-plus fa-fw"></i>Adicionar</a>
             <div class="card shadow">
                 <div class="card-body">
+                    <div class="table-responsive">
                     <table id="datatable" class="display">
                         <thead>
                             <tr>
@@ -76,6 +77,7 @@
                             </c:forEach>
                             </tbody>
                     </table>
+                </div>
                 </div>
             </div>
 

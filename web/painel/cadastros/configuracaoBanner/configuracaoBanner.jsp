@@ -13,55 +13,57 @@
                 <i class="fas fa-plus fa-fw"></i>Adicionar</a>
             <div class="card shadow">
                 <div class="card-body">
-                    <table id="datatable" class="display">
-                        <thead>
-                            <tr>
-                                <th align="center">ID</th>
-                                <th align="center">Título Banner</th>
-                                <th align="left">Data Início</th>
-                                <th align="left">Data Término</th>
-                                <th align="center">Tipo Banner</th>
-                                <th align="center"></th>
-                                <th align="center"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <c:forEach var="configuracaoBanner" items="${configuracaobanners}">
+                    <div class="table-responsive">
+                        <table id="datatable" class="display">
+                            <thead>
                                 <tr>
-                                    <td align="left">${configuracaoBanner.idConfiguracaoBanner}</td>
-                                    <td align="left">${configuracaoBanner.tituloBanner}</td>
-                                    <td align="left"><fmt:formatDate pattern="dd/MM/yyyy" value="${configuracaoBanner.dataInicial}"/></td>
-                                    <td align="left"><fmt:formatDate pattern="dd/MM/yyyy" value="${configuracaoBanner.dataFinal}"/></td>
-                                    <td align="left">
-                                        <c:if test="${configuracaoBanner.tipoBanner == 'C'}">
-                                            Central
-                                        </c:if>
-
-                                        <c:if test="${configuracaoBanner.tipoBanner == 'S'}">
-                                            Lateral Superior
-                                        </c:if>
-
-                                        <c:if test="${configuracaoBanner.tipoBanner == 'I'}">
-                                            Lateral Inferior
-                                        </c:if>
-                                    </td>
-                                    <td align="center">
-                                        <a href="#modaladicionar" class="btn btn-group-lg btn-primary" data-toggle="modal"
-                                           data-id="" onclick="setDadosModal(${configuracaoBanner.idConfiguracaoBanner})">
-                                            <i class="fas fa-edit"></i><Strong> Alterar </Strong> </a>
-                                    </td>
-                                    <td align="center">
-                                        <a href="${pageContext.request.contextPath}/ConfiguracaoBannerExcluir?idConfiguracaoBanner=${configuracaoBanner.idConfiguracaoBanner}" class="btn btn-danger">
-                                            <i class="fas fa-fw fa-times"></i>
-                                            <Strong>
-                                                Excluir
-                                            </Strong>
-                                        </a>
-                                    </td>
+                                    <th align="center">ID</th>
+                                    <th align="center">Título Banner</th>
+                                    <th align="left">Data Início</th>
+                                    <th align="left">Data Término</th>
+                                    <th align="center">Tipo Banner</th>
+                                    <th align="center"></th>
+                                    <th align="center"></th>
                                 </tr>
-                            </c:forEach>
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                <c:forEach var="configuracaoBanner" items="${configuracaobanners}">
+                                    <tr>
+                                        <td align="left">${configuracaoBanner.idConfiguracaoBanner}</td>
+                                        <td align="left">${configuracaoBanner.tituloBanner}</td>
+                                        <td align="left"><fmt:formatDate pattern="dd/MM/yyyy" value="${configuracaoBanner.dataInicial}"/></td>
+                                        <td align="left"><fmt:formatDate pattern="dd/MM/yyyy" value="${configuracaoBanner.dataFinal}"/></td>
+                                        <td align="left">
+                                            <c:if test="${configuracaoBanner.tipoBanner == 'C'}">
+                                                Central
+                                            </c:if>
+
+                                            <c:if test="${configuracaoBanner.tipoBanner == 'S'}">
+                                                Lateral Superior
+                                            </c:if>
+
+                                            <c:if test="${configuracaoBanner.tipoBanner == 'I'}">
+                                                Lateral Inferior
+                                            </c:if>
+                                        </td>
+                                        <td align="center">
+                                            <a href="#modaladicionar" class="btn btn-group-lg btn-primary" data-toggle="modal"
+                                               data-id="" onclick="setDadosModal(${configuracaoBanner.idConfiguracaoBanner})">
+                                                <i class="fas fa-edit"></i><Strong> Alterar </Strong> </a>
+                                        </td>
+                                        <td align="center">
+                                            <a href="${pageContext.request.contextPath}/ConfiguracaoBannerExcluir?idConfiguracaoBanner=${configuracaoBanner.idConfiguracaoBanner}" class="btn btn-danger">
+                                                <i class="fas fa-fw fa-times"></i>
+                                                <Strong>
+                                                    Excluir
+                                                </Strong>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 

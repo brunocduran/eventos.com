@@ -13,42 +13,44 @@
                 <i class="fas fa-plus fa-fw"></i>Adicionar</a>
             <div class="card shadow">
                 <div class="card-body">
-                    <table id="datatable" class="display">
-                        <thead>
-                            <tr>
-                                <th align="left">ID</th>
-                                <th align="left">Nome</th>
-                                <th align="center">CNPJ</th>
-                                <th align="right"></th>
-                                <th align="center"></th>                                 
-                            </tr> 
-                        </thead>
-                        <tbody>
-                            <c:forEach var="instituicao" items="${instituicoes}">
+                    <div class="table-responsive">
+                        <table id="datatable" class="display">
+                            <thead>
                                 <tr>
-                                    <td align="right">${instituicao.idInstituicao}</td>
-                                    <td align="left">${instituicao.nomeInstituicao}</td>
-                                    <td align="left">${instituicao.cnpj}</td>
-                                    <td align="center">
-                                        <a href="#modaladicionar" class="btn btn-group-lg btn-primary" data-toggle="modal" data-id="" 
-                                           onclick="setDadosModal(${instituicao.idInstituicao})">
-                                            <i class="fas fa-edit"></i><Strong> Alterar </Strong> </a>
-                                    </td>
-                                    <td align="center">
-                                        <a href="#" onclick="deletar(${instituicao.idInstituicao}, '${instituicao.situacao}')">
-                                            <button class="btn 
-                                                    <c:out value="${instituicao.situacao == 'A' ? 'btn-danger' : 'btn-success'}"/>">
-                                                <i class="fas fa-fw
-                                                   <c:out value="${instituicao.situacao == 'A' ? 'fa-times' : 'fas fa-check'}"/>"></i>
-                                                <strong>
-                                                    <c:out value="${instituicao.situacao == 'A' ? 'Inativar' : 'Ativar'}"/>                                               
-                                                </strong>
-                                            </button></a>
-                                    </td>
-                                </tr>          
-                            </c:forEach>    
-                        </tbody>      
-                    </table>      
+                                    <th align="left">ID</th>
+                                    <th align="left">Nome</th>
+                                    <th align="center">CNPJ</th>
+                                    <th align="right"></th>
+                                    <th align="center"></th>                                 
+                                </tr> 
+                            </thead>
+                            <tbody>
+                                <c:forEach var="instituicao" items="${instituicoes}">
+                                    <tr>
+                                        <td align="right">${instituicao.idInstituicao}</td>
+                                        <td align="left">${instituicao.nomeInstituicao}</td>
+                                        <td align="left">${instituicao.cnpj}</td>
+                                        <td align="center">
+                                            <a href="#modaladicionar" class="btn btn-group-lg btn-primary" data-toggle="modal" data-id="" 
+                                               onclick="setDadosModal(${instituicao.idInstituicao})">
+                                                <i class="fas fa-edit"></i><Strong> Alterar </Strong> </a>
+                                        </td>
+                                        <td align="center">
+                                            <a href="#" onclick="deletar(${instituicao.idInstituicao}, '${instituicao.situacao}')">
+                                                <button class="btn 
+                                                        <c:out value="${instituicao.situacao == 'A' ? 'btn-danger' : 'btn-success'}"/>">
+                                                    <i class="fas fa-fw
+                                                       <c:out value="${instituicao.situacao == 'A' ? 'fa-times' : 'fas fa-check'}"/>"></i>
+                                                    <strong>
+                                                        <c:out value="${instituicao.situacao == 'A' ? 'Inativar' : 'Ativar'}"/>                                               
+                                                    </strong>
+                                                </button></a>
+                                        </td>
+                                    </tr>          
+                                </c:forEach>    
+                            </tbody>      
+                        </table>  
+                    </div>
                 </div>
             </div>
 

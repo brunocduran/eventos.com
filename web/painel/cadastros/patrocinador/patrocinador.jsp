@@ -13,44 +13,46 @@
                 <i class="fas fa-plus fa-fw"></i>Adicionar</a>
             <div class="card shadow">
                 <div class="card-body">
-                    <table id="datatable" class="display">
-                        <thead>
-                            <tr>
-                                <th align="center">ID</th>
-                                <th align="center">Nome</th>
-                                <th align="center">CPF/CNPJ</th>
-                                <th align="center">Cidade - UF</th>
-                                <th align="center"></th>
-                                <th align="center"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <c:forEach var="patrocinador" items="${patrocinadores}">
+                    <div class="table-responsive">
+                        <table id="datatable" class="display">
+                            <thead>
                                 <tr>
-                                    <td align="right">${patrocinador.idPatrocinador}</td>
-                                    <td align="left">${patrocinador.nomeRazaoPessoa}</td>
-                                    <td align="left">${patrocinador.cpfCnpjPessoa}</td>
-                                    <td align="left">${patrocinador.cidade.nomeCidade} - ${patrocinador.cidade.estado.siglaEstado}</td>
-                                    <td align="center">
-                                        <a href="#modaladicionar" class="btn btn-group-lg btn-primary" data-toggle="modal"
-                                           data-id="" onclick="setDadosModal(${patrocinador.idPatrocinador})">
-                                            <i class="fas fa-edit"></i><Strong> Alterar </Strong> </a>
-                                    </td>
-                                    <td align="center">
-                                        <a href="#" onclick="deletar(${patrocinador.idPatrocinador}, '${patrocinador.situacao}')">
-                                            <button class="btn
-                                                    <c:out value="${patrocinador.situacao == 'A' ? 'btn-danger':'btn-success'}"/>">
-                                                <i class="fas fa-fw
-                                                   <c:out value="${patrocinador.situacao == 'A' ? 'fa-times' : 'fas fa-check'}"/>"></i>
-                                                <Strong>
-                                                    <c:out value="${patrocinador.situacao == 'A' ? 'Inativar' : 'Ativar'}"/>
-                                                </Strong>
-                                            </button></a>
-                                    </td>
+                                    <th align="center">ID</th>
+                                    <th align="center">Nome</th>
+                                    <th align="center">CPF/CNPJ</th>
+                                    <th align="center">Cidade - UF</th>
+                                    <th align="center"></th>
+                                    <th align="center"></th>
                                 </tr>
-                            </c:forEach>
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                <c:forEach var="patrocinador" items="${patrocinadores}">
+                                    <tr>
+                                        <td align="right">${patrocinador.idPatrocinador}</td>
+                                        <td align="left">${patrocinador.nomeRazaoPessoa}</td>
+                                        <td align="left">${patrocinador.cpfCnpjPessoa}</td>
+                                        <td align="left">${patrocinador.cidade.nomeCidade} - ${patrocinador.cidade.estado.siglaEstado}</td>
+                                        <td align="center">
+                                            <a href="#modaladicionar" class="btn btn-group-lg btn-primary" data-toggle="modal"
+                                               data-id="" onclick="setDadosModal(${patrocinador.idPatrocinador})">
+                                                <i class="fas fa-edit"></i><Strong> Alterar </Strong> </a>
+                                        </td>
+                                        <td align="center">
+                                            <a href="#" onclick="deletar(${patrocinador.idPatrocinador}, '${patrocinador.situacao}')">
+                                                <button class="btn
+                                                        <c:out value="${patrocinador.situacao == 'A' ? 'btn-danger':'btn-success'}"/>">
+                                                    <i class="fas fa-fw
+                                                       <c:out value="${patrocinador.situacao == 'A' ? 'fa-times' : 'fas fa-check'}"/>"></i>
+                                                    <Strong>
+                                                        <c:out value="${patrocinador.situacao == 'A' ? 'Inativar' : 'Ativar'}"/>
+                                                    </Strong>
+                                                </button></a>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
