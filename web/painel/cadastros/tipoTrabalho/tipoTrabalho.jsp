@@ -13,40 +13,42 @@
                 <i class="fas fa-plus fa-fw"></i>Adicionar</a>
             <div class="card shadow">
                 <div class="card-body">
-                    <table id="datatable" class="display">
-                        <thead>
-                            <tr>
-                                <th align="center">ID</th>
-                                <th align="center">Descrição</th>
-                                <th align="center"></th>
-                                <th align="center"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <c:forEach var="tipoTrabalho" items="${tipoTrabalhos}">
+                    <div class="table-responsive">
+                        <table id="datatable" class="display">
+                            <thead>
                                 <tr>
-                                    <td align="right">${tipoTrabalho.idTipoTrabalho}</td>
-                                    <td align="left">${tipoTrabalho.descricao}</td>
-                                    <td align="center">
-                                        <a href="#modaladicionar" class="btn btn-group-lg btn-primary" data-toggle="modal"
-                                           data-id="" onclick="setDadosModal(${tipoTrabalho.idTipoTrabalho})">
-                                            <i class="fas fa-edit"></i><Strong> Alterar </Strong> </a>
-                                    </td>
-                                    <td align="center">
-                                        <a href="#" onclick="deletar(${tipoTrabalho.idTipoTrabalho}, '${tipoTrabalho.situacao}')">
-                                            <button class="btn
-                                                    <c:out value="${tipoTrabalho.situacao == 'A' ? 'btn-danger':'btn-success'}"/>">
-                                                <i class="fas fa-fw
-                                                   <c:out value="${tipoTrabalho.situacao == 'A' ? 'fa-times' : 'fas fa-check'}"/>"></i>
-                                                <Strong>
-                                                    <c:out value="${tipoTrabalho.situacao == 'A' ? 'Inativar' : 'Ativar'}"/>
-                                                </Strong>
-                                            </button></a>
-                                    </td>
+                                    <th align="center">ID</th>
+                                    <th align="center">Descrição</th>
+                                    <th align="center"></th>
+                                    <th align="center"></th>
                                 </tr>
-                            </c:forEach>
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                <c:forEach var="tipoTrabalho" items="${tipoTrabalhos}">
+                                    <tr>
+                                        <td align="right">${tipoTrabalho.idTipoTrabalho}</td>
+                                        <td align="left">${tipoTrabalho.descricao}</td>
+                                        <td align="center">
+                                            <a href="#modaladicionar" class="btn btn-group-lg btn-primary" data-toggle="modal"
+                                               data-id="" onclick="setDadosModal(${tipoTrabalho.idTipoTrabalho})">
+                                                <i class="fas fa-edit"></i><Strong> Alterar </Strong> </a>
+                                        </td>
+                                        <td align="center">
+                                            <a href="#" onclick="deletar(${tipoTrabalho.idTipoTrabalho}, '${tipoTrabalho.situacao}')">
+                                                <button class="btn
+                                                        <c:out value="${tipoTrabalho.situacao == 'A' ? 'btn-danger':'btn-success'}"/>">
+                                                    <i class="fas fa-fw
+                                                       <c:out value="${tipoTrabalho.situacao == 'A' ? 'fa-times' : 'fas fa-check'}"/>"></i>
+                                                    <Strong>
+                                                        <c:out value="${tipoTrabalho.situacao == 'A' ? 'Inativar' : 'Ativar'}"/>
+                                                    </Strong>
+                                                </button></a>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 

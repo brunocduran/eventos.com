@@ -14,49 +14,51 @@
 
             <div class="card shadow">
                 <div class="card-body">
-                    <table id="datatable" class="display">
-                        <thead>
-                            <tr>
-                                <th align="center">ID</th>
-                                <th align="center">Nome Evento</th>
-                                <th align="left">Data Início</th>
-                                <th align="left">Data Término</th>
-                                <th align="left">Status</th>
-                                <th align="center"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <c:forEach var="evento" items="${eventos}">
+                    <div class="table-responsive">
+                        <table id="datatable" class="display">
+                            <thead>
                                 <tr>
-                                    <td align="right">${evento.idEvento}</td>
-                                    <td align="left">${evento.nomeEvento}</td>
-                                    <td align="left"><fmt:formatDate pattern="dd/MM/yyyy" value="${evento.dataInicioEvento}"/></td>
-                                    <td align="left"><fmt:formatDate pattern="dd/MM/yyyy" value="${evento.dataTerminoEvento}"/></td>
-                                    <td align="left">
-                                        <c:if test="${evento.situacaoEvento == 'A'}">
-                                            Ativo
-                                        </c:if>
-
-                                        <c:if test="${evento.situacaoEvento == 'I'}">
-                                            Inativo
-                                        </c:if>
-
-                                        <c:if test="${evento.situacaoEvento == 'E'}">
-                                            Encerrado
-                                        </c:if>
-
-                                        <c:if test="${evento.situacaoEvento == 'F'}">
-                                            Finalizado
-                                        </c:if> 
-                                    </td>
-                                    <td align="center">
-                                        <a href="${pageContext.request.contextPath}/EventoGerenciar?idEvento=${evento.idEvento}" class="btn btn-group-lg btn-primary">
-                                            <i class="fas fa-cog"></i><Strong> Gerenciar </Strong> </a>
-                                    </td>
+                                    <th align="center">ID</th>
+                                    <th align="center">Nome Evento</th>
+                                    <th align="left">Data Início</th>
+                                    <th align="left">Data Término</th>
+                                    <th align="left">Status</th>
+                                    <th align="center"></th>
                                 </tr>
-                            </c:forEach>
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                <c:forEach var="evento" items="${eventos}">
+                                    <tr>
+                                        <td align="right">${evento.idEvento}</td>
+                                        <td align="left">${evento.nomeEvento}</td>
+                                        <td align="left"><fmt:formatDate pattern="dd/MM/yyyy" value="${evento.dataInicioEvento}"/></td>
+                                        <td align="left"><fmt:formatDate pattern="dd/MM/yyyy" value="${evento.dataTerminoEvento}"/></td>
+                                        <td align="left">
+                                            <c:if test="${evento.situacaoEvento == 'A'}">
+                                                Ativo
+                                            </c:if>
+
+                                            <c:if test="${evento.situacaoEvento == 'I'}">
+                                                Inativo
+                                            </c:if>
+
+                                            <c:if test="${evento.situacaoEvento == 'E'}">
+                                                Encerrado
+                                            </c:if>
+
+                                            <c:if test="${evento.situacaoEvento == 'F'}">
+                                                Finalizado
+                                            </c:if> 
+                                        </td>
+                                        <td align="center">
+                                            <a href="${pageContext.request.contextPath}/EventoGerenciar?idEvento=${evento.idEvento}" class="btn btn-group-lg btn-primary">
+                                                <i class="fas fa-cog"></i><Strong> Gerenciar </Strong> </a>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>         
                 </div>
             </div>
         </div>

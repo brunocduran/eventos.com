@@ -13,42 +13,44 @@
                 <i class="fas fa-plus fa-fw"></i>Adicionar</a>
             <div class="card shadow">
                 <div class="card-body">
-                    <table id="datatable" class="display">
-                        <thead>
-                            <tr>
-                                <th align="center">ID</th>
-                                <th align="center">Sigla</th>
-                                <th align="center">Nome</th>
-                                <th align="center"></th>
-                                <th align="center"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <c:forEach var="estado" items="${estados}">
+                    <div class="table-responsive">
+                        <table id="datatable" class="display">
+                            <thead>
                                 <tr>
-                                    <td align="right">${estado.idEstado}</td>
-                                    <td align="left">${estado.nomeEstado}</td>
-                                    <td align="left">${estado.siglaEstado}</td>
-                                    <td align="center">
-                                        <a href="#modaladicionar" class="btn btn-group-lg btn-primary" data-toggle="modal"
-                                           data-id="" onclick="setDadosModal(${estado.idEstado})">
-                                            <i class="fas fa-edit"></i><Strong> Alterar </Strong> </a>
-                                    </td>
-                                    <td align="center">
-                                        <a href="#" onclick="deletar(${estado.idEstado}, '${estado.situacao}')">
-                                            <button class="btn
-                                                    <c:out value="${estado.situacao == 'A' ? 'btn-danger':'btn-success'}"/>">
-                                                <i class="fas fa-fw
-                                                   <c:out value="${estado.situacao == 'A' ? 'fa-times' : 'fas fa-check'}"/>"></i>
-                                                <Strong>
-                                                    <c:out value="${estado.situacao == 'A' ? 'Inativar' : 'Ativar'}"/>
-                                                </Strong>
-                                            </button></a>
-                                    </td>
+                                    <th align="center">ID</th>
+                                    <th align="center">Sigla</th>
+                                    <th align="center">Nome</th>
+                                    <th align="center"></th>
+                                    <th align="center"></th>
                                 </tr>
-                            </c:forEach>
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                <c:forEach var="estado" items="${estados}">
+                                    <tr>
+                                        <td align="right">${estado.idEstado}</td>
+                                        <td align="left">${estado.nomeEstado}</td>
+                                        <td align="left">${estado.siglaEstado}</td>
+                                        <td align="center">
+                                            <a href="#modaladicionar" class="btn btn-group-lg btn-primary" data-toggle="modal"
+                                               data-id="" onclick="setDadosModal(${estado.idEstado})">
+                                                <i class="fas fa-edit"></i><Strong> Alterar </Strong> </a>
+                                        </td>
+                                        <td align="center">
+                                            <a href="#" onclick="deletar(${estado.idEstado}, '${estado.situacao}')">
+                                                <button class="btn
+                                                        <c:out value="${estado.situacao == 'A' ? 'btn-danger':'btn-success'}"/>">
+                                                    <i class="fas fa-fw
+                                                       <c:out value="${estado.situacao == 'A' ? 'fa-times' : 'fas fa-check'}"/>"></i>
+                                                    <Strong>
+                                                        <c:out value="${estado.situacao == 'A' ? 'Inativar' : 'Ativar'}"/>
+                                                    </Strong>
+                                                </button></a>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
