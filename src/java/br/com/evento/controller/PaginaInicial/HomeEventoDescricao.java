@@ -5,6 +5,7 @@
  */
 package br.com.evento.controller.PaginaInicial;
 
+import br.com.evento.dao.CategoriaEventoDAO;
 import br.com.evento.dao.EventoDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -37,6 +38,8 @@ public class HomeEventoDescricao extends HttpServlet {
             String descricao = request.getParameter("nomeEvento");
             
             EventoDAO oEventoDAO = new EventoDAO();
+            CategoriaEventoDAO oCategoriaEventoDAO = new CategoriaEventoDAO();
+            request.setAttribute("categorias", oCategoriaEventoDAO.listarAtivos());
             request.setAttribute("eventos", oEventoDAO.listarEventoDescricao(descricao));
             request.setAttribute("descricao", descricao);
             request.getRequestDispatcher("/home/eventoDescricao.jsp").forward(request, response);
