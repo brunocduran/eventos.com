@@ -60,7 +60,7 @@
                                                 <i class="fas fa-fw 
                                                    <c:out value="${despesa.situacao == 'A' ? 'fas fa-check' : 'fa-times'}"/>"></i>
                                                 <Strong>
-                                                    <c:out value="${despesa.situacao == 'A' ? 'Baixar' : 'Estorna'}"/>
+                                                    <c:out value="${despesa.situacao == 'A' ? 'Baixar' : 'Estornar'}"/>
                                                 </Strong>
                                             </button>
                                         </a>
