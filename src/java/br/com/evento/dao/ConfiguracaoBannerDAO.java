@@ -261,7 +261,10 @@ public class ConfiguracaoBannerDAO implements GenericDAO {
         
         String sql = "select coalesce(count(configuracaobanner.idconfiguracaobanner),0) as idconfiguracaobanner from configuracaobanner "
                 + "where ((? between configuracaobanner.datainicial and configuracaobanner.datafinal) or"
-                + "(? between configuracaobanner.datainicial and configuracaobanner.datafinal))"
+                + "(? between configuracaobanner.datainicial and configuracaobanner.datafinal)"
+                + "or ((configuracaobanner.datainicial between ? and ?)"
+                + " or (configuracaobanner.datafinal between ? and ?))"
+                + ")"
                 + "and configuracaobanner.tipobanner = ?";
 
         if (idConfiguracaoBanner > 0) {
@@ -272,13 +275,17 @@ public class ConfiguracaoBannerDAO implements GenericDAO {
             stmt = conexao.prepareStatement(sql);
             stmt.setDate(1, datainicial);
             stmt.setDate(2, datafinal);
-            stmt.setString(3, tipoBanner);
+            stmt.setDate(3, datainicial);
+            stmt.setDate(4, datafinal);
+            stmt.setDate(5, datainicial);
+            stmt.setDate(6, datafinal);
+            stmt.setString(7, tipoBanner);
            // stmt.setDate(3, datainicial);
             //stmt.setDate(4, datafinal);
             //stmt.setString(5, tipoBanner);
             
             if (idConfiguracaoBanner > 0) {
-                stmt.setInt(4, idConfiguracaoBanner);
+                stmt.setInt(8, idConfiguracaoBanner);
             }
 
             rs = stmt.executeQuery();
