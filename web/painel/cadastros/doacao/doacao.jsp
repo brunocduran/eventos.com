@@ -290,7 +290,7 @@
                 $('#idEvento').val("");
             }
         }
-
+        
         function setDadosModal(valor) {
             limparDadosModal();
             document.getElementById('idDoacao').value = valor;
@@ -301,17 +301,19 @@
                     var id = respostaServlet.idDoacao;
                     if (id != "0") {
                         $('#idDoacao').val(respostaServlet.idDoacao);
-                        $('#valorDoacao').val(respostaServlet.valorDoacao);
+                        $('#valorDoacao').val(respostaServlet.valorDoacao.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}));
                         $('#dataDoacao').val(respostaServlet.dataDoacao);
                         $('#descricao').val(respostaServlet.descricao);
                         $('#situacao').val(respostaServlet.situacao);
                         $('#idPatrocinador').val(respostaServlet.patrocinador.idPatrocinador);
                         $('#idEvento').val(respostaServlet.evento.idEvento);
-                    }
+                    }                
                 });
+            }else{
+                $('#valorDoacao').val(0.00.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}));
             }
         }
-
+        
         function menuAtivo() {
             document.getElementById('titulopainel').innerHTML = "<strong>Doação</strong>";
             document.getElementById('agrupamentoevento').classList.add("menu-open");

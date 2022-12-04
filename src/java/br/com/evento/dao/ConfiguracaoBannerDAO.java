@@ -209,7 +209,7 @@ public class ConfiguracaoBannerDAO implements GenericDAO {
         String sql = "select * from configuracaobanner where tipobanner = ? and configuracaobanner.datafinal >= cast('TODAY' as date)";
 
         if (tipoBanner.equalsIgnoreCase("S") || tipoBanner.equalsIgnoreCase("I")) {
-            sql += " limit 1";
+            sql += " order by configuracaobanner.datainicial limit 1";
         }
         else{
             sql += " order by configuracaobanner.datainicial";     

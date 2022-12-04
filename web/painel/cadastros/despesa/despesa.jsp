@@ -315,7 +315,7 @@
                 if (id != "0") {
                     $('#idDespesa').val(respostaServlet.idDespesa);
                     $('#situacao').val(respostaServlet.situacao);
-                    $('#valorDespesa').val(respostaServlet.valorDespesa);
+                    $('#valorDespesa').val(respostaServlet.valorDespesa.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}));
                     $('#vencimentoDespesa').val(respostaServlet.vencimentoDespesa);
                     //$('#pagamentoDespesa').val(respostaServlet.pagamentoDespesa);
                     $('#descricao').val(respostaServlet.descricao);
@@ -324,6 +324,8 @@
 
                 }
             });
+        }else{
+            $('#valorDespesa').val(0.00.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}));
         }
     }
 
