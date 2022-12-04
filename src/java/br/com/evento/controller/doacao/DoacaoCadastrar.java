@@ -11,6 +11,7 @@ import br.com.evento.model.Cidade;
 import br.com.evento.model.Patrocinador;
 import br.com.evento.model.Doacao;
 import br.com.evento.model.Evento;
+import br.com.evento.utils.Conversao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
@@ -44,7 +45,7 @@ public class DoacaoCadastrar extends HttpServlet {
         try {
             
             int idDoacao = Integer.parseInt(request.getParameter("idDoacao"));
-            Double valorDoacao = Double.parseDouble(request.getParameter("valorDoacao"));
+            Double valorDoacao = Conversao.valorDinheiro(request.getParameter("valorDoacao"));
             Date dataDoacao = Date.valueOf(request.getParameter("dataDoacao"));
             String descricao = request.getParameter("descricao");
             String situacao = request.getParameter("situacao");

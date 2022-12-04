@@ -14,6 +14,7 @@ import br.com.evento.model.Evento;
 import br.com.evento.model.Funcao;
 import br.com.evento.model.Organizador;
 import br.com.evento.model.OrganizadorEvento;
+import br.com.evento.utils.Conversao;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.io.IOException;
@@ -51,8 +52,8 @@ public class EventoCadastrar extends HttpServlet {
             int idEvento = Integer.parseInt(request.getParameter("idEvento"));
             oEvento.setIdEvento(idEvento);
             oEvento.setNomeEvento(request.getParameter("nomeEvento"));
-            oEvento.setValorEvento(Double.parseDouble(request.getParameter("valorEvento")));
-            oEvento.setValorEventoPrazo(Double.parseDouble(request.getParameter("valorEventoPrazo")));
+            oEvento.setValorEvento(Conversao.valorDinheiro(request.getParameter("valorEvento")));
+            oEvento.setValorEventoPrazo(Conversao.valorDinheiro(request.getParameter("valorEventoPrazo")));
             oEvento.setDataInicioEvento(Date.valueOf(request.getParameter("dataInicioEvento")));
             oEvento.setDataTerminoEvento(Date.valueOf(request.getParameter("dataTerminoEvento")));
             oEvento.setSituacaoEvento(request.getParameter("situacaoEvento"));

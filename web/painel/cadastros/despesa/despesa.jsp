@@ -98,7 +98,9 @@
 
                             <div class="form-group">
                                 <label>Valor da Despesa</label>
-                                <input class="form-control" type="number" name="valorDespesa" id="valorDespesa" value=""/>
+                                 <input class="form-control" type="text" name="valorDespesa" id="valorDespesa"
+                                                                    style="text-align:right;"
+                                                                    value="" type='currency'/>
                             </div>
 
                             <div class="form-group">
@@ -245,6 +247,21 @@
                 }
             }
         });
+        
+         $('#valorDespesa').maskMoney({
+                prefix: 'R$',
+                suffix: '',
+                allowZero : false,
+                allowNegative: true,
+                allowEmpty : false,
+                doubleClickSelection : true,
+                selectAllOnFocus : true,
+                thousands: '.',
+                decimal :',',
+                precision: 2,
+                affixesStay : true,
+                bringCareAtEndOnFocus: true
+            });
     });
 
     var cidade = '';

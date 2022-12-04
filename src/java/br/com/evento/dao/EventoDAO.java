@@ -160,7 +160,7 @@ public class EventoDAO {
                 oEvento.setIdEvento(rs.getInt("idevento"));
                 oEvento.setNomeEvento(rs.getString("nomeevento"));
                 oEvento.setValorEvento(rs.getDouble("valorevento"));
-                oEvento.setValorEventoPrazo(rs.getDouble("valorevento"));
+                oEvento.setValorEventoPrazo(rs.getDouble("valoreventoprazo"));
                 oEvento.setDataInicioEvento(rs.getDate("datainicioevento"));
                 oEvento.setDataTerminoEvento(rs.getDate("dataterminoevento"));
                 oEvento.setInformacaoEvento(rs.getString("informacaoevento"));

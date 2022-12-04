@@ -46,7 +46,7 @@ public class DespesaCadastrar extends HttpServlet {
         try{
             
             int idDespesa = Integer.parseInt(request.getParameter("idDespesa"));
-            Double valorDespesa = Double.parseDouble(request.getParameter("valorDespesa"));
+            Double valorDespesa = Conversao.valorDinheiro(request.getParameter("valorDespesa"));
             Date vencimentoDespesa = Date.valueOf(request.getParameter("vencimentoDespesa"));
             //Date pagamentoDespesa = Date.valueOf(request.getParameter("pagamentoDespesa"));
             String descricao = request.getParameter("descricao");

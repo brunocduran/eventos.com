@@ -117,8 +117,9 @@
 
                             <div class="form-group">
                                 <label>Valor Doação</label>
-                                <input class="form-control" type="number" name="valorDoacao"
-                                       id="valorDoacao" value="" />
+                                 <input class="form-control" type="text" name="valorDoacao" id="valorDoacao"
+                                                                    style="text-align:right;"
+                                                                    value="" type='currency'/>
                             </div>
 
                             <div class="form-group">
@@ -243,6 +244,21 @@
                         "sLast": "Último"
                     }
                 }
+            });
+            
+            $('#valorDoacao').maskMoney({
+                prefix: 'R$',
+                suffix: '',
+                allowZero : false,
+                allowNegative: true,
+                allowEmpty : false,
+                doubleClickSelection : true,
+                selectAllOnFocus : true,
+                thousands: '.',
+                decimal :',',
+                precision: 2,
+                affixesStay : true,
+                bringCareAtEndOnFocus: true
             });
         });
 

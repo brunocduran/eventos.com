@@ -80,17 +80,24 @@
                                                             <div class="form-line row">
                                                                 <div class="col-sm">
                                                                     <label for="valorevento" id="labelvalorevento">Valor</label>
+                                                                    <input class="form-control" type="text" name="valorevento" id="valorevento"
+                                                                    style="text-align:right;"
+                                                                    value="<fmt:formatNumber value='${evento.valorEvento}' type='currency'/>"/>
+                                                                    <!--
                                                                     <input class="form-control" style="text-align:right;"
                                                                            type="number" min="0" max="100" step=".01"
                                                                            value="<fmt:formatNumber value='${evento.valorEvento}'/>"
-                                                                           id="valorevento" name="valorevento">
+                                                                           id="valorevento" name="valorevento">-->
                                                                 </div>
                                                                 <div class="col-sm">
                                                                     <label for="valoreventoprazo" id="labelvaloreventoprazo">Valor Prazo</label>
-                                                                    <input class="form-control" style="text-align:right;"
+                                                                     <input class="form-control" type="text" name="valoreventoprazo" id="valoreventoprazo"
+                                                                    style="text-align:right;"
+                                                                    value="<fmt:formatNumber value='${evento.valorEventoPrazo}' type='currency'/>"/>
+                                                                   <!-- <input class="form-control" style="text-align:right;"
                                                                            type="number" min="0" max="100" step=".01"
                                                                            value="<fmt:formatNumber value='${evento.valorEventoPrazo}'/>"
-                                                                           id="valoreventoprazo" name="valoreventoprazo">
+                                                                           id="valoreventoprazo" name="valoreventoprazo">-->
                                                                 </div>
 
                                                             </div>
@@ -402,6 +409,39 @@
 
     $(document).ready(function () {
         menuAtivo();
+        
+        $('#valorevento').maskMoney({
+                prefix: 'R$',
+                suffix: '',
+                allowZero : false,
+                allowNegative: true,
+                allowEmpty : false,
+                doubleClickSelection : true,
+                selectAllOnFocus : true,
+                thousands: '.',
+                decimal :',',
+                precision: 2,
+                affixesStay : true,
+                bringCareAtEndOnFocus: true
+            });
+            
+            
+            $('#valoreventoprazo').maskMoney({
+                prefix: 'R$',
+                suffix: '',
+                allowZero : false,
+                allowNegative: true,
+                allowEmpty : false,
+                doubleClickSelection : true,
+                selectAllOnFocus : true,
+                thousands: '.',
+                decimal :',',
+                precision: 2,
+                affixesStay : true,
+                bringCareAtEndOnFocus: true
+            });
+            
+            
     });
 
 
